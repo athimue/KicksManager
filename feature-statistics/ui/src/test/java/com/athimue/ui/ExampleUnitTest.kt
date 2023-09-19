@@ -1,4 +1,4 @@
-package com.athimue.mylibrary
+package com.athimue.ui
 
 import org.junit.Test
 

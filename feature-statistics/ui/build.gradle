@@ -6,16 +6,14 @@ plugins {
 }
 
 android {
-    namespace 'com.athimue.feature_inventory.ui'
+    namespace 'com.athimue.feature_statistics.ui'
     compileSdk project.compileSdk
 
     defaultConfig {
         minSdk project.minSdk
         targetSdk project.targetSdk
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary true
-        }
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -46,7 +44,7 @@ android {
 }
 
 dependencies {
-    implementation project(':feature-inventory:domain')
+    implementation project(':feature-statistics:domain')
 
     implementation "androidx.core:core-ktx:$core_ktx_version"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"

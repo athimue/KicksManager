@@ -1,4 +1,4 @@
-package com.athimue.feature_inventory.data
+package com.athimue.data
 
 import org.junit.Test
 

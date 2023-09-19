@@ -14,7 +14,9 @@ dependencyResolutionManagement {
 }
 rootProject.name = "KicksManager"
 include ':app'
-include ':feature-inventory'
 include ':feature-inventory:data'
 include ':feature-inventory:domain'
 include ':feature-inventory:ui'
+include ':feature-statistics:data'
+include ':feature-statistics:domain'
+include ':feature-statistics:ui'
