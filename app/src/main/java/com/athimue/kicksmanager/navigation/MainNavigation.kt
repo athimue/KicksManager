@@ -14,6 +14,7 @@ import com.athimue.ui.StatisticsComposable
 
 sealed class Screen(val route: String) {
     object Inventory : Screen("inventory")
+    object Sells : Screen("sells")
     object Statistics : Screen("statistics")
 }
 
@@ -39,6 +40,9 @@ fun MainNavigation() {
             composable(Screen.Inventory.route) {
                 InventoryComposable()
             }
+            composable(Screen.Sells.route) {
+                StatisticsComposable()
+            }
             composable(Screen.Statistics.route) {
                 StatisticsComposable()
             }
@@ -58,6 +62,12 @@ fun BottomBar(
             icon = { Icon(imageVector = Icons.Rounded.AccountBox, contentDescription = "") },
             label = { Text("Inventory") },
             onClick = onInventoryClick
+        )
+        NavigationBarItem(
+            selected = currentRoute == Screen.Sells.route,
+            icon = { Icon(imageVector = Icons.Rounded.Check, contentDescription = "") },
+            label = { Text("Sells") },
+            onClick = onStatisticsClick
         )
         NavigationBarItem(
             selected = currentRoute == Screen.Statistics.route,
