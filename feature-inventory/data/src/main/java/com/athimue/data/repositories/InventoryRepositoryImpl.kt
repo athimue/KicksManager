@@ -19,7 +19,7 @@ class InventoryRepositoryImpl @Inject constructor(
         inventoryDao.insert(
             InventoryEntity(
                 name = inventoryItem.name,
-                picture = "",
+                picture = inventoryItem.picture,
                 size = inventoryItem.size,
                 quantity = 1,
                 buyPrice = inventoryItem.buyPrice,
