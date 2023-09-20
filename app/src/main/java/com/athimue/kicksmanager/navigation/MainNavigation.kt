@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.athimue.ui.InventoryComposable
+import com.athimue.ui.composables.inventory.InventoryComposable
 import com.athimue.ui.StatisticsComposable
 
 sealed class Screen(val route: String) {

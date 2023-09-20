@@ -1,4 +1,4 @@
-package com.athimue.ui
+package com.athimue.ui.composables.inventory
 
 import com.athimue.domain.models.InventoryItem
 import com.athimue.domain.models.Sneaker

@@ -14,7 +14,9 @@ data class SneakerDto(
 
 fun SneakerDto.toSneaker() = Sneaker(
     id = id,
-    name = name
+    name = name,
+    picture = image,
+    brand = brand
 )
 
 data class SearchResultDto(

@@ -12,7 +12,7 @@ class SearchRepositoryImpl @Inject constructor(
 ) : SearchRepository {
 
     override suspend fun getSneakers(query: String): Result<List<Sneaker>> {
-        val response = sellWeTheNewApi.getSneakers()
+        val response = sellWeTheNewApi.getSneakers(query)
         Log.d("COUCOU", "ici")
         Log.d("COUCOU", response.body().toString())
         return response.takeIf { it.isSuccessful }?.body()?.let {
