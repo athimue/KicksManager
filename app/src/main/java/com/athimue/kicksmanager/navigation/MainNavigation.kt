@@ -1,5 +1,6 @@
 package com.athimue.kicksmanager.navigation
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AccountBox
 import androidx.compose.material.icons.rounded.Check
@@ -33,7 +34,7 @@ fun MainNavigation() {
         }
     ) {
         NavHost(
-            modifier = Modifier,
+            modifier = Modifier.padding(it),
             navController = navController,
             startDestination = Screen.Inventory.route
         ) {
