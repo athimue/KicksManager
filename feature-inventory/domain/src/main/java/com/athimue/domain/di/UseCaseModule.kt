@@ -1,9 +1,6 @@
 package com.athimue.domain.di
 
-import com.athimue.domain.usecases.GetInventoryUseCase
-import com.athimue.domain.usecases.GetInventoryUseCaseImpl
-import com.athimue.domain.usecases.SearchSneakerUseCase
-import com.athimue.domain.usecases.SearchSneakerUseCaseImpl
+import com.athimue.domain.usecases.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -21,5 +18,9 @@ abstract class UseCaseModule {
     @Binds
     @ViewModelScoped
     abstract fun bindGetInventoryUseCase(getInventoryUseCase: GetInventoryUseCaseImpl): GetInventoryUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindAddInventoryUseCase(addInventoryUseCase: AddInventoryUseCaseImpl): AddInventoryUseCase
 
 }

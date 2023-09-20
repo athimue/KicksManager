@@ -4,5 +4,5 @@ import com.athimue.domain.models.InventoryItem
 import kotlinx.coroutines.flow.Flow
 
 interface GetInventoryUseCase {
-    suspend fun invoke(): Flow<List<InventoryItem>>
+    fun invoke(): Flow<List<InventoryItem>>
 }

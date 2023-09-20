@@ -1,6 +1,7 @@
 package com.athimue.data.repositories
 
 import com.athimue.data.database.dao.InventoryDao
+import com.athimue.data.database.entity.InventoryEntity
 import com.athimue.data.database.entity.toInventoryItem
 import com.athimue.domain.models.InventoryItem
 import com.athimue.domain.repositories.InventoryRepository
@@ -11,6 +12,23 @@ import javax.inject.Inject
 class InventoryRepositoryImpl @Inject constructor(
     private val inventoryDao: InventoryDao
 ) : InventoryRepository {
-    override suspend fun getInventory(): Flow<List<InventoryItem>> =
+
+    override suspend fun addInventory(
+        inventoryItem: InventoryItem
+    ) {
+        inventoryDao.insert(
+            InventoryEntity(
+                name = inventoryItem.name,
+                picture = "",
+                size = inventoryItem.size,
+                quantity = 1,
+                buyPrice = inventoryItem.buyPrice,
+                buyDate = inventoryItem.buyDate,
+                buyPlace = inventoryItem.buyPlace,
+            )
+        )
+    }
+
+    override fun getInventory(): Flow<List<InventoryItem>> =
         inventoryDao.getAll().map { it.map { it.toInventoryItem() } }
 }

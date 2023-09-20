@@ -6,11 +6,11 @@ import com.athimue.domain.models.InventoryItem
 
 @Entity(tableName = "inventory")
 data class InventoryEntity(
-    @PrimaryKey val id: Long,
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val name: String,
     val picture: String,
     val size: String,
-    val quantity: String,
+    val quantity: Int,
     val buyPrice: Double,
     val buyDate: String,
     val buyPlace: String?,

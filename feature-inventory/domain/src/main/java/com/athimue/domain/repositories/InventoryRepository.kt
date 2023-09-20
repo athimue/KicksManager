@@ -4,5 +4,8 @@ import com.athimue.domain.models.InventoryItem
 import kotlinx.coroutines.flow.Flow
 
 interface InventoryRepository {
-    suspend fun getInventory(): Flow<List<InventoryItem>>
+
+    suspend fun addInventory(inventoryItem: InventoryItem)
+
+    fun getInventory(): Flow<List<InventoryItem>>
 }
