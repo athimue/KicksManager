@@ -13,8 +13,6 @@ class SearchRepositoryImpl @Inject constructor(
 
     override suspend fun getSneakers(query: String): Result<List<Sneaker>> {
         val response = sellWeTheNewApi.getSneakers(query)
-        Log.d("COUCOU", "ici")
-        Log.d("COUCOU", response.body().toString())
         return response.takeIf { it.isSuccessful }?.body()?.let {
             Result.success(it.results.map { sneakerDto -> sneakerDto.toSneaker() })
         } ?: Result.failure(Throwable("Erreur :/"))

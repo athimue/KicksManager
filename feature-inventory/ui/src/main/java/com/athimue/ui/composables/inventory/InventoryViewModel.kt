@@ -54,7 +54,6 @@ class InventoryViewModel @Inject constructor(
     }
 
     fun deleteInventoryItem(inventoryItemId: Long) {
-        Log.d("COUCOU", inventoryItemId.toString())
         viewModelScope.launch {
             deleteInventoryUseCase.invoke(inventoryItemId)
         }

@@ -1,20 +1,17 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
 }
 
 android {
-    namespace 'com.athimue.kicksmanager'
+    namespace 'com.athimue.feature_sells.ui'
     compileSdk project.compileSdk
 
     defaultConfig {
-        applicationId "com.athimue.kicksmanager"
         minSdk project.minSdk
         targetSdk project.targetSdk
-        versionCode 1
-        versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
@@ -49,16 +46,7 @@ android {
 }
 
 dependencies {
-
-    implementation project(':feature-inventory:ui')
-    implementation project(':feature-inventory:data')
-    implementation project(':feature-inventory:domain')
-    implementation project(':feature-sells:ui')
-    implementation project(':feature-sells:data')
     implementation project(':feature-sells:domain')
-    implementation project(':feature-statistics:ui')
-    implementation project(':feature-statistics:data')
-    implementation project(':feature-statistics:domain')
 
     implementation "androidx.core:core-ktx:$core_ktx_version"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
@@ -67,7 +55,7 @@ dependencies {
     implementation "androidx.compose.compiler:compiler:$compose_compiler"
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
     implementation "androidx.navigation:navigation-compose:$nav_version"
-    implementation "androidx.compose.material3:material3:1.1.1"
+    implementation "androidx.compose.material3:material3:$material3_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$compose_version"
     implementation "androidx.compose.foundation:foundation:$compose_version"
     implementation "io.coil-kt:coil-compose:$coil_compose"
@@ -76,6 +64,11 @@ dependencies {
     implementation "androidx.hilt:hilt-navigation-compose:$nav_compose_version"
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit2"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit2"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3"
 
     // Unit test
     testImplementation "junit:junit:$junit"
