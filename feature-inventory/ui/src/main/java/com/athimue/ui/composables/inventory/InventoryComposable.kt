@@ -53,14 +53,26 @@ fun InventoryComposable(
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 38.sp
             )
-            uiState.inventory?.let {
-                LazyColumn {
-                    items(it) { item ->
-                        InventoryItemRow(item)
-                        Divider()
-                    }
+            Divider()
+            Row(modifier = Modifier.padding(top = 10.dp, bottom = 10.dp)) {
+                Text(
+                    text = "${uiState.inventory.size} items",
+                    modifier = Modifier.padding(start = 10.dp)
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Text(text = "${
+                    uiState.inventory.map { inventoryItem -> inventoryItem.buyPrice }
+                        .fold(0.0) { acc, buyPriceItem -> acc + buyPriceItem }
+                } €", modifier = Modifier.padding(end = 10.dp))
+            }
+            Divider()
+            if (uiState.inventory.isNotEmpty()) LazyColumn {
+                items(uiState.inventory) { item ->
+                    InventoryItemRow(item)
+                    Divider()
                 }
-            } ?: Text(text = "No inventory")
+            }
+            else Text(text = "No inventory")
             InventoryFormModal(formModalState = formModalState,
                 showFormModal = showFormModal,
                 closeModal = { showFormModal = false },
@@ -78,20 +90,31 @@ fun InventoryItemRow(
     inventoryItem: InventoryItem
 ) {
     Row(
-        modifier = Modifier.padding(8.dp), verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
             painter = rememberAsyncImagePainter(inventoryItem.picture),
             contentDescription = "",
-            modifier = Modifier
-                .size(100.dp)
+            modifier = Modifier.size(100.dp)
         )
-        Column {
-            Text(text = inventoryItem.name)
-            Row {
-                Text(text = inventoryItem.quantity.toString())
-                Text(text = inventoryItem.size)
-                Text(text = inventoryItem.buyPrice.toString())
+        Column(
+            modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = inventoryItem.name, fontWeight = FontWeight.ExtraBold
+            )
+            Row(modifier = Modifier.padding(top = 10.dp)) {
+                Text(
+                    text = "Qty : ${inventoryItem.quantity}",
+                )
+                Text(
+                    modifier = Modifier.padding(start = 10.dp),
+                    text = "Size : ${inventoryItem.size}",
+                )
+                Text(
+                    modifier = Modifier.padding(start = 10.dp),
+                    text = "Price : ${inventoryItem.buyPrice} €"
+                )
             }
         }
     }
