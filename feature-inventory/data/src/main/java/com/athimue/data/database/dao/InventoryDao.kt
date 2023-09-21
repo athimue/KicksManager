@@ -11,7 +11,7 @@ abstract class InventoryDao {
     abstract suspend fun insert(inventoryEntity: InventoryEntity): Long
 
     @Query("DELETE FROM inventory WHERE id IS :inventoryEntityId")
-    abstract suspend fun delete(inventoryEntityId: Long): Long
+    abstract suspend fun delete(inventoryEntityId: Long): Int
 
     @Query("SELECT * FROM inventory")
     abstract fun getAll(): Flow<List<InventoryEntity>>
