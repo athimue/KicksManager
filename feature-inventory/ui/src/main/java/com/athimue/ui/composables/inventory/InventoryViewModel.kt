@@ -1,6 +1,9 @@
 package com.athimue.ui.composables.inventory
 
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.athimue.domain.models.InventoryItem
@@ -18,8 +21,8 @@ class InventoryViewModel @Inject constructor(
     private val addInventoryUseCase: AddInventoryUseCase,
     private val deleteInventoryUseCase: DeleteInventoryUseCase
 ) : ViewModel() {
-    var uiState: MutableStateFlow<InventoryUiState> =
-        MutableStateFlow(InventoryUiState())
+
+    var uiState = MutableStateFlow(InventoryUiState())
 
     init {
         viewModelScope.launch {

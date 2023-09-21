@@ -15,6 +15,10 @@
             <option value="$PROJECT_DIR$/feature-inventory/data" />
             <option value="$PROJECT_DIR$/feature-inventory/domain" />
             <option value="$PROJECT_DIR$/feature-inventory/ui" />
+            <option value="$PROJECT_DIR$/feature-sells" />
+            <option value="$PROJECT_DIR$/feature-sells/data" />
+            <option value="$PROJECT_DIR$/feature-sells/domain" />
+            <option value="$PROJECT_DIR$/feature-sells/ui" />
             <option value="$PROJECT_DIR$/feature-statistics" />
             <option value="$PROJECT_DIR$/feature-statistics/data" />
             <option value="$PROJECT_DIR$/feature-statistics/domain" />
