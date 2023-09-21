@@ -21,6 +21,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
+import com.athimue.ui.composables.common.ModalHeader
 
 @Composable
 fun SneakerPicker(
@@ -44,19 +45,10 @@ fun SneakerPicker(
                     .background(Color.White)
                     .padding(16.dp)
             ) {
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Button(onClick = closeDialog) {
-                        Icon(imageVector = Icons.Rounded.Close, contentDescription = "")
-                    }
-                    Text(
-                        "Sneaker search",
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center
-                    )
-                }
+                ModalHeader(
+                    title = "Sneaker search",
+                    onClick = closeDialog
+                )
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth(),
                     value = query,

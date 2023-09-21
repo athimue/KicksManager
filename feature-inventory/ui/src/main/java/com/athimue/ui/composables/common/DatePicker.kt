@@ -2,13 +2,15 @@ package com.athimue.ui.composables.common
 
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import java.text.SimpleDateFormat
+import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DatePicker(
     isDialogDisplayed: Boolean,
     closeDialog: () -> Unit,
-    onDateSelected: (Long) -> Unit,
+    onDateSelected: (String) -> Unit,
 ) {
     val datePickerState = rememberDatePickerState()
     if (isDialogDisplayed) {
@@ -17,7 +19,11 @@ fun DatePicker(
             confirmButton = {
                 TextButton(onClick = {
                     closeDialog()
-                    onDateSelected(datePickerState.selectedDateMillis!!)
+                    datePickerState.selectedDateMillis?.let {
+                        val simpleDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                        val currentDate = simpleDate.format(it)
+                        onDateSelected(currentDate)
+                    }
                 }) {
                     Text(text = "Confirm")
                 }

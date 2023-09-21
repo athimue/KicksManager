@@ -15,7 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun <T> ExtraInputField(
+fun <T> PickerInputField(
     title: String,
     value: T,
     onClick: () -> Unit,
