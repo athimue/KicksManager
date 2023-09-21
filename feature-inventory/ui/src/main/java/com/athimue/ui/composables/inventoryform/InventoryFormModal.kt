@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import com.athimue.ui.composables.sneakerpicker.SneakerPicker
 import com.athimue.ui.composables.common.DatePicker
+import com.athimue.ui.composables.common.DropDownField
 import com.athimue.ui.composables.common.PickerInputField
 import com.athimue.ui.composables.common.ModalHeader
 import java.util.*
@@ -45,6 +46,14 @@ fun InventoryFormModal(
     var showDatePicker by remember { mutableStateOf(false) }
     var showSneakerPicker by remember { mutableStateOf(false) }
 
+    val sizes = listOf(
+        "38", "38.5", "39", "40", "40.5", "41", "42", "42.5", "42 2/3", "43", "44", "44.5", "45"
+    )
+    val shops = listOf(
+        "Adidas / Confirmed", "BSTN", "Buzzz", "Courir", "Foot District", "GLF", "Impact", "KITH",
+        "Nike / SNKRS", "Patta", "Snipes", "Solebox", "Starcow", "Supreme", "SVD",
+    )
+
     if (showFormModal) {
         ModalBottomSheet(
             modifier = Modifier.fillMaxSize(),
@@ -61,38 +70,19 @@ fun InventoryFormModal(
                     .padding(16.dp)
                     .verticalScroll(rememberScrollState())
             ) {
-                ModalHeader(
-                    title = "Add an item",
-                    onClick = {
-                        showDatePicker = false
-                        showSneakerPicker = false
-                        closeModal()
-                    }
-                )
-                PickerInputField(
-                    title = "Item name",
+                ModalHeader(title = "Add an item", onClick = {
+                    showDatePicker = false
+                    showSneakerPicker = false
+                    closeModal()
+                })
+                PickerInputField(title = "Item name",
                     value = name,
                     onClick = { showSneakerPicker = true })
                 DropDownField(
                     title = "Item size",
                     itemSelected = size,
                     onItemSelected = { size = it },
-                    choices =
-                    listOf(
-                        "38",
-                        "38.5",
-                        "39",
-                        "40",
-                        "40.5",
-                        "41",
-                        "42",
-                        "42.5",
-                        "42 2/3",
-                        "43",
-                        "44",
-                        "44.5",
-                        "45"
-                    )
+                    choices = sizes
                 )
                 InputField(
                     title = "Purchasing price",
@@ -102,39 +92,26 @@ fun InventoryFormModal(
                         keyboardType = KeyboardType.Decimal
                     )
                 )
-                PickerInputField(
-                    title = "Purchasing date",
+                PickerInputField(title = "Purchasing date",
                     value = buyDate,
                     onClick = { showDatePicker = true })
                 DropDownField(
                     title = "Purchasing place",
                     itemSelected = buyPlace,
                     onItemSelected = { buyPlace = it },
-                    choices =
-                    listOf(
-                        "Adidas / Confirmed",
-                        "BSTN",
-                        "Buzzz",
-                        "Courir",
-                        "Foot District",
-                        "GLF",
-                        "Impact",
-                        "KITH",
-                        "Nike / SNKRS",
-                        "Patta",
-                        "Snipes",
-                        "Solebox",
-                        "Starcow",
-                        "Supreme",
-                        "SVD",
-                    )
+                    choices = shops
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Button(modifier = Modifier.align(Alignment.CenterHorizontally), onClick = {
-                    addInventory(
-                        name, picture, size, buyPrice.toDouble(), buyDate.toString(), buyPlace
-                    )
-                    closeModal()
+                    if (allFieldAreNotEmpty(
+                            listOf(
+                                name, picture, size, buyPrice, buyDate, buyPlace
+                            )
+                        )
+                    ) {
+                        addInventory(name, picture, size, buyPrice.toDouble(), buyDate, buyPlace)
+                        closeModal()
+                    }
                 }) {
                     Text(text = "Add")
                 }
@@ -152,6 +129,10 @@ fun InventoryFormModal(
         }
     }
 }
+
+fun allFieldAreNotEmpty(
+    fields: List<String>
+): Boolean = !fields.any { it.isEmpty() }
 
 @Composable
 fun ColumnScope.InputField(
@@ -171,60 +152,5 @@ fun ColumnScope.InputField(
             label = { Text(title) },
             keyboardOptions = keyboardOptions,
         )
-    }
-}
-
-@Composable
-fun DropDownField(
-    title: String,
-    choices: List<String>,
-    itemSelected: String,
-    onItemSelected: (String) -> Unit
-) {
-    var isDropDownExpanded by remember { mutableStateOf(false) }
-    var dropDownTextField by remember { mutableStateOf(Size.Zero) }
-    val icon =
-        if (isDropDownExpanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown
-
-    Column(
-        modifier = Modifier.padding(8.dp)
-    ) {
-        Text(
-            text = title, fontWeight = FontWeight.Bold, fontFamily = FontFamily.Monospace
-        )
-        Box {
-            OutlinedTextField(value = itemSelected,
-                onValueChange = onItemSelected,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .onGloballyPositioned { coordinates ->
-                        dropDownTextField = coordinates.size.toSize()
-                    },
-                label = { Text(title) },
-                trailingIcon = {
-                    Icon(
-                        imageVector = icon,
-                        contentDescription = ""
-                    )
-                })
-            Box(
-                modifier = Modifier
-                    .matchParentSize()
-                    .alpha(0f)
-                    .clickable(onClick = { isDropDownExpanded = !isDropDownExpanded }),
-            )
-        }
-        DropdownMenu(
-            expanded = isDropDownExpanded,
-            onDismissRequest = { isDropDownExpanded = false },
-            modifier = Modifier.width(with(LocalDensity.current) { dropDownTextField.width.toDp() })
-        ) {
-            choices.forEach { label ->
-                DropdownMenuItem(onClick = {
-                    onItemSelected(label)
-                    isDropDownExpanded = false
-                }, text = { Text(text = label) })
-            }
-        }
     }
 }
