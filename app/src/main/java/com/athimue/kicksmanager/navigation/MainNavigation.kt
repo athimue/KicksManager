@@ -62,19 +62,31 @@ fun BottomBar(
             selected = currentRoute == Screen.Inventory.route,
             icon = { Icon(imageVector = Icons.Rounded.AccountBox, contentDescription = "") },
             label = { Text("Inventory") },
-            onClick = onInventoryClick
+            onClick = onInventoryClick,
+            colors = NavigationBarItemDefaults.colors(
+                unselectedIconColor = MaterialTheme.colorScheme.secondary,
+                unselectedTextColor = MaterialTheme.colorScheme.secondary
+            )
         )
         NavigationBarItem(
             selected = currentRoute == Screen.Sells.route,
             icon = { Icon(imageVector = Icons.Rounded.Check, contentDescription = "") },
             label = { Text("Sells") },
-            onClick = onStatisticsClick
+            onClick = onStatisticsClick,
+            colors = NavigationBarItemDefaults.colors(
+                unselectedIconColor = MaterialTheme.colorScheme.secondary,
+                unselectedTextColor = MaterialTheme.colorScheme.secondary
+            )
         )
         NavigationBarItem(
             selected = currentRoute == Screen.Statistics.route,
             icon = { Icon(imageVector = Icons.Rounded.Check, contentDescription = "") },
             label = { Text("Statistics") },
-            onClick = onStatisticsClick
+            onClick = onStatisticsClick,
+            colors = NavigationBarItemDefaults.colors(
+                unselectedIconColor = MaterialTheme.colorScheme.secondary,
+                unselectedTextColor = MaterialTheme.colorScheme.secondary
+            )
         )
     }
 }
