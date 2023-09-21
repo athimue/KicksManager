@@ -7,5 +7,7 @@ interface InventoryRepository {
 
     suspend fun addInventory(inventoryItem: InventoryItem)
 
+    suspend fun deleteInventory(inventoryItemId: Long)
+
     fun getInventory(): Flow<List<InventoryItem>>
 }

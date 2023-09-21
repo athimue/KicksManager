@@ -29,6 +29,10 @@ class InventoryRepositoryImpl @Inject constructor(
         )
     }
 
+    override suspend fun deleteInventory(inventoryItemId: Long) {
+        inventoryDao.delete(inventoryItemId)
+    }
+
     override fun getInventory(): Flow<List<InventoryItem>> =
         inventoryDao.getAll().map { it.map { it.toInventoryItem() } }
 }

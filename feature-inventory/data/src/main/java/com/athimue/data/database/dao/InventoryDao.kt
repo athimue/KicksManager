@@ -1,9 +1,6 @@
 package com.athimue.data.database.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.athimue.data.database.entity.InventoryEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -12,6 +9,9 @@ abstract class InventoryDao {
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
     abstract suspend fun insert(inventoryEntity: InventoryEntity): Long
+
+    @Query("DELETE FROM inventory WHERE id IS :inventoryEntityId")
+    abstract suspend fun delete(inventoryEntityId: Long): Long
 
     @Query("SELECT * FROM inventory")
     abstract fun getAll(): Flow<List<InventoryEntity>>
