@@ -72,7 +72,16 @@ fun InventoryComposable(
                     Divider()
                 }
             }
-            else Text(text = "No inventory")
+            else Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 20.dp),
+                text = "No inventory",
+                textAlign = TextAlign.Center,
+                fontFamily = FontFamily.Monospace,
+                fontWeight = FontWeight.ExtraBold,
+                fontSize = 20.sp
+            )
             InventoryFormModal(formModalState = formModalState,
                 showFormModal = showFormModal,
                 closeModal = { showFormModal = false },
