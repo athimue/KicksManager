@@ -13,7 +13,7 @@ data class InventoryEntity(
     val quantity: Int,
     val buyPrice: Double,
     val buyDate: String,
-    val buyPlace: String?,
+    val buyPlace: String,
 )
 
 fun InventoryEntity.toInventoryItem() = InventoryItem(

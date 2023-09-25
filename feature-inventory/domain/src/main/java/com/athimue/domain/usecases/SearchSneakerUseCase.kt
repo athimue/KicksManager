@@ -1,7 +1,10 @@
 package com.athimue.domain.usecases
 
-import com.athimue.domain.models.Sneaker
+import com.athimue.domain.repositories.SearchRepository
+import javax.inject.Inject
 
-interface SearchSneakerUseCase {
-    suspend fun invoke(query: String): Result<List<Sneaker>>
+class SearchSneakerUseCase @Inject constructor(
+    private val searchRepository: SearchRepository
+) {
+    suspend fun invoke(query: String) = searchRepository.getSneakers(query)
 }

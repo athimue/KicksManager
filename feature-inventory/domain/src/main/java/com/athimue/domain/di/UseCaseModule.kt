@@ -13,18 +13,18 @@ abstract class UseCaseModule {
 
     @Binds
     @ViewModelScoped
-    abstract fun bindSearchSneakerUseCase(searchSneakerUseCase: SearchSneakerUseCaseImpl): SearchSneakerUseCase
+    abstract fun bindSearchSneakerUseCase(searchSneakerUseCase: SearchSneakerUseCase): SearchSneakerUseCase
 
     @Binds
     @ViewModelScoped
-    abstract fun bindGetInventoryUseCase(getInventoryUseCase: GetInventoryUseCaseImpl): GetInventoryUseCase
+    abstract fun bindGetInventoryUseCase(getInventoryUseCase: GetInventoryUseCase): GetInventoryUseCase
 
     @Binds
     @ViewModelScoped
-    abstract fun bindAddInventoryUseCase(addInventoryUseCase: AddInventoryUseCaseImpl): AddInventoryUseCase
+    abstract fun bindAddInventoryUseCase(addInventoryUseCase: AddInventoryUseCase): AddInventoryUseCase
 
     @Binds
     @ViewModelScoped
-    abstract fun bindDeleteInventoryUseCase(deleteInventoryUseCase: DeleteInventoryUseCaseImpl): DeleteInventoryUseCase
+    abstract fun bindDeleteInventoryUseCase(deleteInventoryUseCase: DeleteInventoryUseCase): DeleteInventoryUseCase
 
 }

@@ -8,5 +8,5 @@ data class InventoryItem(
     val quantity: Int,
     val buyPrice: Double,
     val buyDate: String,
-    val buyPlace: String?,
+    val buyPlace: String,
 )
