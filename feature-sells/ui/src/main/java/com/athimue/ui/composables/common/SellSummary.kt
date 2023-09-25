@@ -35,10 +35,10 @@ fun SellSummary(
         SellSummaryItem(icon = Icons.Rounded.AddCircle, iconColor = Color.Green, title = "${
             sells.map { sell -> sell.sellPrice - sell.buyPrice }
                 .fold(0.0) { acc, profitItem -> acc + profitItem }
-        } €", subject = "Beneficts")
+        } €", subject = "Margin")
         SellSummaryItem(icon = Icons.Rounded.CheckCircle, iconColor = Color.Red, title = "${
             sells.map { sell -> sell.sellPrice }.fold(0.0) { acc, profitItem -> acc + profitItem }
-        } €", subject = "CA")
+        } €", subject = "Sales")
     }
 }
 
