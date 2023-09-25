@@ -16,6 +16,6 @@ abstract class Database : RoomDatabase() {
     abstract fun inventoryDao(): InventoryDao
 
     companion object {
-        const val DATABASE_NAME: String = "database.db"
+        const val DATABASE_NAME: String = "InventoryDatabase.db"
     }
 }

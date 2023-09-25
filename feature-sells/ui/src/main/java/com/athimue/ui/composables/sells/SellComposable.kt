@@ -42,14 +42,8 @@ fun SellsComposable(
         )
         SellSummary()
         LazyColumn {
-            items(
-                items = uiState.sells,
-                key = { item -> item.id }
-            ) { item ->
-                SellItem(
-                    sellItem = item,
-                    onRemove = { viewModel.deleteSell(it) }
-                )
+            items(items = uiState.sells, key = { item -> item.id }) { item ->
+                SellItem(sellItem = item, onRemove = { viewModel.deleteSell(it) })
                 Divider()
             }
         }
@@ -65,10 +59,7 @@ fun SellSummary() {
         horizontalArrangement = Arrangement.SpaceAround
     ) {
         SellSummaryItem(
-            icon = Icons.Rounded.ThumbUp,
-            iconColor = Color.Blue,
-            title = "0",
-            subject = "Sells"
+            icon = Icons.Rounded.ThumbUp, iconColor = Color.Blue, title = "0", subject = "Sells"
         )
         SellSummaryItem(
             icon = Icons.Rounded.AddCircle,
@@ -77,28 +68,20 @@ fun SellSummary() {
             subject = "Beneficts"
         )
         SellSummaryItem(
-            icon = Icons.Rounded.CheckCircle,
-            iconColor = Color.Red,
-            title = "0.00",
-            subject = "CA"
+            icon = Icons.Rounded.CheckCircle, iconColor = Color.Red, title = "0.00", subject = "CA"
         )
     }
 }
 
 @Composable
 private fun SellSummaryItem(
-    icon: ImageVector,
-    iconColor: Color,
-    title: String,
-    subject: String
+    icon: ImageVector, iconColor: Color, title: String, subject: String
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
-            imageVector = icon,
-            contentDescription = "",
-            colorFilter = ColorFilter.tint(iconColor)
+            imageVector = icon, contentDescription = "", colorFilter = ColorFilter.tint(iconColor)
         )
         Column(modifier = Modifier.padding(10.dp)) {
             Text(text = title)
@@ -109,8 +92,9 @@ private fun SellSummaryItem(
 
 @Composable
 private fun SellItem(
-    sellItem: Sell,
-    onRemove: (Long) -> Unit
+    sellItem: Sell, onRemove: (Long) -> Unit
 ) {
-
+    Text(text = sellItem.name)
+    Text(text = sellItem.buyPrice.toString())
+    Text(text = sellItem.sellPrice.toString())
 }

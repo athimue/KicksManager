@@ -1,32 +1,23 @@
 package com.athimue.ui.composables.inventoryform
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.toSize
-import com.athimue.ui.composables.sneakerpicker.SneakerPicker
 import com.athimue.ui.composables.common.DatePicker
 import com.athimue.ui.composables.common.DropDownField
-import com.athimue.ui.composables.common.PickerInputField
 import com.athimue.ui.composables.common.ModalHeader
+import com.athimue.ui.composables.common.PickerInputField
+import com.athimue.ui.composables.sneakerpicker.SneakerPicker
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -70,7 +61,7 @@ fun InventoryFormModal(
                     .padding(16.dp)
                     .verticalScroll(rememberScrollState())
             ) {
-                ModalHeader(title = "Add an item", onClick = {
+                ModalHeader(title = "Add an item", onCloseBtnClick = {
                     showDatePicker = false
                     showSneakerPicker = false
                     closeModal()

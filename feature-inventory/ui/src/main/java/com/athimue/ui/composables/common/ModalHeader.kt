@@ -19,13 +19,13 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun ModalHeader(
     title: String,
-    onClick: () -> Unit
+    onCloseBtnClick: () -> Unit
 ) {
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Button(onClick = onClick) {
+        Button(onClick = onCloseBtnClick) {
             Icon(imageVector = Icons.Rounded.Close, contentDescription = "")
         }
         Text(

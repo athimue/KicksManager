@@ -1,6 +1,6 @@
 package com.athimue.domain.models
 
-data class Sell(
+data class InventorySell(
     val id: Long,
     val name: String,
     val picture: String,

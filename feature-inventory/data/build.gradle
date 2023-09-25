@@ -33,6 +33,7 @@ android {
 
 dependencies {
     implementation project(':feature-inventory:domain')
+    implementation project(':core-data')
 
     implementation "androidx.core:core-ktx:$core_ktx_version"
 

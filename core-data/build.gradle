@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace 'com.athimue.feature_sells.data'
+    namespace 'com.athimue.core_data'
     compileSdk project.compileSdk
 
     defaultConfig {
@@ -32,9 +32,6 @@ android {
 }
 
 dependencies {
-    implementation project(':feature-sells:domain')
-    implementation project(':core-data')
-
     implementation "androidx.core:core-ktx:$core_ktx_version"
 
     implementation "androidx.room:room-runtime:$room_version"

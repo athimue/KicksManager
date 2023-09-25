@@ -1,8 +1,10 @@
 package com.athimue.data.di
 
 import com.athimue.data.repositories.InventoryRepositoryImpl
+import com.athimue.data.repositories.InventorySellRepositoryImpl
 import com.athimue.data.repositories.SearchRepositoryImpl
 import com.athimue.domain.repositories.InventoryRepository
+import com.athimue.domain.repositories.InventorySellRepository
 import com.athimue.domain.repositories.SearchRepository
 import dagger.Binds
 import dagger.Module
@@ -18,7 +20,12 @@ abstract class RepositoryModule {
     @Binds
     @ViewModelScoped
     abstract fun provideSearchRepository(searchRepositoryImpl: SearchRepositoryImpl): SearchRepository
+
     @Binds
     @ViewModelScoped
     abstract fun provideInventoryRepository(inventoryRepositoryImpl: InventoryRepositoryImpl): InventoryRepository
+
+    @Binds
+    @ViewModelScoped
+    abstract fun provideInventorySellRepository(inventorySellRepository: InventorySellRepositoryImpl): InventorySellRepository
 }

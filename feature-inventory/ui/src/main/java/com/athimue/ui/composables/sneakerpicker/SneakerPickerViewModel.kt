@@ -3,6 +3,7 @@ package com.athimue.ui.composables.sneakerpicker
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.athimue.domain.usecases.SearchSneakerUseCase
+import com.athimue.domain.usecases.SearchSneakerUseCaseImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
