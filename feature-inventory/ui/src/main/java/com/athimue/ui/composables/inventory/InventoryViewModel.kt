@@ -1,15 +1,9 @@
 package com.athimue.ui.composables.inventory
 
-import android.util.Log
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.athimue.domain.models.InventoryItem
-import com.athimue.domain.usecases.AddInventoryUseCase
-import com.athimue.domain.usecases.DeleteInventoryUseCase
-import com.athimue.domain.usecases.GetInventoryUseCase
+import com.athimue.domain.usecases.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -19,6 +13,7 @@ import javax.inject.Inject
 class InventoryViewModel @Inject constructor(
     private val getInventoryUseCase: GetInventoryUseCase,
     private val addInventoryUseCase: AddInventoryUseCase,
+    private val addSellUseCase: AddSellUseCase,
     private val deleteInventoryUseCase: DeleteInventoryUseCase
 ) : ViewModel() {
 
@@ -59,6 +54,12 @@ class InventoryViewModel @Inject constructor(
     fun deleteInventoryItem(inventoryItemId: Long) {
         viewModelScope.launch {
             deleteInventoryUseCase.invoke(inventoryItemId)
+        }
+    }
+
+    fun addSell(inventoryItemId: Long, sellPrice: String, sellDate: String, sellPlace: String) {
+        viewModelScope.launch {
+            addSellUseCase.invoke(inventoryItemId, sellPrice, sellDate, sellPlace)
         }
     }
 }
