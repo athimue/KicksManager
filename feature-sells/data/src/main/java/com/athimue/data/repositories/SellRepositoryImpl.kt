@@ -13,7 +13,7 @@ class SellRepositoryImpl @Inject constructor(
 ) : SellRepository {
 
     override suspend fun deleteSell(sellId: Long) {
-        TODO("Not yet implemented")
+        sellDao.delete(sellId)
     }
 
     override fun getSells(): Flow<List<Sell>> =
