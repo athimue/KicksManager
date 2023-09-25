@@ -3,6 +3,7 @@ package com.athimue.domain.usecases
 import com.athimue.domain.models.InventorySell
 import com.athimue.domain.repositories.InventoryRepository
 import com.athimue.domain.repositories.InventorySellRepository
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class AddSellUseCaseImpl @Inject constructor(
@@ -16,7 +17,7 @@ class AddSellUseCaseImpl @Inject constructor(
         sellDate: String,
         sellPlace: String
     ) {
-        inventoryRepository.getInventory(inventoryItemId).collect {
+        inventoryRepository.getInventory(inventoryItemId).first().let {
             inventorySellRepository.addSell(
                 InventorySell(
                     id = 0,
@@ -30,6 +31,7 @@ class AddSellUseCaseImpl @Inject constructor(
                     sellDate = sellDate,
                 )
             )
+            inventoryRepository.deleteInventory(inventoryItemId)
         }
     }
 }
