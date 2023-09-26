@@ -14,11 +14,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.athimue.domain.models.Sell
+import com.athimue.ui.composables.sells.SellUiModel
 
 @Composable
 fun SellSummary(
-    sells: List<Sell>
+    sells: List<SellUiModel>
 ) {
     Row(
         modifier = Modifier

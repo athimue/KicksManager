@@ -20,7 +20,7 @@ class SellViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             getSellsUseCase.invoke().collect {
-                uiState.value = uiState.value.copy(sells = it)
+                uiState.value = uiState.value.copy(sells = it.map { it.toSellUiModel() })
             }
         }
     }

@@ -62,7 +62,7 @@ fun SellsComposable(
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 private fun LazyItemScope.SellItem(
-    sell: Sell, onEndToStartSwipe: (Long) -> Unit
+    sell: SellUiModel, onEndToStartSwipe: (Long) -> Unit
 ) {
     val currentItem by rememberUpdatedState(sell)
     val dismissState = rememberDismissState(confirmValueChange = {
@@ -90,7 +90,7 @@ private fun LazyItemScope.SellItem(
 
 @Composable
 private fun SellItemCard(
-    sell: Sell
+    sell: SellUiModel
 ) {
     Row(
         modifier = Modifier
