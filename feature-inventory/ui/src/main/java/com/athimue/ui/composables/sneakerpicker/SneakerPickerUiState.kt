@@ -1,7 +1,7 @@
 package com.athimue.ui.composables.sneakerpicker
 
-import com.athimue.domain.models.Sneaker
+import com.athimue.ui.composables.uimodels.SneakerUiModel
 
 data class SneakerPickerUiState(
-    var sneakers: List<Sneaker> = listOf()
+    var sneakers: List<SneakerUiModel> = listOf()
 )

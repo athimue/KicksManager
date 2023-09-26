@@ -9,10 +9,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.athimue.domain.models.InventoryItem
+import com.athimue.ui.composables.uimodels.InventoryUiModel
 
 @Composable
 fun SummaryHeader(
-    inventory: List<InventoryItem>
+    inventory: List<InventoryUiModel>
 ) {
     Divider()
     Row(modifier = Modifier.padding(top = 10.dp, bottom = 10.dp)) {

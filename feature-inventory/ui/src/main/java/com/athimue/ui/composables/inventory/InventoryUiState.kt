@@ -1,9 +1,7 @@
 package com.athimue.ui.composables.inventory
 
-import com.athimue.domain.models.InventoryItem
-import com.athimue.domain.models.Sneaker
+import com.athimue.ui.composables.uimodels.InventoryUiModel
 
 data class InventoryUiState(
-    var inventory: List<InventoryItem> = listOf(),
-    var sneakerResult: List<Sneaker> = listOf()
+    var inventory: List<InventoryUiModel> = listOf()
 )

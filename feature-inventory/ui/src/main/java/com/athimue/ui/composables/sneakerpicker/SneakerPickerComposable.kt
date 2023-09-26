@@ -29,7 +29,6 @@ fun SneakerPicker(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var query by remember { mutableStateOf("") }
-
     viewModel.searchSneaker()
 
     if (isDialogDisplayed) {

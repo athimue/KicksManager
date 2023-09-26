@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.athimue.domain.usecases.SearchSneakerUseCase
 import com.athimue.domain.usecases.SearchSneakerUseCaseImpl
+import com.athimue.ui.composables.uimodels.toSneakerUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -25,8 +26,8 @@ class SneakerPickerViewModel @Inject constructor(
         searchJob = viewModelScope.launch {
             delay(500)
             val response = searchSneakerUseCase.invoke(query)
-            uiState.value =
-                uiState.value.copy(sneakers = response.getOrElse { listOf() })
+            uiState.value = uiState.value.copy(sneakers = response.getOrElse { listOf() }
+                .map { it.toSneakerUiModel() })
         }
     }
 }

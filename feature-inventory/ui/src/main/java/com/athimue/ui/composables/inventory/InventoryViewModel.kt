@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.athimue.domain.models.InventoryItem
 import com.athimue.domain.usecases.*
+import com.athimue.ui.composables.uimodels.toInventoryUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -22,7 +23,7 @@ class InventoryViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             getInventoryUseCase.invoke().collect {
-                uiState.value = uiState.value.copy(inventory = it)
+                uiState.value = uiState.value.copy(inventory = it.map { it.toInventoryUiModel() })
             }
         }
     }
