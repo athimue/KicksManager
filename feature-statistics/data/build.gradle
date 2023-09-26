@@ -33,6 +33,7 @@ android {
 
 dependencies {
     implementation project(':feature-statistics:domain')
+    implementation project(':core-data')
 
     implementation "androidx.core:core-ktx:$core_ktx_version"
 
