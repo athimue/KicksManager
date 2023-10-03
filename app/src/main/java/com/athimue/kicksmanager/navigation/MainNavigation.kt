@@ -12,6 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import com.athimue.ui.composables.inventory.InventoryComposable
 import com.athimue.ui.StatisticsComposable
 import com.athimue.ui.composables.sells.SellsComposable
+import com.athimue.ui.navigation.StatisticsNavigation
 
 sealed class Screen(val route: String) {
     object Inventory : Screen("inventory")
@@ -22,7 +23,6 @@ sealed class Screen(val route: String) {
 @Composable
 fun MainNavigation() {
     val navController = rememberNavController()
-
     Scaffold(
         modifier = Modifier,
         bottomBar = {
@@ -46,7 +46,7 @@ fun MainNavigation() {
                 SellsComposable()
             }
             composable(Screen.Statistics.route) {
-                StatisticsComposable()
+                StatisticsNavigation()
             }
         }
     }
