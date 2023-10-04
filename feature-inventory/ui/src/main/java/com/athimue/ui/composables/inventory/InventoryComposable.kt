@@ -46,7 +46,11 @@ fun InventoryComposable(
             }
         }, floatingActionButtonPosition = FabPosition.End
     ) {
-        Column(Modifier.fillMaxSize()) {
+        Column(
+            Modifier
+                .fillMaxSize()
+                .padding(it)
+        ) {
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -60,12 +64,10 @@ fun InventoryComposable(
             SummaryHeader(inventory = uiState.inventory)
             if (uiState.inventory.isNotEmpty()) LazyColumn {
                 items(items = uiState.inventory, key = { item -> item.id }) { item ->
-                    InventoryItem(inventoryItem = item,
-                        onStartToEndSwipe = {
-                            currentItemId = it
-                            showSellFormModal = true
-                        },
-                        onEndToStartSwipe = { viewModel.deleteInventoryItem(it) })
+                    InventoryItem(inventoryItem = item, onStartToEndSwipe = {
+                        currentItemId = it
+                        showSellFormModal = true
+                    }, onEndToStartSwipe = { viewModel.deleteInventoryItem(it) })
                     Divider()
                 }
             }
@@ -87,16 +89,14 @@ fun InventoryComposable(
                         name, picture, size, price, date, place
                     )
                 })
-            SellFormModal(
-                isDialogDisplayed = showSellFormModal,
+            SellFormModal(isDialogDisplayed = showSellFormModal,
                 onCloseBtnClick = { showSellFormModal = false },
                 onActionBtnClick = { sellPrice, sellDate, sellPlace ->
                     viewModel.addSell(
                         currentItemId, sellPrice, sellDate, sellPlace
                     )
                     showSellFormModal = false
-                }
-            )
+                })
         }
     }
 }
@@ -115,10 +115,12 @@ private fun LazyItemScope.InventoryItem(
                 onEndToStartSwipe(currentItem.id)
                 false
             }
+
             DismissValue.DismissedToEnd -> {
                 onStartToEndSwipe(currentItem.id)
                 false
             }
+
             else -> false
         }
     }, positionalThreshold = { 0.35f })

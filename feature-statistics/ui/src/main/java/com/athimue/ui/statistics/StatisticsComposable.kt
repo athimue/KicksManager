@@ -1,4 +1,4 @@
-package com.athimue.ui
+package com.athimue.ui.statistics
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -26,8 +26,8 @@ fun StatisticsComposable(
         Row(
             modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            KeyFigureCard("?", "SHOES", 0xFFdf2098)
-            KeyFigureCard(uiState.sells.toString(), "SELLS", 0xFF149414)
+            KeyFigureCard("?", "INVENTORY SHOES", 0xFFdf2098)
+            KeyFigureCard(uiState.sells.toString(), "SELLS", 0xFFdf2098)
         }
         KeyFigureTitle(title = "PROFITS")
         Row(

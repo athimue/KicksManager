@@ -6,8 +6,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.athimue.ui.StatisticsComposable
 import com.athimue.ui.sellplace.SellPlaceStatisticsComposable
+import com.athimue.ui.statistics.StatisticsComposable
 
 sealed class StatisticsScreen(val route: String) {
     object Home : StatisticsScreen("home")
