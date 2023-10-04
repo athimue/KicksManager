@@ -1,4 +1,4 @@
-package com.athimue.ui
+package com.athimue.ui.statistics
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.athimue.ui.common.KeyFigureCard
 import com.athimue.ui.common.KeyFigureTitle
+import com.athimue.ui.statistics.StatisticsViewModel
 
 @Composable
 fun StatisticsComposable(
