@@ -1,25 +1,25 @@
 buildscript {
     ext {
-        minSdk = 33
-        compileSdk = 33
-        targetSdk = 33
+        minSdk = 34
+        compileSdk = 34
+        targetSdk = 34
 
-        activity_compose_version = '1.7.2'
+        activity_compose_version = '1.8.0'
         androix_appcompat = "1.6.1"
         androix_lifecycle = "2.3.1"
-        compose_compiler = '1.4.3'
-        compose_material = '1.4.3'
-        compose_version = '1.4.3'
-        core_ktx_version = "1.10.1"
-        hilt_version = "2.45"
-        kotlin_version = "1.8.10"
-        lifecycle_version = "2.3.1"
-        material3_version = "1.1.1"
-        nav_compose_version = "1.0.0"
-        nav_version = "2.6.0"
+        compose_compiler = '1.5.4'
+        compose_material = '1.5.4'
+        compose_version = '1.5.4'
+        core_ktx_version = "1.12.0"
+        hilt_version = "2.48"
+        kotlin_version = "1.9.20"
+        lifecycle_version = "2.6.2"
+        material3_version = "1.1.2"
+        nav_compose_version = "1.1.0"
+        nav_version = "2.7.5"
         okhttp3 = "5.0.0-alpha.1"
         retrofit2 = "2.9.0"
-        room_version = "2.5.2"
+        room_version = "2.6.0"
 
         // Coil
         coil_compose = "2.4.0"
@@ -38,10 +38,11 @@ buildscript {
 }
 
 plugins {
-    id 'com.android.application' version '7.4.2' apply false
-    id 'com.android.library' version '7.4.2' apply false
-    id 'org.jetbrains.kotlin.android' version '1.8.10' apply false
-    id 'org.jetbrains.kotlin.jvm' version '1.8.10' apply false
-    id 'com.google.dagger.hilt.android' version '2.45' apply false
+    id 'com.android.application' version '8.1.2' apply false
+    id 'com.android.library' version '8.1.2' apply false
+    id 'org.jetbrains.kotlin.android' version '1.9.20' apply false
+    id 'org.jetbrains.kotlin.jvm' version '1.9.20' apply false
+    id 'com.google.dagger.hilt.android' version '2.48' apply false
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.8.0' apply false
+    id 'com.google.devtools.ksp' version '1.9.20-1.0.14' apply false
 }
