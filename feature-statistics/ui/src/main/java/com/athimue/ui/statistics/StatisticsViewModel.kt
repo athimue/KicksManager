@@ -18,8 +18,8 @@ class StatisticsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            withContext(Dispatchers.Main) {
-                getSellsUseCase.invoke().collect {
+            getSellsUseCase.invoke().collect {
+                withContext(Dispatchers.Main) {
                     uiState.value = uiState.value.copy(
                         shoes = 15,
                         sells = it.size,

@@ -18,8 +18,8 @@ class SellPlaceViewModel @Inject constructor(
 
     fun loadSells(filter: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            withContext(Dispatchers.Main) {
-                getSpecificSellsUseCase.invoke(filter).collect {
+            getSpecificSellsUseCase.invoke(filter).collect {
+                withContext(Dispatchers.Main) {
                     uiState.value =
                         uiState.value.copy(sells = it.map { sell -> sell.toSellPlaceUiModel() })
                 }
