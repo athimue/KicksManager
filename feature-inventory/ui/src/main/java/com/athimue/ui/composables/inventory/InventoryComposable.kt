@@ -63,11 +63,18 @@ fun InventoryComposable(
             )
             SummaryHeader(inventory = uiState.inventory)
             if (uiState.inventory.isNotEmpty()) LazyColumn {
-                items(items = uiState.inventory, key = { item -> item.id }) { item ->
-                    InventoryItem(inventoryItem = item, onStartToEndSwipe = {
-                        currentItemId = it
-                        showSellFormModal = true
-                    }, onEndToStartSwipe = { viewModel.deleteInventoryItem(it) })
+                items(
+                    items = uiState.inventory,
+                    key = { item -> item.id }) { item ->
+                    InventoryItem(
+                        inventoryItem = item,
+                        onStartToEndSwipe = { itemId ->
+                            currentItemId = itemId
+                            showSellFormModal = true
+                        },
+                        onEndToStartSwipe = { itemId -> viewModel.deleteInventoryItem(itemId) },
+                        onItemClick = { itemId -> showSellFormModal(itemId) }
+                    )
                     Divider()
                 }
             }
@@ -81,15 +88,22 @@ fun InventoryComposable(
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 20.sp
             )
-            InventoryFormModal(formModalState = formModalState,
+            InventoryFormModal(
+                formModalState = formModalState,
                 showFormModal = showFormModal,
                 closeModal = { showFormModal = false },
-                addInventory = { name, picture, size, price, date, place ->
+                addInventory = { inventoryFormModalUiModel ->
                     viewModel.addInventoryItem(
-                        name, picture, size, price, date, place
+                        inventoryFormModalUiModel.name,
+                        inventoryFormModalUiModel.picture,
+                        inventoryFormModalUiModel.size,
+                        inventoryFormModalUiModel.buyPrice,
+                        inventoryFormModalUiModel.buyDate,
+                        inventoryFormModalUiModel.buyPlace,
                     )
                 })
-            SellFormModal(isDialogDisplayed = showSellFormModal,
+            SellFormModal(
+                isDialogDisplayed = showSellFormModal,
                 onCloseBtnClick = { showSellFormModal = false },
                 onActionBtnClick = { sellPrice, sellDate, sellPlace ->
                     viewModel.addSell(
@@ -106,24 +120,27 @@ fun InventoryComposable(
 private fun LazyItemScope.InventoryItem(
     inventoryItem: InventoryUiModel,
     onStartToEndSwipe: (Long) -> Unit,
-    onEndToStartSwipe: (Long) -> Unit
+    onEndToStartSwipe: (Long) -> Unit,
+    onItemClick: (Long) -> Unit
 ) {
     val currentItem by rememberUpdatedState(inventoryItem)
-    val dismissState = rememberDismissState(confirmValueChange = {
-        when (it) {
-            DismissValue.DismissedToStart -> {
-                onEndToStartSwipe(currentItem.id)
-                false
-            }
+    val dismissState = rememberDismissState(
+        confirmValueChange = {
+            when (it) {
+                DismissValue.DismissedToStart -> {
+                    onEndToStartSwipe(currentItem.id)
+                    false
+                }
 
-            DismissValue.DismissedToEnd -> {
-                onStartToEndSwipe(currentItem.id)
-                false
-            }
+                DismissValue.DismissedToEnd -> {
+                    onStartToEndSwipe(currentItem.id)
+                    false
+                }
 
-            else -> false
-        }
-    }, positionalThreshold = { 0.35f })
+                else -> false
+            }
+        },
+        positionalThreshold = { 0.35f })
     SwipeToDismiss(state = dismissState,
         modifier = Modifier
             .padding(vertical = 1.dp)
@@ -132,18 +149,23 @@ private fun LazyItemScope.InventoryItem(
             DismissBackground(dismissState)
         },
         dismissContent = {
-            InventoryItemCard(inventoryItem)
+            InventoryItemCard(
+                inventoryItem = inventoryItem,
+                onClick = onItemClick
+            )
         })
 }
 
 @Composable
 private fun InventoryItemCard(
-    inventoryItem: InventoryUiModel
+    inventoryItem: InventoryUiModel,
+    onClick: (Long) -> Unit
 ) {
     Row(
         modifier = Modifier
             .clip(MaterialTheme.shapes.medium)
-            .background(Color.White),
+            .background(Color.White)
+            .clickable { onClick(inventoryItem.id) },
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
@@ -191,13 +213,18 @@ fun DismissBackground(dismissState: DismissState) {
         if (direction == DismissDirection.StartToEnd) Icon(
             imageVector = Icons.Default.CheckCircle,
             contentDescription = "sell",
-            modifier = Modifier.padding(start = 8.dp)
+            modifier = Modifier.padding(start = 16.dp)
         )
         Spacer(modifier = Modifier.weight(1f))
         if (direction == DismissDirection.EndToStart) Icon(
             imageVector = Icons.Default.Delete,
             contentDescription = "delete",
-            modifier = Modifier.padding(end = 8.dp)
+            modifier = Modifier.padding(end = 16.dp)
         )
     }
+}
+
+private fun showSellFormModal(
+    itemId: Long
+) {
 }
