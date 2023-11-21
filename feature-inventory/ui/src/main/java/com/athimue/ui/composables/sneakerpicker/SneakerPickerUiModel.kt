@@ -1,4 +1,4 @@
-package com.athimue.ui.composables.uimodels
+package com.athimue.ui.composables.sneakerpicker
 
 import com.athimue.domain.models.Sneaker
 
