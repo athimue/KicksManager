@@ -22,7 +22,6 @@ import com.athimue.ui.composables.inventoryform.InputField
 
 @Composable
 fun SellFormModal(
-    isDialogDisplayed: Boolean,
     onCloseBtnClick: () -> Unit,
     onActionBtnClick: (String, String, String) -> Unit,
 ) {
@@ -31,52 +30,50 @@ fun SellFormModal(
     var sellPlace by rememberSaveable { mutableStateOf("") }
     var showDatePicker by remember { mutableStateOf(false) }
 
-    if (isDialogDisplayed) {
-        Dialog(
-            properties = DialogProperties(usePlatformDefaultWidth = false),
-            onDismissRequest = onCloseBtnClick
+    Dialog(
+        properties = DialogProperties(usePlatformDefaultWidth = false),
+        onDismissRequest = onCloseBtnClick
+    ) {
+        Column(
+            modifier = Modifier
+                .background(Color.White)
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.Center
         ) {
-            Column(
-                modifier = Modifier
-                    .background(Color.White)
-                    .fillMaxSize()
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.Center
+            ModalHeader(
+                title = "Item sold",
+                onCloseBtnClick = onCloseBtnClick
+            )
+            InputField(
+                title = "Sell price",
+                value = sellPrice,
+                onValueChange = { sellPrice = it },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Decimal
+                )
+            )
+            PickerInputField(
+                title = "Sell date",
+                value = sellDate,
+                onClick = { showDatePicker = true })
+            DropDownField(
+                title = "Sell place",
+                itemSelected = sellPlace,
+                onItemSelected = { sellPlace = it },
+                choices = listOf("Vinted", "WeTheNew", "GOAT", "Face2Face")
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            Button(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                onClick = { onActionBtnClick(sellPrice, sellDate, sellPlace) }
             ) {
-                ModalHeader(
-                    title = "Item sold",
-                    onCloseBtnClick = onCloseBtnClick
-                )
-                InputField(
-                    title = "Sell price",
-                    value = sellPrice,
-                    onValueChange = { sellPrice = it },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Decimal
-                    )
-                )
-                PickerInputField(
-                    title = "Sell date",
-                    value = sellDate,
-                    onClick = { showDatePicker = true })
-                DropDownField(
-                    title = "Sell place",
-                    itemSelected = sellPlace,
-                    onItemSelected = { sellPlace = it },
-                    choices = listOf("Vinted", "WeTheNew", "GOAT", "Face2Face")
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                Button(
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                    onClick = { onActionBtnClick(sellPrice, sellDate, sellPlace) }
-                ) {
-                    Text(text = "Add the sell")
-                }
-                DatePicker(
-                    isDialogDisplayed = showDatePicker,
-                    closeDialog = { showDatePicker = false },
-                    onDateSelected = { sellDate = it })
+                Text(text = "Add the sell")
             }
+            DatePicker(
+                isDialogDisplayed = showDatePicker,
+                closeDialog = { showDatePicker = false },
+                onDateSelected = { sellDate = it })
         }
     }
 }
