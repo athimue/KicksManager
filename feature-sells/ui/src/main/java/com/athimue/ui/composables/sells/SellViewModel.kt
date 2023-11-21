@@ -7,26 +7,25 @@ import com.athimue.domain.usecases.GetSellsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class SellViewModel @Inject constructor(
-    private val getSellsUseCase: GetSellsUseCase, private val deleteSellUseCase: DeleteSellUseCase
+    getSellsUseCase: GetSellsUseCase, private val deleteSellUseCase: DeleteSellUseCase
 ) : ViewModel() {
 
-    var uiState = MutableStateFlow(SellUiState())
-
-    init {
-        viewModelScope.launch(Dispatchers.IO) {
-            getSellsUseCase.invoke().collect {
-                withContext(Dispatchers.Main) {
-                    uiState.value = uiState.value.copy(sells = it.map { it.toSellUiModel() })
-                }
-            }
-        }
-    }
+    var uiState = getSellsUseCase.invoke()
+        .map { SellUiState(sells = it.map { it.toSellUiModel() }) }
+        .stateIn(
+            scope = viewModelScope,
+            initialValue = SellUiState(),
+            started = SharingStarted.WhileSubscribed(5000)
+        )
 
     fun deleteSell(sellId: Long) {
         viewModelScope.launch(Dispatchers.IO) {

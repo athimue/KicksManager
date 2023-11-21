@@ -9,7 +9,7 @@ class GetSellsUseCaseImpl @Inject constructor(
     private val sellRepository: SellRepository
 ) : GetSellsUseCase {
 
-    override suspend fun invoke(): Flow<List<Sell>> =
+    override fun invoke(): Flow<List<Sell>> =
         sellRepository.getSells()
 
 }
