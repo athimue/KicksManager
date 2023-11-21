@@ -28,23 +28,30 @@ import com.athimue.ui.composables.sellform.SellFormModal
 import com.athimue.ui.composables.uimodels.InventoryUiModel
 import java.util.*
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InventoryComposable(
     viewModel: InventoryViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    var showFormModal by remember { mutableStateOf(false) }
-    val formModalState = rememberModalBottomSheetState(showFormModal)
+    var showInventoryFormModal by remember { mutableStateOf(false) }
     var showSellFormModal by remember { mutableStateOf(false) }
-    var currentItemId by remember { mutableStateOf(0L) }
+    var selectedSneakerId by remember { mutableLongStateOf(0L) }
 
     Scaffold(
-        modifier = Modifier, floatingActionButton = {
-            FloatingActionButton(onClick = { showFormModal = true }) {
-                Icon(imageVector = Icons.Rounded.Add, contentDescription = "")
+        modifier = Modifier,
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    viewModel.resetSelectedInventory()
+                    showInventoryFormModal = true
+                }) {
+                Icon(
+                    imageVector = Icons.Rounded.Add,
+                    contentDescription = ""
+                )
             }
-        }, floatingActionButtonPosition = FabPosition.End
+        },
+        floatingActionButtonPosition = FabPosition.End
     ) {
         Column(
             Modifier
@@ -69,11 +76,14 @@ fun InventoryComposable(
                     InventoryItem(
                         inventoryItem = item,
                         onStartToEndSwipe = { itemId ->
-                            currentItemId = itemId
+                            selectedSneakerId = itemId
                             showSellFormModal = true
                         },
                         onEndToStartSwipe = { itemId -> viewModel.deleteInventoryItem(itemId) },
-                        onItemClick = { itemId -> showSellFormModal(itemId) }
+                        onItemClick = { itemId ->
+                            viewModel.loadInventoryItem(itemId)
+                            showInventoryFormModal = true
+                        }
                     )
                     Divider()
                 }
@@ -88,29 +98,33 @@ fun InventoryComposable(
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 20.sp
             )
-            InventoryFormModal(
-                formModalState = formModalState,
-                showFormModal = showFormModal,
-                closeModal = { showFormModal = false },
-                addInventory = { inventoryFormModalUiModel ->
-                    viewModel.addInventoryItem(
-                        inventoryFormModalUiModel.name,
-                        inventoryFormModalUiModel.picture,
-                        inventoryFormModalUiModel.size,
-                        inventoryFormModalUiModel.buyPrice,
-                        inventoryFormModalUiModel.buyDate,
-                        inventoryFormModalUiModel.buyPlace,
-                    )
-                })
-            SellFormModal(
-                isDialogDisplayed = showSellFormModal,
-                onCloseBtnClick = { showSellFormModal = false },
-                onActionBtnClick = { sellPrice, sellDate, sellPlace ->
-                    viewModel.addSell(
-                        currentItemId, sellPrice, sellDate, sellPlace
-                    )
-                    showSellFormModal = false
-                })
+
+            if (showInventoryFormModal) {
+                InventoryFormModal(
+                    loadedInventoryFormModalUiModel = uiState.inventorySelected,
+                    closeModal = { showInventoryFormModal = false },
+                    addInventory = { inventoryFormModalUiModel ->
+                        viewModel.addOrUpdateInventoryItem(
+                            inventoryFormModalUiModel.id,
+                            inventoryFormModalUiModel.name,
+                            inventoryFormModalUiModel.picture,
+                            inventoryFormModalUiModel.size,
+                            inventoryFormModalUiModel.buyPrice,
+                            inventoryFormModalUiModel.buyDate,
+                            inventoryFormModalUiModel.buyPlace,
+                        )
+                    })
+            }
+            if (showSellFormModal) {
+                SellFormModal(
+                    onCloseBtnClick = { showSellFormModal = false },
+                    onActionBtnClick = { sellPrice, sellDate, sellPlace ->
+                        viewModel.addSell(
+                            selectedSneakerId, sellPrice, sellDate, sellPlace
+                        )
+                        showSellFormModal = false
+                    })
+            }
         }
     }
 }
@@ -222,9 +236,4 @@ fun DismissBackground(dismissState: DismissState) {
             modifier = Modifier.padding(end = 16.dp)
         )
     }
-}
-
-private fun showSellFormModal(
-    itemId: Long
-) {
 }

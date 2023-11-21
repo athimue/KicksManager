@@ -3,19 +3,27 @@ package com.athimue.ui.composables.inventory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.athimue.domain.models.InventoryItem
-import com.athimue.domain.usecases.*
+import com.athimue.domain.usecases.AddOrUpdateInventoryUseCase
+import com.athimue.domain.usecases.AddSellUseCase
+import com.athimue.domain.usecases.DeleteInventoryUseCase
+import com.athimue.domain.usecases.GetInventoryItemUseCase
+import com.athimue.domain.usecases.GetInventoryUseCase
+import com.athimue.ui.composables.inventoryform.InventoryFormModalUiModel
+import com.athimue.ui.composables.uimodels.toInventoryFormModalUiModel
 import com.athimue.ui.composables.uimodels.toInventoryUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class InventoryViewModel @Inject constructor(
+    private val getInventoryItemUseCase: GetInventoryItemUseCase,
     private val getInventoryUseCase: GetInventoryUseCase,
-    private val addInventoryUseCase: AddInventoryUseCase,
+    private val addOrUpdateInventoryUseCase: AddOrUpdateInventoryUseCase,
     private val addSellUseCase: AddSellUseCase,
     private val deleteInventoryUseCase: DeleteInventoryUseCase
 ) : ViewModel() {
@@ -33,7 +41,8 @@ class InventoryViewModel @Inject constructor(
         }
     }
 
-    fun addInventoryItem(
+    fun addOrUpdateInventoryItem(
+        id: Long?,
         name: String,
         picture: String,
         size: String,
@@ -42,9 +51,9 @@ class InventoryViewModel @Inject constructor(
         buyPlace: String
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            addInventoryUseCase.invoke(
+            addOrUpdateInventoryUseCase.invoke(
                 InventoryItem(
-                    id = -1,
+                    id = id ?: 0,
                     name = name,
                     picture = picture,
                     size = size,
@@ -67,5 +76,21 @@ class InventoryViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             addSellUseCase.invoke(inventoryItemId, sellPrice, sellDate, sellPlace)
         }
+    }
+
+    fun loadInventoryItem(itemId: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            getInventoryItemUseCase.invoke(itemId).first().let {
+                withContext(Dispatchers.Main) {
+                    uiState.value =
+                        uiState.value.copy(inventorySelected = it.toInventoryFormModalUiModel())
+                }
+            }
+        }
+    }
+
+    fun resetSelectedInventory() {
+        uiState.value =
+            uiState.value.copy(inventorySelected = InventoryFormModalUiModel())
     }
 }

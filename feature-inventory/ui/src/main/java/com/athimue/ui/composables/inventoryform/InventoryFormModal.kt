@@ -23,12 +23,12 @@ import java.util.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InventoryFormModal(
-    inventoryFormModalUiModel: InventoryFormModalUiModel?,
+    loadedInventoryFormModalUiModel: InventoryFormModalUiModel,
     closeModal: () -> Unit,
     addInventory: (InventoryFormModalUiModel) -> Unit
 ) {
     val inventoryFormModalState = rememberModalBottomSheetState(true)
-    var inventoryFormModalUiModel by remember { mutableStateOf(InventoryFormModalUiModel()) }
+    var inventoryFormModalUiModel by remember { mutableStateOf(loadedInventoryFormModalUiModel) }
 
     val sizes = listOf(
         "38", "38.5", "39", "40", "40.5", "41", "42", "42.5", "42 2/3", "43", "44", "44.5", "45"
@@ -53,12 +53,15 @@ fun InventoryFormModal(
                 .padding(16.dp)
                 .verticalScroll(rememberScrollState())
         ) {
-            ModalHeader(title = "Add an item", onCloseBtnClick = {
-                inventoryFormModalUiModel = inventoryFormModalUiModel.copy(
-                    showDatePicker = false, showSneakerPicker = false
-                )
-                closeModal()
-            })
+            ModalHeader(
+                title = if (loadedInventoryFormModalUiModel.name.isNotBlank())
+                    "Update an item" else "Add an item",
+                onCloseBtnClick = {
+                    inventoryFormModalUiModel = inventoryFormModalUiModel.copy(
+                        showDatePicker = false, showSneakerPicker = false
+                    )
+                    closeModal()
+                })
             PickerInputField(title = "Item name",
                 value = inventoryFormModalUiModel.name,
                 onClick = {
