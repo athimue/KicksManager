@@ -8,8 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.athimue.domain.models.InventoryItem
-import com.athimue.ui.composables.uimodels.InventoryUiModel
+import com.athimue.ui.composables.inventory.InventoryUiModel
 
 @Composable
 fun SummaryHeader(

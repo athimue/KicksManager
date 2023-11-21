@@ -13,37 +13,33 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.athimue.ui.composables.common.DatePicker
 import com.athimue.ui.composables.common.DropDownField
 import com.athimue.ui.composables.common.ModalHeader
 import com.athimue.ui.composables.common.PickerInputField
+import com.athimue.ui.composables.inventory.InventoryViewModel
 import com.athimue.ui.composables.sneakerpicker.SneakerPicker
+import com.athimue.ui.constants.ShoeSize
+import com.athimue.ui.constants.Shop
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InventoryFormModal(
-    loadedInventoryFormModalUiModel: InventoryFormModalUiModel,
+    viewModel: InventoryFormModalViewModel = hiltViewModel(),
+    selectedSneakerId: Long,
     closeModal: () -> Unit,
     addInventory: (InventoryFormModalUiModel) -> Unit
 ) {
     val inventoryFormModalState = rememberModalBottomSheetState(true)
-    var inventoryFormModalUiModel by remember { mutableStateOf(loadedInventoryFormModalUiModel) }
+    val uiState by viewModel.uiState.collectAsState()
+    viewModel.loadInventoryItem(selectedSneakerId)
 
-    val sizes = listOf(
-        "38", "38.5", "39", "40", "40.5", "41", "42", "42.5", "42 2/3", "43", "44", "44.5", "45"
-    )
-    val shops = listOf(
-        "ADIDAS / CONFIRMED", "BSTN", "BUZZZ", "COURIR", "FOOT DISTRICT", "GLF", "IMPACT", "KITH",
-        "NIKE / SNKRS", "PATTA", "SNIPES", "SOLEBOX", "STARCOW", "SUPREME", "SVD",
-    )
     ModalBottomSheet(
         modifier = Modifier.fillMaxSize(),
         sheetState = inventoryFormModalState,
         onDismissRequest = {
-            inventoryFormModalUiModel = inventoryFormModalUiModel.copy(
-                showDatePicker = false, showSneakerPicker = false
-            )
             closeModal()
         },
     ) {
@@ -53,109 +49,91 @@ fun InventoryFormModal(
                 .padding(16.dp)
                 .verticalScroll(rememberScrollState())
         ) {
-            ModalHeader(
-                title = if (loadedInventoryFormModalUiModel.name.isNotBlank())
-                    "Update an item" else "Add an item",
-                onCloseBtnClick = {
-                    inventoryFormModalUiModel = inventoryFormModalUiModel.copy(
-                        showDatePicker = false, showSneakerPicker = false
-                    )
-                    closeModal()
-                })
-            PickerInputField(title = "Item name",
-                value = inventoryFormModalUiModel.name,
-                onClick = {
-                    inventoryFormModalUiModel = inventoryFormModalUiModel.copy(
-                        showSneakerPicker = true
-                    )
-                })
-            DropDownField(
-                title = "Item size",
-                itemSelected = inventoryFormModalUiModel.size,
-                onItemSelected = {
-                    inventoryFormModalUiModel = inventoryFormModalUiModel.copy(
-                        size = it
-                    )
-                },
-                choices = sizes
-            )
-            InputField(
-                title = "Purchasing price",
-                value = inventoryFormModalUiModel.buyPrice.toString(),
-                onValueChange = {
-                    inventoryFormModalUiModel = inventoryFormModalUiModel.copy(
-                        buyPrice = it.toDouble()
-                    )
-                },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Decimal
+            if (uiState.isLoading) {
+                CircularProgressIndicator()
+            } else {
+                ModalHeader(
+                    title = if (selectedSneakerId.toInt() != 0)
+                        "Update an item" else "Add an item",
+                    onCloseBtnClick = {
+                        viewModel.closePickers()
+                        closeModal()
+                    })
+                PickerInputField(title = "Item name",
+                    value = uiState.name,
+                    onClick = {
+                        viewModel.closePickers()
+                    })
+                DropDownField(
+                    title = "Item size",
+                    itemSelected = uiState.size,
+                    onItemSelected = {
+                        viewModel.setSize(it)
+                    },
+                    choices = ShoeSize.values().map { it.size }
                 )
-            )
-            PickerInputField(title = "Purchasing date",
-                value = inventoryFormModalUiModel.buyDate,
-                onClick = {
-                    inventoryFormModalUiModel = inventoryFormModalUiModel.copy(
-                        showDatePicker = true
+                InputField(
+                    title = "Purchasing price",
+                    value = uiState.buyPrice.toString(),
+                    onValueChange = {
+                        viewModel.setBuyPrice(it)
+                    },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Decimal
                     )
-                })
-            DropDownField(
-                title = "Purchasing place",
-                itemSelected = inventoryFormModalUiModel.buyPlace,
-                onItemSelected = {
-                    inventoryFormModalUiModel = inventoryFormModalUiModel.copy(
-                        buyPlace = it
-                    )
-                },
-                choices = shops
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Button(modifier = Modifier.align(Alignment.CenterHorizontally), onClick = {
-                if (inventoryFormModalUiModel.isCompleted()) {
-                    addInventory(inventoryFormModalUiModel)
-                    inventoryFormModalUiModel = inventoryFormModalUiModel.copy(
-                        name = "",
-                        size = "",
-                        picture = "",
-                        buyPrice = 0.0,
-                        buyDate = "",
-                        buyPlace = ""
-                    )
-                    closeModal()
+                )
+                PickerInputField(title = "Purchasing date",
+                    value = uiState.buyDate,
+                    onClick = {
+                        viewModel.showDatePicker()
+                    })
+                DropDownField(
+                    title = "Purchasing place",
+                    itemSelected = uiState.buyPlace,
+                    onItemSelected = {
+                        viewModel.setBuyPlace(it)
+                    },
+                    choices = Shop.values().map { it.shopName }
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Button(
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    onClick = {
+                        if (uiState.isCompleted()) {
+                            addInventory(uiState)
+                            closeModal()
+                        }
+                    }) {
+                    Text(text = "Add")
                 }
-            }) {
-                Text(text = "Add")
+                DatePicker(
+                    isDialogDisplayed = uiState.showDatePicker,
+                    closeDialog = {
+                        viewModel.closePickers()
+                    },
+                    onDateSelected = {
+
+                    })
+                SneakerPicker(
+                    isDialogDisplayed = uiState.showSneakerPicker,
+                    closeDialog = {
+                        viewModel.closePickers()
+                    },
+                    onSneakerSelected = { nameSelected, pictureSelected ->
+                        viewModel.setNameAndPicture(nameSelected, pictureSelected)
+                        viewModel.closePickers()
+                    })
             }
-            DatePicker(isDialogDisplayed = inventoryFormModalUiModel.showDatePicker,
-                closeDialog = {
-                    inventoryFormModalUiModel = inventoryFormModalUiModel.copy(
-                        showDatePicker = false
-                    )
-                },
-                onDateSelected = {
-                    inventoryFormModalUiModel = inventoryFormModalUiModel.copy(
-                        buyDate = it
-                    )
-                })
-            SneakerPicker(isDialogDisplayed = inventoryFormModalUiModel.showSneakerPicker,
-                closeDialog = {
-                    inventoryFormModalUiModel = inventoryFormModalUiModel.copy(
-                        showSneakerPicker = false
-                    )
-                },
-                onSneakerSelected = { nameSelected, pictureSelected ->
-                    inventoryFormModalUiModel = inventoryFormModalUiModel.copy(
-                        name = nameSelected,
-                        picture = pictureSelected,
-                        showSneakerPicker = false
-                    )
-                })
         }
     }
 }
 
 @Composable
 fun InputField(
-    title: String, value: String, onValueChange: (String) -> Unit, keyboardOptions: KeyboardOptions
+    title: String,
+    value: String,
+    onValueChange: (String) -> Unit,
+    keyboardOptions: KeyboardOptions
 ) {
     Column(
         modifier = Modifier.padding(8.dp)

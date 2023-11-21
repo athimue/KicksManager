@@ -25,7 +25,6 @@ import coil.compose.rememberAsyncImagePainter
 import com.athimue.ui.composables.common.SummaryHeader
 import com.athimue.ui.composables.inventoryform.InventoryFormModal
 import com.athimue.ui.composables.sellform.SellFormModal
-import com.athimue.ui.composables.uimodels.InventoryUiModel
 import java.util.*
 
 @Composable
@@ -38,20 +37,17 @@ fun InventoryComposable(
     var selectedSneakerId by remember { mutableLongStateOf(0L) }
 
     Scaffold(
-        modifier = Modifier,
-        floatingActionButton = {
+        modifier = Modifier, floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    viewModel.resetSelectedInventory()
+                    selectedSneakerId = 0L
                     showInventoryFormModal = true
                 }) {
                 Icon(
-                    imageVector = Icons.Rounded.Add,
-                    contentDescription = ""
+                    imageVector = Icons.Rounded.Add, contentDescription = ""
                 )
             }
-        },
-        floatingActionButtonPosition = FabPosition.End
+        }, floatingActionButtonPosition = FabPosition.End
     ) {
         Column(
             Modifier
@@ -70,21 +66,17 @@ fun InventoryComposable(
             )
             SummaryHeader(inventory = uiState.inventory)
             if (uiState.inventory.isNotEmpty()) LazyColumn {
-                items(
-                    items = uiState.inventory,
-                    key = { item -> item.id }) { item ->
-                    InventoryItem(
-                        inventoryItem = item,
+                items(items = uiState.inventory, key = { item -> item.id }) { item ->
+                    InventoryItem(inventoryItem = item,
                         onStartToEndSwipe = { itemId ->
                             selectedSneakerId = itemId
                             showSellFormModal = true
                         },
                         onEndToStartSwipe = { itemId -> viewModel.deleteInventoryItem(itemId) },
                         onItemClick = { itemId ->
-                            viewModel.loadInventoryItem(itemId)
+                            selectedSneakerId = itemId
                             showInventoryFormModal = true
-                        }
-                    )
+                        })
                     Divider()
                 }
             }
@@ -101,8 +93,11 @@ fun InventoryComposable(
 
             if (showInventoryFormModal) {
                 InventoryFormModal(
-                    loadedInventoryFormModalUiModel = uiState.inventorySelected,
-                    closeModal = { showInventoryFormModal = false },
+                    selectedSneakerId = selectedSneakerId,
+                    closeModal = {
+                        selectedSneakerId = 0
+                        showInventoryFormModal = false
+                    },
                     addInventory = { inventoryFormModalUiModel ->
                         viewModel.addOrUpdateInventoryItem(
                             inventoryFormModalUiModel.id,
@@ -116,8 +111,7 @@ fun InventoryComposable(
                     })
             }
             if (showSellFormModal) {
-                SellFormModal(
-                    onCloseBtnClick = { showSellFormModal = false },
+                SellFormModal(onCloseBtnClick = { showSellFormModal = false },
                     onActionBtnClick = { sellPrice, sellDate, sellPlace ->
                         viewModel.addSell(
                             selectedSneakerId, sellPrice, sellDate, sellPlace
@@ -138,23 +132,21 @@ private fun LazyItemScope.InventoryItem(
     onItemClick: (Long) -> Unit
 ) {
     val currentItem by rememberUpdatedState(inventoryItem)
-    val dismissState = rememberDismissState(
-        confirmValueChange = {
-            when (it) {
-                DismissValue.DismissedToStart -> {
-                    onEndToStartSwipe(currentItem.id)
-                    false
-                }
-
-                DismissValue.DismissedToEnd -> {
-                    onStartToEndSwipe(currentItem.id)
-                    false
-                }
-
-                else -> false
+    val dismissState = rememberDismissState(confirmValueChange = {
+        when (it) {
+            DismissValue.DismissedToStart -> {
+                onEndToStartSwipe(currentItem.id)
+                false
             }
-        },
-        positionalThreshold = { 0.35f })
+
+            DismissValue.DismissedToEnd -> {
+                onStartToEndSwipe(currentItem.id)
+                false
+            }
+
+            else -> false
+        }
+    }, positionalThreshold = { 0.35f })
     SwipeToDismiss(state = dismissState,
         modifier = Modifier
             .padding(vertical = 1.dp)
@@ -164,23 +156,20 @@ private fun LazyItemScope.InventoryItem(
         },
         dismissContent = {
             InventoryItemCard(
-                inventoryItem = inventoryItem,
-                onClick = onItemClick
+                inventoryItem = inventoryItem, onClick = onItemClick
             )
         })
 }
 
 @Composable
 private fun InventoryItemCard(
-    inventoryItem: InventoryUiModel,
-    onClick: (Long) -> Unit
+    inventoryItem: InventoryUiModel, onClick: (Long) -> Unit
 ) {
     Row(
         modifier = Modifier
             .clip(MaterialTheme.shapes.medium)
             .background(Color.White)
-            .clickable { onClick(inventoryItem.id) },
-        verticalAlignment = Alignment.CenterVertically
+            .clickable { onClick(inventoryItem.id) }, verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
             painter = rememberAsyncImagePainter(inventoryItem.picture),

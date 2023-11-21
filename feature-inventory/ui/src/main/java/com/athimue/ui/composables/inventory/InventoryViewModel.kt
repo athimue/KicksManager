@@ -6,40 +6,30 @@ import com.athimue.domain.models.InventoryItem
 import com.athimue.domain.usecases.AddOrUpdateInventoryUseCase
 import com.athimue.domain.usecases.AddSellUseCase
 import com.athimue.domain.usecases.DeleteInventoryUseCase
-import com.athimue.domain.usecases.GetInventoryItemUseCase
 import com.athimue.domain.usecases.GetInventoryUseCase
-import com.athimue.ui.composables.inventoryform.InventoryFormModalUiModel
-import com.athimue.ui.composables.uimodels.toInventoryFormModalUiModel
-import com.athimue.ui.composables.uimodels.toInventoryUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class InventoryViewModel @Inject constructor(
-    private val getInventoryItemUseCase: GetInventoryItemUseCase,
-    private val getInventoryUseCase: GetInventoryUseCase,
+    getInventoryUseCase: GetInventoryUseCase,
     private val addOrUpdateInventoryUseCase: AddOrUpdateInventoryUseCase,
     private val addSellUseCase: AddSellUseCase,
     private val deleteInventoryUseCase: DeleteInventoryUseCase
 ) : ViewModel() {
 
-    var uiState = MutableStateFlow(InventoryUiState())
-
-    init {
-        viewModelScope.launch(Dispatchers.IO) {
-            getInventoryUseCase.invoke().collect {
-                withContext(Dispatchers.Main) {
-                    uiState.value =
-                        uiState.value.copy(inventory = it.map { it.toInventoryUiModel() })
-                }
-            }
-        }
-    }
+    val uiState = getInventoryUseCase.invoke()
+        .map { InventoryUiState(inventory = it.map { inventoryItem -> inventoryItem.toInventoryUiModel() }) }
+        .stateIn(
+            scope = viewModelScope,
+            initialValue = InventoryUiState(),
+            started = WhileSubscribed(5000)
+        )
 
     fun addOrUpdateInventoryItem(
         id: Long?,
@@ -76,21 +66,5 @@ class InventoryViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             addSellUseCase.invoke(inventoryItemId, sellPrice, sellDate, sellPlace)
         }
-    }
-
-    fun loadInventoryItem(itemId: Long) {
-        viewModelScope.launch(Dispatchers.IO) {
-            getInventoryItemUseCase.invoke(itemId).first().let {
-                withContext(Dispatchers.Main) {
-                    uiState.value =
-                        uiState.value.copy(inventorySelected = it.toInventoryFormModalUiModel())
-                }
-            }
-        }
-    }
-
-    fun resetSelectedInventory() {
-        uiState.value =
-            uiState.value.copy(inventorySelected = InventoryFormModalUiModel())
     }
 }
