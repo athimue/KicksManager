@@ -16,9 +16,9 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.athimue.ui.composables.common.DatePicker
 import com.athimue.ui.composables.common.DropDownField
+import com.athimue.ui.composables.common.InputField
 import com.athimue.ui.composables.common.ModalHeader
 import com.athimue.ui.composables.common.PickerInputField
-import com.athimue.ui.composables.inventoryform.InputField
 
 @Composable
 fun SellFormModal(

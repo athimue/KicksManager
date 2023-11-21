@@ -20,13 +20,3 @@ fun InventoryItem.toInventoryUiModel() = InventoryUiModel(
     quantity = quantity,
     buyPrice = buyPrice,
 )
-
-fun InventoryItem.toInventoryFormModalUiModel() = InventoryFormModalUiModel(
-    id = id,
-    name = name,
-    size = size,
-    picture = picture,
-    buyPrice = buyPrice,
-    buyPlace = buyPlace,
-    buyDate = buyDate,
-)

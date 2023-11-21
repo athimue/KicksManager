@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.athimue.ui.composables.common.DatePicker
 import com.athimue.ui.composables.common.DropDownField
+import com.athimue.ui.composables.common.InputField
 import com.athimue.ui.composables.common.ModalHeader
 import com.athimue.ui.composables.common.PickerInputField
 import com.athimue.ui.composables.inventory.InventoryViewModel
@@ -125,29 +126,5 @@ fun InventoryFormModal(
                     })
             }
         }
-    }
-}
-
-@Composable
-fun InputField(
-    title: String,
-    value: String,
-    onValueChange: (String) -> Unit,
-    keyboardOptions: KeyboardOptions
-) {
-    Column(
-        modifier = Modifier.padding(8.dp)
-    ) {
-        Text(
-            text = title, fontWeight = FontWeight.Bold, fontFamily = FontFamily.Monospace
-        )
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = value,
-            onValueChange = { onValueChange(it) },
-            singleLine = true,
-            label = { Text(title) },
-            keyboardOptions = keyboardOptions,
-        )
     }
 }
