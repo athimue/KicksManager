@@ -44,7 +44,8 @@ fun InventoryComposable(
                     showInventoryFormModal = true
                 }) {
                 Icon(
-                    imageVector = Icons.Rounded.Add, contentDescription = ""
+                    imageVector = Icons.Rounded.Add,
+                    contentDescription = ""
                 )
             }
         }, floatingActionButtonPosition = FabPosition.End

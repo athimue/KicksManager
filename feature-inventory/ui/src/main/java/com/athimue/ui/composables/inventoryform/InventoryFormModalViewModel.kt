@@ -4,11 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.athimue.domain.usecases.GetInventoryItemUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -16,87 +15,51 @@ class InventoryFormModalViewModel @Inject constructor(
     private val getInventoryItemUseCase: GetInventoryItemUseCase,
 ) : ViewModel() {
 
-    val uiState = MutableStateFlow(InventoryFormModalUiModel())
+    private val _uiState = MutableStateFlow(InventoryFormModalUiModel())
+    val uiState: StateFlow<InventoryFormModalUiModel> = _uiState
 
     fun loadInventoryItem(itemId: Long) {
-        if (itemId != 0L) {
-            viewModelScope.launch {
-                getInventoryItemUseCase.invoke(itemId).first().let {
-                    withContext(Dispatchers.Main) {
-                        uiState.value = uiState.value.copy(
-                            isLoading = false,
-                            id = it.id,
-                            name = it.name,
-                            size = it.size,
-                            picture = it.picture,
-                            buyPrice = it.buyPrice,
-                            buyPlace = it.buyPlace,
-                            buyDate = it.buyDate,
-                        )
-                    }
+        viewModelScope.launch {
+            if (itemId != 0L) {
+                getInventoryItemUseCase.invoke(itemId).first().let { item ->
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        id = item.id,
+                        name = item.name,
+                        size = item.size,
+                        picture = item.picture,
+                        buyPrice = item.buyPrice,
+                        buyPlace = item.buyPlace,
+                        buyDate = item.buyDate,
+                    )
                 }
+            } else {
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false,
+                    id = null,
+                    name = "",
+                    size = "",
+                    picture = "",
+                    buyPrice = 0.0,
+                    buyPlace = "",
+                    buyDate = "",
+                )
             }
-        } else {
-            uiState.value = uiState.value.copy(
-                isLoading = false,
-                id = null,
-                name = "",
-                size = "",
-                picture = "",
-                buyPrice = 0.0,
-                buyPlace = "",
-                buyDate = "",
-            )
         }
     }
 
-    fun closePickers() {
-        uiState.value = uiState.value.copy(
-            showDatePicker = false,
-            showSneakerPicker = false
-        )
-    }
+    fun closeDatePicker() = updateState { copy(showDatePicker = false) }
+    fun closeSneakerPicker() = updateState { copy(showSneakerPicker = false) }
+    fun showDatePicker() = updateState { copy(showDatePicker = true) }
+    fun showSneakerPicker() = updateState { copy(showSneakerPicker = true) }
+    fun setSize(size: String) = updateState { copy(size = size) }
+    fun setBuyPrice(price: String) = updateState { copy(buyPrice = price.toDouble()) }
+    fun setBuyPlace(buyPlace: String) = updateState { copy(buyPlace = buyPlace) }
+    fun setBuyDate(buyDate: String) = updateState { copy(buyDate = buyDate) }
+    fun setNameAndPicture(name: String, picture: String) =
+        updateState { copy(name = name, picture = picture) }
 
-    fun showSneakerPicker() {
-        uiState.value = uiState.value.copy(
-            showSneakerPicker = true
-        )
-    }
-
-    fun setSize(size: String) {
-        uiState.value = uiState.value.copy(
-            size = size
-        )
-    }
-
-    fun setBuyPrice(price: String) {
-        uiState.value = uiState.value.copy(
-            buyPrice = price.toDouble()
-        )
-    }
-
-    fun showDatePicker() {
-        uiState.value = uiState.value.copy(
-            showSneakerPicker = true
-        )
-    }
-
-    fun setBuyPlace(buyPlace: String) {
-        uiState.value = uiState.value.copy(
-            buyPlace = buyPlace
-        )
-    }
-
-    fun setBuyDate(buyDate: String) {
-        uiState.value = uiState.value.copy(
-            buyDate = buyDate
-        )
-    }
-
-    fun setNameAndPicture(name: String, picture: String) {
-        uiState.value = uiState.value.copy(
-            name = name,
-            picture = picture
-        )
+    private fun updateState(block: InventoryFormModalUiModel.() -> InventoryFormModalUiModel) {
+        _uiState.value = _uiState.value.block()
     }
 }

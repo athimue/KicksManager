@@ -35,7 +35,10 @@ fun InventoryFormModal(
 ) {
     val inventoryFormModalState = rememberModalBottomSheetState(true)
     val uiState by viewModel.uiState.collectAsState()
-    viewModel.loadInventoryItem(selectedSneakerId)
+
+    LaunchedEffect(selectedSneakerId) {
+        viewModel.loadInventoryItem(selectedSneakerId)
+    }
 
     ModalBottomSheet(
         modifier = Modifier.fillMaxSize(),
@@ -57,43 +60,38 @@ fun InventoryFormModal(
                     title = if (selectedSneakerId.toInt() != 0)
                         "Update an item" else "Add an item",
                     onCloseBtnClick = {
-                        viewModel.closePickers()
+                        viewModel.closeDatePicker()
+                        viewModel.closeSneakerPicker()
                         closeModal()
                     })
-                PickerInputField(title = "Item name",
+                PickerInputField(
+                    title = "Item name",
                     value = uiState.name,
-                    onClick = {
-                        viewModel.closePickers()
-                    })
+                    onClick = viewModel::showSneakerPicker
+                )
                 DropDownField(
                     title = "Item size",
                     itemSelected = uiState.size,
-                    onItemSelected = {
-                        viewModel.setSize(it)
-                    },
+                    onItemSelected = viewModel::setSize,
                     choices = ShoeSize.values().map { it.size }
                 )
                 InputField(
                     title = "Purchasing price",
                     value = uiState.buyPrice.toString(),
-                    onValueChange = {
-                        viewModel.setBuyPrice(it)
-                    },
+                    onValueChange = viewModel::setBuyPrice,
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Decimal
                     )
                 )
-                PickerInputField(title = "Purchasing date",
+                PickerInputField(
+                    title = "Purchasing date",
                     value = uiState.buyDate,
-                    onClick = {
-                        viewModel.showDatePicker()
-                    })
+                    onClick = viewModel::showDatePicker
+                )
                 DropDownField(
                     title = "Purchasing place",
                     itemSelected = uiState.buyPlace,
-                    onItemSelected = {
-                        viewModel.setBuyPlace(it)
-                    },
+                    onItemSelected = viewModel::setBuyPlace,
                     choices = Shop.values().map { it.shopName }
                 )
                 Spacer(modifier = Modifier.weight(1f))
@@ -110,20 +108,17 @@ fun InventoryFormModal(
                 DatePicker(
                     isDialogDisplayed = uiState.showDatePicker,
                     closeDialog = {
-                        viewModel.closePickers()
+                        viewModel.closeDatePicker()
                     },
-                    onDateSelected = {
-
-                    })
+                    onDateSelected = viewModel::setBuyDate
+                )
                 SneakerPicker(
                     isDialogDisplayed = uiState.showSneakerPicker,
                     closeDialog = {
-                        viewModel.closePickers()
+                        viewModel.closeSneakerPicker()
                     },
-                    onSneakerSelected = { nameSelected, pictureSelected ->
-                        viewModel.setNameAndPicture(nameSelected, pictureSelected)
-                        viewModel.closePickers()
-                    })
+                    onSneakerSelected = viewModel::setNameAndPicture
+                )
             }
         }
     }
