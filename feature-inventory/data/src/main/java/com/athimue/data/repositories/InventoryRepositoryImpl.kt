@@ -1,5 +1,6 @@
 package com.athimue.data.repositories
 
+import android.util.Log
 import com.athimue.data.database.dao.InventoryDao
 import com.athimue.data.database.entity.InventoryEntity
 import com.athimue.data.database.entity.toInventoryItem
@@ -13,11 +14,12 @@ class InventoryRepositoryImpl @Inject constructor(
     private val inventoryDao: InventoryDao
 ) : InventoryRepository {
 
-    override suspend fun addInventory(
+    override suspend fun addOrUpdateInventory(
         inventoryItem: InventoryItem
     ) {
-        inventoryDao.insert(
+        inventoryDao.insertOrUpdate(
             InventoryEntity(
+                id = inventoryItem.id,
                 name = inventoryItem.name,
                 picture = inventoryItem.picture,
                 size = inventoryItem.size,

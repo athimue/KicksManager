@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 abstract class InventoryDao {
 
-    @Insert(onConflict = OnConflictStrategy.ABORT)
-    abstract suspend fun insert(inventoryEntity: InventoryEntity): Long
+    @Upsert
+    abstract suspend fun insertOrUpdate(inventoryEntity: InventoryEntity): Long
 
     @Query("DELETE FROM inventory WHERE id IS :inventoryEntityId")
     abstract suspend fun delete(inventoryEntityId: Long): Int
