@@ -21,7 +21,7 @@ abstract class InventoryUseCaseModule {
 
     @Binds
     @ViewModelScoped
-    abstract fun bindAddInventoryUseCase(addInventoryUseCase: AddInventoryUseCaseImpl): AddInventoryUseCase
+    abstract fun bindAddInventoryUseCase(addInventoryUseCase: AddOrUpdateOrUpdateInventoryUseCaseImpl): AddOrUpdateInventoryUseCase
 
     @Binds
     @ViewModelScoped
@@ -30,5 +30,10 @@ abstract class InventoryUseCaseModule {
     @Binds
     @ViewModelScoped
     abstract fun bindAddSellUseCase(addSellUseCase: AddSellUseCaseImpl): AddSellUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindGetInventoryItemUseCase(getInventoryItemUseCase: GetInventoryItemUseCaseImpl): GetInventoryItemUseCase
+
 
 }

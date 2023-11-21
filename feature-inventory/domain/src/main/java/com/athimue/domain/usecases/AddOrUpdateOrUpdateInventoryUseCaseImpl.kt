@@ -4,9 +4,9 @@ import com.athimue.domain.models.InventoryItem
 import com.athimue.domain.repositories.InventoryRepository
 import javax.inject.Inject
 
-class AddInventoryUseCaseImpl @Inject constructor(
+class AddOrUpdateOrUpdateInventoryUseCaseImpl @Inject constructor(
     private val inventoryRepository: InventoryRepository
-) : AddInventoryUseCase {
+) : AddOrUpdateInventoryUseCase {
     override suspend fun invoke(inventoryItem: InventoryItem) =
-        inventoryRepository.addInventory(inventoryItem)
+        inventoryRepository.addOrUpdateInventory(inventoryItem)
 }

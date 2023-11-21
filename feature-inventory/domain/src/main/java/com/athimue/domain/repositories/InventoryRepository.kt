@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface InventoryRepository {
 
-    suspend fun addInventory(inventoryItem: InventoryItem)
+    suspend fun addOrUpdateInventory(inventoryItem: InventoryItem)
 
     suspend fun deleteInventory(inventoryItemId: Long)
 
