@@ -1,5 +1,6 @@
 package com.athimue.ui.composables.sells
 
+import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,6 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -37,6 +39,7 @@ fun SellsComposable(
     viewModel: SellViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
     Column {
         Text(
             modifier = Modifier
@@ -52,7 +55,16 @@ fun SellsComposable(
         Divider()
         LazyColumn {
             items(items = uiState.sells, key = { item -> item.id }) { item ->
-                SellItem(sell = item, onEndToStartSwipe = { viewModel.deleteSell(it) })
+                SellItem(
+                    sell = item,
+                    onEndToStartSwipe = {
+                        viewModel.deleteSell(it)
+                        Toast.makeText(
+                            context,
+                            "Sell deleted !",
+                            Toast.LENGTH_SHORT
+                        ).show()}
+                )
                 Divider()
             }
         }
@@ -62,7 +74,8 @@ fun SellsComposable(
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 private fun LazyItemScope.SellItem(
-    sell: SellUiModel, onEndToStartSwipe: (Long) -> Unit
+    sell: SellUiModel,
+    onEndToStartSwipe: (Long) -> Unit
 ) {
     val currentItem by rememberUpdatedState(sell)
     val dismissState = rememberDismissState(confirmValueChange = {
