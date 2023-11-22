@@ -117,7 +117,10 @@ fun InventoryFormModal(
                     closeDialog = {
                         viewModel.closeSneakerPicker()
                     },
-                    onSneakerSelected = viewModel::setNameAndPicture
+                    onSneakerSelected = { name, picture ->
+                        viewModel.setNameAndPicture(name, picture)
+                        viewModel.closeSneakerPicker()
+                    }
                 )
             }
         }

@@ -21,7 +21,7 @@ import com.athimue.ui.composables.common.ModalHeader
 import com.athimue.ui.composables.common.PickerInputField
 
 @Composable
-fun SellFormModal(
+fun SellFormDialog(
     onCloseBtnClick: () -> Unit,
     onActionBtnClick: (String, String, String) -> Unit,
 ) {

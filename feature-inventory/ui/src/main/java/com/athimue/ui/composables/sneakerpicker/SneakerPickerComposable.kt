@@ -38,15 +38,17 @@ fun SneakerPicker(
         ) {
             Column(
                 modifier = Modifier
-                    .background(Color.White)
-                    .padding(16.dp)
+                    .background(Color(0xFFf3edfd))
+                    .padding(10.dp)
             ) {
                 ModalHeader(
                     title = "Sneaker search",
                     onCloseBtnClick = closeDialog
                 )
                 OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 10.dp),
                     value = query,
                     onValueChange = {
                         query = it

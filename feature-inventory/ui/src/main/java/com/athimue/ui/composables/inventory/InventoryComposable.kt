@@ -24,7 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.athimue.ui.composables.common.SummaryHeader
 import com.athimue.ui.composables.inventoryform.InventoryFormModal
-import com.athimue.ui.composables.sellform.SellFormModal
+import com.athimue.ui.composables.sellform.SellFormDialog
 import java.util.*
 
 @Composable
@@ -112,7 +112,8 @@ fun InventoryComposable(
                     })
             }
             if (showSellFormModal) {
-                SellFormModal(onCloseBtnClick = { showSellFormModal = false },
+                SellFormDialog(
+                    onCloseBtnClick = { showSellFormModal = false },
                     onActionBtnClick = { sellPrice, sellDate, sellPlace ->
                         viewModel.addSell(
                             selectedSneakerId, sellPrice, sellDate, sellPlace
