@@ -15,5 +15,6 @@ enum class BuyShop(val shopName: String) {
     SOLEBOX("SOLEBOX"),
     STARCOW("STARCOW"),
     SUPREME("SUPREME"),
-    SVD("SVD")
+    SVD("SVD"),
+    ZALANDO("ZALANDO")
 }
