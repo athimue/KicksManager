@@ -19,6 +19,7 @@ import com.athimue.ui.composables.common.DropDownField
 import com.athimue.ui.composables.common.InputField
 import com.athimue.ui.composables.common.ModalHeader
 import com.athimue.ui.composables.common.PickerInputField
+import com.athimue.ui.constants.SellShop
 
 @Composable
 fun SellFormDialog(
@@ -61,7 +62,7 @@ fun SellFormDialog(
                 title = "Sell place",
                 itemSelected = sellPlace,
                 onItemSelected = { sellPlace = it },
-                choices = listOf("Vinted", "WeTheNew", "GOAT", "Face2Face")
+                choices = SellShop.values().map { it.shopName }
             )
             Spacer(modifier = Modifier.weight(1f))
             Button(
