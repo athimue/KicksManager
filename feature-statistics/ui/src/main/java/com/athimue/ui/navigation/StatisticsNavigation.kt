@@ -6,12 +6,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.athimue.ui.sellplace.SellPlaceStatisticsComposable
-import com.athimue.ui.statistics.StatisticsComposable
+import com.athimue.ui.composable.sellplace.SellPlaceStatisticsComposable
+import com.athimue.ui.composable.statistics.StatisticsComposable
 
 sealed class StatisticsScreen(val route: String) {
-    object Home : StatisticsScreen("home")
-    object SellPlace : StatisticsScreen("sellplace/{place}")
+    data object Home : StatisticsScreen("home")
+    data object SellPlace : StatisticsScreen("sellplace/{place}")
 }
 
 @Composable
@@ -32,7 +32,7 @@ fun StatisticsNavigation() {
         composable(
             route = StatisticsScreen.SellPlace.route, arguments = listOf(navArgument("place") {
                 type = NavType.StringType
-                defaultValue = "wethenew"
+                defaultValue = "WETHENEW"
             })
         ) { sellPlace ->
             SellPlaceStatisticsComposable(sellPlace = sellPlace.arguments?.getString("place") ?: "",

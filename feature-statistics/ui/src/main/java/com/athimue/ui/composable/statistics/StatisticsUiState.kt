@@ -1,4 +1,4 @@
-package com.athimue.ui.statistics
+package com.athimue.ui.composable.statistics
 
 data class StatisticsUiState(
     var shoes: Int = 15,

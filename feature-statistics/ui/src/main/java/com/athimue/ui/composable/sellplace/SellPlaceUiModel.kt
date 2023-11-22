@@ -1,4 +1,4 @@
-package com.athimue.ui.sellplace
+package com.athimue.ui.composable.sellplace
 
 import com.athimue.domain.models.StatisticsSell
 

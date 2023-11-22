@@ -1,4 +1,4 @@
-package com.athimue.ui.common
+package com.athimue.ui.composable.common
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text

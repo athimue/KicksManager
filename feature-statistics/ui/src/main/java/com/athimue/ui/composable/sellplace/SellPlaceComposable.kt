@@ -1,4 +1,4 @@
-package com.athimue.ui.sellplace
+package com.athimue.ui.composable.sellplace
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,11 +20,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
-import com.athimue.ui.common.KeyFigureTitle
+import com.athimue.ui.composable.common.KeyFigureTitle
 
 @Composable
 fun SellPlaceStatisticsComposable(
-    sellPlace: String, onBack: () -> Unit, viewModel: SellPlaceViewModel = hiltViewModel()
+    viewModel: SellPlaceViewModel = hiltViewModel(),
+    sellPlace: String,
+    onBack: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
     viewModel.loadSells(sellPlace)

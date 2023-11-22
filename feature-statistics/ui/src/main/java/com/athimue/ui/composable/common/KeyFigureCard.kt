@@ -1,4 +1,4 @@
-package com.athimue.ui.common
+package com.athimue.ui.composable.common
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -30,15 +30,22 @@ fun KeyFigureCard(
         )
     ) {
         Column(
-            modifier = Modifier.fillMaxHeight(), verticalArrangement = Arrangement.SpaceEvenly
+            modifier = Modifier.fillMaxHeight(),
+            verticalArrangement = Arrangement.SpaceEvenly
         ) {
             Text(
-                text = title, fontSize = 20.sp, fontWeight = FontWeight.ExtraBold,
-                textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(),
+                text = title,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth(),
             )
             Text(
-                text = subTitle, fontSize = 15.sp, fontWeight = FontWeight.ExtraBold,
-                textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(),
+                text = subTitle,
+                fontSize = 15.sp,
+                fontWeight = FontWeight.ExtraBold,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth(),
             )
         }
     }

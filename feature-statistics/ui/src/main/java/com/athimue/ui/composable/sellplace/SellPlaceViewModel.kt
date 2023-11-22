@@ -1,8 +1,8 @@
-package com.athimue.ui.sellplace
+package com.athimue.ui.composable.sellplace
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.athimue.domain.models.usecases.GetSpecificSellsUseCase
+import com.athimue.domain.usecases.GetSpecificSellsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,6 +14,7 @@ import javax.inject.Inject
 class SellPlaceViewModel @Inject constructor(
     private val getSpecificSellsUseCase: GetSpecificSellsUseCase
 ) : ViewModel() {
+
     var uiState = MutableStateFlow(SellPlaceUiState())
 
     fun loadSells(filter: String) {
