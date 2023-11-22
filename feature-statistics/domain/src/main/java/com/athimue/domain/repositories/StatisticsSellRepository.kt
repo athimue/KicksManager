@@ -1,4 +1,4 @@
-package com.athimue.domain.models.repositories
+package com.athimue.domain.repositories
 
 import com.athimue.domain.models.StatisticsSell
 import kotlinx.coroutines.flow.Flow

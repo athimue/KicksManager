@@ -16,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SellViewModel @Inject constructor(
-    getSellsUseCase: GetSellsUseCase, private val deleteSellUseCase: DeleteSellUseCase
+    getSellsUseCase: GetSellsUseCase,
+    private val deleteSellUseCase: DeleteSellUseCase
 ) : ViewModel() {
 
     var uiState = getSellsUseCase.invoke()

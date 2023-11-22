@@ -1,8 +1,8 @@
-package com.athimue.domain.models.usecases
+package com.athimue.domain.usecases
 
 import com.athimue.domain.models.StatisticsSell
 import kotlinx.coroutines.flow.Flow
 
 interface GetSpecificSellsUseCase {
-    suspend fun invoke(filter: String): Flow<List<StatisticsSell>>
+    fun invoke(filter: String): Flow<List<StatisticsSell>>
 }

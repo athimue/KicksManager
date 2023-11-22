@@ -1,7 +1,7 @@
 package com.athimue.data.repositories
 
 import com.athimue.domain.models.StatisticsSell
-import com.athimue.domain.models.repositories.StatisticsSellRepository
+import com.athimue.domain.repositories.StatisticsSellRepository
 import database.dao.SellDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

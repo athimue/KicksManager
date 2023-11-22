@@ -1,7 +1,7 @@
 package com.athimue.data.di
 
 import com.athimue.data.repositories.StatisticsSellRepositoryImpl
-import com.athimue.domain.models.repositories.StatisticsSellRepository
+import com.athimue.domain.repositories.StatisticsSellRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
