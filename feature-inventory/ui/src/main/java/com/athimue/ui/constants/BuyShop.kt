@@ -1,6 +1,6 @@
 package com.athimue.ui.constants
 
-enum class Shop(val shopName: String) {
+enum class BuyShop(val shopName: String) {
     ADIDAS_CONFIRMED("ADIDAS / CONFIRMED"),
     BSTN("BSTN"),
     BUZZZ("BUZZZ"),

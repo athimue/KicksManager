@@ -6,11 +6,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -19,10 +16,9 @@ import com.athimue.ui.composables.common.DropDownField
 import com.athimue.ui.composables.common.InputField
 import com.athimue.ui.composables.common.ModalHeader
 import com.athimue.ui.composables.common.PickerInputField
-import com.athimue.ui.composables.inventory.InventoryViewModel
 import com.athimue.ui.composables.sneakerpicker.SneakerPicker
 import com.athimue.ui.constants.ShoeSize
-import com.athimue.ui.constants.Shop
+import com.athimue.ui.constants.BuyShop
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -92,7 +88,7 @@ fun InventoryFormModal(
                     title = "Purchasing place",
                     itemSelected = uiState.buyPlace,
                     onItemSelected = viewModel::setBuyPlace,
-                    choices = Shop.values().map { it.shopName }
+                    choices = BuyShop.values().map { it.shopName }
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Button(
