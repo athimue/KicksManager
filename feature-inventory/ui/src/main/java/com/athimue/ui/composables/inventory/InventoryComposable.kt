@@ -1,5 +1,6 @@
 package com.athimue.ui.composables.inventory
 
+import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -35,6 +37,7 @@ fun InventoryComposable(
     var showInventoryFormModal by remember { mutableStateOf(false) }
     var showSellFormModal by remember { mutableStateOf(false) }
     var selectedSneakerId by remember { mutableLongStateOf(0L) }
+    val context = LocalContext.current
 
     Scaffold(
         modifier = Modifier, floatingActionButton = {
@@ -73,7 +76,14 @@ fun InventoryComposable(
                             selectedSneakerId = itemId
                             showSellFormModal = true
                         },
-                        onEndToStartSwipe = { itemId -> viewModel.deleteInventoryItem(itemId) },
+                        onEndToStartSwipe = { itemId ->
+                            viewModel.deleteInventoryItem(itemId)
+                            Toast.makeText(
+                                context,
+                                "Sneaker deleted !",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
                         onItemClick = { itemId ->
                             selectedSneakerId = itemId
                             showInventoryFormModal = true
@@ -109,6 +119,11 @@ fun InventoryComposable(
                             inventoryFormModalUiModel.buyDate,
                             inventoryFormModalUiModel.buyPlace,
                         )
+                        Toast.makeText(
+                            context,
+                            "Sneaker added !",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     })
             }
             if (showSellFormModal) {
@@ -119,6 +134,11 @@ fun InventoryComposable(
                             selectedSneakerId, sellPrice, sellDate, sellPlace
                         )
                         showSellFormModal = false
+                        Toast.makeText(
+                            context,
+                            "Sneaker sold !",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     })
             }
         }
