@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.athimue.domain.models.Sell
+import com.athimue.ui.composables.common.SellItemCard
 import com.athimue.ui.composables.common.SellSummary
 
 @Composable
@@ -100,61 +101,9 @@ private fun LazyItemScope.SellItem(
         })
 }
 
-
-@Composable
-private fun SellItemCard(
-    sell: SellUiModel
-) {
-    Row(
-        modifier = Modifier
-            .clip(MaterialTheme.shapes.medium)
-            .background(Color.White),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Image(
-            painter = rememberAsyncImagePainter(sell.picture),
-            contentDescription = "",
-            modifier = Modifier.size(100.dp)
-        )
-        Column(
-            modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = sell.name, fontWeight = FontWeight.ExtraBold
-            )
-            Row(modifier = Modifier.padding(top = 10.dp)) {
-                Text(
-                    modifier = Modifier.padding(start = 10.dp),
-                    text = "Date : ${sell.sellDate}",
-                )
-                Text(
-                    modifier = Modifier.padding(start = 10.dp),
-                    text = "Size : ${sell.size}",
-                )
-            }
-            Row(modifier = Modifier.padding(top = 10.dp)) {
-                Text(
-                    modifier = Modifier.padding(start = 10.dp),
-                    text = "Sell price : ${sell.sellPrice}  €",
-                )
-                Text(
-                    modifier = Modifier.padding(start = 10.dp),
-                    text = "Profit : ${sell.sellPrice - sell.buyPrice} €"
-                )
-            }
-            Row(modifier = Modifier.padding(top = 10.dp)) {
-                Text(
-                    modifier = Modifier.padding(start = 10.dp),
-                    text = "Sell place : ${sell.sellPlace}",
-                )
-            }
-        }
-    }
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DismissBackground(dismissState: DismissState) {
+private fun DismissBackground(dismissState: DismissState) {
     val direction = dismissState.dismissDirection ?: return
     val color = when (direction) {
         DismissDirection.EndToStart -> Color(0xFFFF1744)
