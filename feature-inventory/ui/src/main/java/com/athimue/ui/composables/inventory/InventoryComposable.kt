@@ -27,14 +27,13 @@ import coil.compose.rememberAsyncImagePainter
 import com.athimue.ui.composables.common.SummaryHeader
 import com.athimue.ui.composables.inventoryform.InventoryFormModal
 import com.athimue.ui.composables.sellform.SellFormDialog
-import java.util.*
 
 @Composable
 fun InventoryComposable(
     viewModel: InventoryViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    var showInventoryFormModal by remember { mutableStateOf(false) }
+    var isInventoryFormModalOpen by remember { mutableStateOf(false) }
     var showSellFormModal by remember { mutableStateOf(false) }
     var selectedSneakerId by remember { mutableLongStateOf(0L) }
     val context = LocalContext.current
@@ -43,8 +42,8 @@ fun InventoryComposable(
         modifier = Modifier, floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    selectedSneakerId = 0L
-                    showInventoryFormModal = true
+                    selectedSneakerId = 0
+                    isInventoryFormModalOpen = true
                 }) {
                 Icon(
                     imageVector = Icons.Rounded.Add,
@@ -86,7 +85,7 @@ fun InventoryComposable(
                         },
                         onItemClick = { itemId ->
                             selectedSneakerId = itemId
-                            showInventoryFormModal = true
+                            isInventoryFormModalOpen = true
                         })
                     Divider()
                 }
@@ -102,12 +101,12 @@ fun InventoryComposable(
                 fontSize = 20.sp
             )
 
-            if (showInventoryFormModal) {
+            if (isInventoryFormModalOpen) {
                 InventoryFormModal(
                     selectedSneakerId = selectedSneakerId,
                     closeModal = {
                         selectedSneakerId = 0
-                        showInventoryFormModal = false
+                        isInventoryFormModalOpen = false
                     },
                     addInventory = { inventoryFormModalUiModel ->
                         viewModel.addOrUpdateInventoryItem(

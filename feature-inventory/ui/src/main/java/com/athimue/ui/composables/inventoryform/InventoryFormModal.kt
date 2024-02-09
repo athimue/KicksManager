@@ -32,9 +32,7 @@ fun InventoryFormModal(
     val inventoryFormModalState = rememberModalBottomSheetState(true)
     val uiState by viewModel.uiState.collectAsState()
 
-    LaunchedEffect(selectedSneakerId) {
-        viewModel.loadInventoryItem(selectedSneakerId)
-    }
+    viewModel.loadInventoryItem(selectedSneakerId)
 
     ModalBottomSheet(
         modifier = Modifier.fillMaxSize(),

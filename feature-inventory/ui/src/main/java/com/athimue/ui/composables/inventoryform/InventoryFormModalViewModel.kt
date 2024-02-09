@@ -4,10 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.athimue.domain.usecases.GetInventoryItemUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,28 +24,23 @@ class InventoryFormModalViewModel @Inject constructor(
         viewModelScope.launch {
             if (itemId != 0L) {
                 getInventoryItemUseCase.invoke(itemId).first().let { item ->
-                    _uiState.value = _uiState.value.copy(
-                        isLoading = false,
-                        id = item.id,
-                        name = item.name,
-                        size = item.size,
-                        picture = item.picture,
-                        buyPrice = item.buyPrice,
-                        buyPlace = item.buyPlace,
-                        buyDate = item.buyDate,
-                    )
+                    withContext(Dispatchers.Main) {
+                        _uiState.value = InventoryFormModalUiModel(
+                            isLoading = false,
+                            id = item.id,
+                            name = item.name,
+                            size = item.size,
+                            picture = item.picture,
+                            buyPrice = item.buyPrice,
+                            buyPlace = item.buyPlace,
+                            buyDate = item.buyDate,
+                        )
+                    }
                 }
             } else {
-                _uiState.value = _uiState.value.copy(
-                    isLoading = false,
-                    id = null,
-                    name = "",
-                    size = "",
-                    picture = "",
-                    buyPrice = 0.0,
-                    buyPlace = "",
-                    buyDate = "",
-                )
+                withContext(Dispatchers.Main) {
+                    _uiState.value = InventoryFormModalUiModel(false)
+                }
             }
         }
     }
