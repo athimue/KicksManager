@@ -2,8 +2,8 @@ package com.athimue.kicksmanager.navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.List
 import androidx.compose.material.icons.rounded.Build
-import androidx.compose.material.icons.rounded.List
 import androidx.compose.material.icons.rounded.ShoppingCart
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -23,7 +23,9 @@ import com.athimue.ui.navigation.StatisticsNavigation
 
 sealed class Screen(val route: String) {
     object Inventory : Screen("inventory")
+
     object Sells : Screen("sells")
+
     object Statistics : Screen("statistics")
 }
 
@@ -37,14 +39,14 @@ fun MainNavigation() {
                 currentRoute = navController.currentDestination?.route,
                 onInventoryClick = { navController.navigate(Screen.Inventory.route) },
                 onSellsClick = { navController.navigate(Screen.Sells.route) },
-                onStatisticsClick = { navController.navigate(Screen.Statistics.route) }
+                onStatisticsClick = { navController.navigate(Screen.Statistics.route) },
             )
-        }
+        },
     ) {
         NavHost(
             modifier = Modifier.padding(it),
             navController = navController,
-            startDestination = Screen.Inventory.route
+            startDestination = Screen.Inventory.route,
         ) {
             composable(Screen.Inventory.route) {
                 InventoryComposable()
@@ -64,38 +66,41 @@ fun BottomBar(
     currentRoute: String?,
     onInventoryClick: () -> Unit,
     onSellsClick: () -> Unit,
-    onStatisticsClick: () -> Unit
+    onStatisticsClick: () -> Unit,
 ) {
     NavigationBar {
         NavigationBarItem(
             selected = currentRoute == Screen.Inventory.route,
-            icon = { Icon(imageVector = Icons.Rounded.List, contentDescription = "") },
+            icon = { Icon(imageVector = Icons.AutoMirrored.Rounded.List, contentDescription = "") },
             label = { Text("Inventory") },
             onClick = onInventoryClick,
-            colors = NavigationBarItemDefaults.colors(
-                unselectedIconColor = MaterialTheme.colorScheme.secondary,
-                unselectedTextColor = MaterialTheme.colorScheme.secondary
-            )
+            colors =
+                NavigationBarItemDefaults.colors(
+                    unselectedIconColor = MaterialTheme.colorScheme.secondary,
+                    unselectedTextColor = MaterialTheme.colorScheme.secondary,
+                ),
         )
         NavigationBarItem(
             selected = currentRoute == Screen.Sells.route,
             icon = { Icon(imageVector = Icons.Rounded.ShoppingCart, contentDescription = "") },
             label = { Text("Sells") },
             onClick = onSellsClick,
-            colors = NavigationBarItemDefaults.colors(
-                unselectedIconColor = MaterialTheme.colorScheme.secondary,
-                unselectedTextColor = MaterialTheme.colorScheme.secondary
-            )
+            colors =
+                NavigationBarItemDefaults.colors(
+                    unselectedIconColor = MaterialTheme.colorScheme.secondary,
+                    unselectedTextColor = MaterialTheme.colorScheme.secondary,
+                ),
         )
         NavigationBarItem(
             selected = currentRoute == Screen.Statistics.route,
             icon = { Icon(imageVector = Icons.Rounded.Build, contentDescription = "") },
             label = { Text("Statistics") },
             onClick = onStatisticsClick,
-            colors = NavigationBarItemDefaults.colors(
-                unselectedIconColor = MaterialTheme.colorScheme.secondary,
-                unselectedTextColor = MaterialTheme.colorScheme.secondary
-            )
+            colors =
+                NavigationBarItemDefaults.colors(
+                    unselectedIconColor = MaterialTheme.colorScheme.secondary,
+                    unselectedTextColor = MaterialTheme.colorScheme.secondary,
+                ),
         )
     }
 }
