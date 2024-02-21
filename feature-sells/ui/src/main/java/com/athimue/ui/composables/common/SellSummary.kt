@@ -1,7 +1,11 @@
 package com.athimue.ui.composables.common
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AddCircle
 import androidx.compose.material.icons.rounded.CheckCircle
@@ -17,40 +21,54 @@ import androidx.compose.ui.unit.dp
 import com.athimue.ui.composables.sells.SellUiModel
 
 @Composable
-fun SellSummary(
-    sells: List<SellUiModel>
-) {
+fun SellSummary(sells: List<SellUiModel>) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 10.dp),
-        horizontalArrangement = Arrangement.SpaceAround
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp),
+        horizontalArrangement = Arrangement.SpaceAround,
     ) {
         SellSummaryItem(
             icon = Icons.Rounded.ThumbUp,
             iconColor = Color.Blue,
             title = sells.size.toString(),
-            subject = "Sells"
+            subject = "Sells",
         )
-        SellSummaryItem(icon = Icons.Rounded.AddCircle, iconColor = Color.Green, title = "${
-            sells.map { sell -> sell.sellPrice - sell.buyPrice }
-                .fold(0.0) { acc, profitItem -> acc + profitItem }
-        } €", subject = "Margin")
-        SellSummaryItem(icon = Icons.Rounded.CheckCircle, iconColor = Color.Red, title = "${
-            sells.map { sell -> sell.sellPrice }.fold(0.0) { acc, profitItem -> acc + profitItem }
-        } €", subject = "Sales")
+        SellSummaryItem(
+            icon = Icons.Rounded.AddCircle,
+            iconColor = Color.Green,
+            title = "${
+                sells.map { sell -> sell.sellPrice - sell.buyPrice }
+                    .fold(0.0) { acc, profitItem -> acc + profitItem }
+            } €",
+            subject = "Margin",
+        )
+        SellSummaryItem(
+            icon = Icons.Rounded.CheckCircle,
+            iconColor = Color.Red,
+            title = "${
+                sells.map { sell -> sell.sellPrice }.fold(0.0) { acc, profitItem -> acc + profitItem }
+            } €",
+            subject = "Sales",
+        )
     }
 }
 
 @Composable
 private fun SellSummaryItem(
-    icon: ImageVector, iconColor: Color, title: String, subject: String
+    icon: ImageVector,
+    iconColor: Color,
+    title: String,
+    subject: String,
 ) {
     Row(
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
-            imageVector = icon, contentDescription = "", colorFilter = ColorFilter.tint(iconColor)
+            imageVector = icon,
+            contentDescription = "",
+            colorFilter = ColorFilter.tint(iconColor),
         )
         Column(modifier = Modifier.padding(10.dp)) {
             Text(text = title)
