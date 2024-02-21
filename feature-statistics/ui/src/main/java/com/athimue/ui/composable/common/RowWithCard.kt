@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 fun RowWithCard(composables: List<@Composable () -> Unit>) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceEvenly
+        horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
         composables.forEach { it.invoke() }
     }

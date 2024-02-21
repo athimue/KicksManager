@@ -2,12 +2,20 @@ package com.athimue.ui.composable.sellplace
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material3.*
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -34,32 +42,35 @@ fun SellPlaceStatisticsComposable(
     Column {
         IconButton(onClick = onBack) {
             Icon(
-                imageVector = Icons.Rounded.ArrowBack,
+                imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
                 contentDescription = "Go back",
-                tint = MaterialTheme.colorScheme.primary
+                tint = MaterialTheme.colorScheme.primary,
             )
         }
         KeyFigureTitle(title = "$sellPlace SUMMARY")
         if (uiState.sells.isNotEmpty()) {
             LazyColumn(modifier = Modifier.padding(top = 10.dp)) {
                 items(items = uiState.sells) {
-                    Divider()
+                    HorizontalDivider()
                     Row(
-                        modifier = Modifier
-                            .clip(MaterialTheme.shapes.medium)
-                            .background(Color.White), verticalAlignment = Alignment.CenterVertically
+                        modifier =
+                            Modifier
+                                .clip(MaterialTheme.shapes.medium)
+                                .background(Color.White),
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Image(
                             painter = rememberAsyncImagePainter(it.picture),
                             contentDescription = "",
-                            modifier = Modifier.size(100.dp)
+                            modifier = Modifier.size(100.dp),
                         )
                         Column(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalAlignment = Alignment.CenterHorizontally
+                            horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
                             Text(
-                                text = it.name, fontWeight = FontWeight.ExtraBold
+                                text = it.name,
+                                fontWeight = FontWeight.ExtraBold,
                             )
                             Row(modifier = Modifier.padding(top = 10.dp)) {
                                 Text(
@@ -85,9 +96,10 @@ fun SellPlaceStatisticsComposable(
             Text(
                 text = "No sells",
                 textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 10.dp)
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 10.dp),
             )
         }
     }
