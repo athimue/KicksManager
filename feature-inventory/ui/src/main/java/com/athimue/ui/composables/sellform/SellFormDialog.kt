@@ -1,12 +1,20 @@
 package com.athimue.ui.composables.sellform
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,48 +41,52 @@ fun SellFormDialog(
 
     Dialog(
         properties = DialogProperties(usePlatformDefaultWidth = false),
-        onDismissRequest = onCloseBtnClick
+        onDismissRequest = onCloseBtnClick,
     ) {
         Column(
-            modifier = Modifier
-                .background(Color.White)
-                .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.Center
+            modifier =
+                Modifier
+                    .background(Color.White)
+                    .fillMaxSize()
+                    .padding(16.dp),
+            verticalArrangement = Arrangement.Center,
         ) {
             ModalHeader(
                 title = "Item sold",
-                onCloseBtnClick = onCloseBtnClick
+                onCloseBtnClick = onCloseBtnClick,
             )
             InputField(
                 title = "Sell price",
                 value = sellPrice,
                 onValueChange = { sellPrice = it },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Decimal
-                )
+                keyboardOptions =
+                    KeyboardOptions(
+                        keyboardType = KeyboardType.Decimal,
+                    ),
             )
             PickerInputField(
                 title = "Sell date",
                 value = sellDate,
-                onClick = { showDatePicker = true })
+                onClick = { showDatePicker = true },
+            )
             DropDownField(
                 title = "Sell place",
                 itemSelected = sellPlace,
                 onItemSelected = { sellPlace = it },
-                choices = SellShop.values().map { it.shopName }
+                choices = SellShop.entries.map { it.shopName },
             )
             Spacer(modifier = Modifier.weight(1f))
             Button(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
-                onClick = { onActionBtnClick(sellPrice, sellDate, sellPlace) }
+                onClick = { onActionBtnClick(sellPrice, sellDate, sellPlace) },
             ) {
                 Text(text = "Add the sell")
             }
             DatePicker(
                 isDialogDisplayed = showDatePicker,
                 closeDialog = { showDatePicker = false },
-                onDateSelected = { sellDate = it })
+                onDateSelected = { sellDate = it },
+            )
         }
     }
 }

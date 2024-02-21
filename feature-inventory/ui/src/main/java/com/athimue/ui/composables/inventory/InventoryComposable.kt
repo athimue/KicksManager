@@ -1,8 +1,17 @@
 package com.athimue.ui.composables.inventory
 
 import android.widget.Toast
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.items
@@ -10,8 +19,26 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxState
+import androidx.compose.material3.SwipeToDismissBoxValue
+import androidx.compose.material3.Text
+import androidx.compose.material3.rememberSwipeToDismissBoxState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,10 +55,9 @@ import com.athimue.ui.composables.common.SummaryHeader
 import com.athimue.ui.composables.inventoryform.InventoryFormModal
 import com.athimue.ui.composables.sellform.SellFormDialog
 
+@Suppress("ktlint:standard:function-naming")
 @Composable
-fun InventoryComposable(
-    viewModel: InventoryViewModel = hiltViewModel()
-) {
+fun InventoryComposable(viewModel: InventoryViewModel = hiltViewModel()) {
     val uiState by viewModel.uiState.collectAsState()
     var isInventoryFormModalOpen by remember { mutableStateOf(false) }
     var showSellFormModal by remember { mutableStateOf(false) }
@@ -39,67 +65,77 @@ fun InventoryComposable(
     val context = LocalContext.current
 
     Scaffold(
-        modifier = Modifier, floatingActionButton = {
+        modifier = Modifier,
+        floatingActionButton = {
             FloatingActionButton(
                 onClick = {
                     selectedSneakerId = 0
                     isInventoryFormModalOpen = true
-                }) {
+                },
+            ) {
                 Icon(
                     imageVector = Icons.Rounded.Add,
-                    contentDescription = ""
+                    contentDescription = "",
                 )
             }
-        }, floatingActionButtonPosition = FabPosition.End
+        },
+        floatingActionButtonPosition = FabPosition.End,
     ) {
         Column(
             Modifier
                 .fillMaxSize()
-                .padding(it)
+                .padding(it),
         ) {
             Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 10.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 10.dp),
                 text = "INVENTORY",
                 textAlign = TextAlign.Center,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.ExtraBold,
-                fontSize = 38.sp
+                fontSize = 38.sp,
             )
             SummaryHeader(inventory = uiState.inventory)
-            if (uiState.inventory.isNotEmpty()) LazyColumn {
-                items(items = uiState.inventory, key = { item -> item.id }) { item ->
-                    InventoryItem(inventoryItem = item,
-                        onStartToEndSwipe = { itemId ->
-                            selectedSneakerId = itemId
-                            showSellFormModal = true
-                        },
-                        onEndToStartSwipe = { itemId ->
-                            viewModel.deleteInventoryItem(itemId)
-                            Toast.makeText(
-                                context,
-                                "Sneaker deleted !",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        },
-                        onItemClick = { itemId ->
-                            selectedSneakerId = itemId
-                            isInventoryFormModalOpen = true
-                        })
-                    Divider()
+            if (uiState.inventory.isNotEmpty()) {
+                LazyColumn {
+                    items(items = uiState.inventory, key = { item -> item.id }) { item ->
+                        InventoryItem(
+                            inventoryItem = item,
+                            onStartToEndSwipe = { itemId ->
+                                selectedSneakerId = itemId
+                                showSellFormModal = true
+                            },
+                            onEndToStartSwipe = { itemId ->
+                                viewModel.deleteInventoryItem(itemId)
+                                Toast.makeText(
+                                    context,
+                                    "Sneaker deleted !",
+                                    Toast.LENGTH_SHORT,
+                                ).show()
+                            },
+                            onItemClick = { itemId ->
+                                selectedSneakerId = itemId
+                                isInventoryFormModalOpen = true
+                            },
+                        )
+                        HorizontalDivider()
+                    }
                 }
+            } else {
+                Text(
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(top = 20.dp),
+                    text = "No inventory",
+                    textAlign = TextAlign.Center,
+                    fontFamily = FontFamily.Monospace,
+                    fontWeight = FontWeight.ExtraBold,
+                    fontSize = 20.sp,
+                )
             }
-            else Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 20.dp),
-                text = "No inventory",
-                textAlign = TextAlign.Center,
-                fontFamily = FontFamily.Monospace,
-                fontWeight = FontWeight.ExtraBold,
-                fontSize = 20.sp
-            )
 
             if (isInventoryFormModalOpen) {
                 InventoryFormModal(
@@ -121,24 +157,29 @@ fun InventoryComposable(
                         Toast.makeText(
                             context,
                             "Sneaker added !",
-                            Toast.LENGTH_SHORT
+                            Toast.LENGTH_SHORT,
                         ).show()
-                    })
+                    },
+                )
             }
             if (showSellFormModal) {
                 SellFormDialog(
                     onCloseBtnClick = { showSellFormModal = false },
                     onActionBtnClick = { sellPrice, sellDate, sellPlace ->
                         viewModel.addSell(
-                            selectedSneakerId, sellPrice, sellDate, sellPlace
+                            selectedSneakerId,
+                            sellPrice,
+                            sellDate,
+                            sellPlace,
                         )
                         showSellFormModal = false
                         Toast.makeText(
                             context,
                             "Sneaker sold !",
-                            Toast.LENGTH_SHORT
+                            Toast.LENGTH_SHORT,
                         ).show()
-                    })
+                    },
+                )
             }
         }
     }
@@ -150,58 +191,67 @@ private fun LazyItemScope.InventoryItem(
     inventoryItem: InventoryUiModel,
     onStartToEndSwipe: (Long) -> Unit,
     onEndToStartSwipe: (Long) -> Unit,
-    onItemClick: (Long) -> Unit
+    onItemClick: (Long) -> Unit,
 ) {
     val currentItem by rememberUpdatedState(inventoryItem)
-    val dismissState = rememberDismissState(confirmValueChange = {
-        when (it) {
-            DismissValue.DismissedToStart -> {
-                onEndToStartSwipe(currentItem.id)
-                false
-            }
+    val dismissState =
+        rememberSwipeToDismissBoxState(confirmValueChange = {
+            when (it) {
+                SwipeToDismissBoxValue.EndToStart -> {
+                    onEndToStartSwipe(currentItem.id)
+                    false
+                }
 
-            DismissValue.DismissedToEnd -> {
-                onStartToEndSwipe(currentItem.id)
-                false
-            }
+                SwipeToDismissBoxValue.StartToEnd -> {
+                    onStartToEndSwipe(currentItem.id)
+                    false
+                }
 
-            else -> false
-        }
-    }, positionalThreshold = { 0.35f })
-    SwipeToDismiss(state = dismissState,
-        modifier = Modifier
-            .padding(vertical = 1.dp)
-            .animateItemPlacement(),
-        background = {
+                else -> false
+            }
+        }, positionalThreshold = { 0.35f })
+    SwipeToDismissBox(
+        state = dismissState,
+        modifier =
+            Modifier
+                .padding(vertical = 1.dp)
+                .animateItemPlacement(),
+        backgroundContent = {
             DismissBackground(dismissState)
         },
-        dismissContent = {
-            InventoryItemCard(
-                inventoryItem = inventoryItem, onClick = onItemClick
-            )
-        })
+    ) {
+        InventoryItemCard(
+            inventoryItem = inventoryItem,
+            onClick = onItemClick,
+        )
+    }
 }
 
 @Composable
 private fun InventoryItemCard(
-    inventoryItem: InventoryUiModel, onClick: (Long) -> Unit
+    inventoryItem: InventoryUiModel,
+    onClick: (Long) -> Unit,
 ) {
     Row(
-        modifier = Modifier
-            .clip(MaterialTheme.shapes.medium)
-            .background(Color.White)
-            .clickable { onClick(inventoryItem.id) }, verticalAlignment = Alignment.CenterVertically
+        modifier =
+            Modifier
+                .clip(MaterialTheme.shapes.medium)
+                .background(Color.White)
+                .clickable { onClick(inventoryItem.id) },
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
             painter = rememberAsyncImagePainter(inventoryItem.picture),
             contentDescription = "",
-            modifier = Modifier.size(100.dp)
+            modifier = Modifier.size(100.dp),
         )
         Column(
-            modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
-                text = inventoryItem.name, fontWeight = FontWeight.ExtraBold
+                text = inventoryItem.name,
+                fontWeight = FontWeight.ExtraBold,
             )
             Row(modifier = Modifier.padding(top = 10.dp)) {
                 Text(
@@ -213,7 +263,7 @@ private fun InventoryItemCard(
                 )
                 Text(
                     modifier = Modifier.padding(start = 10.dp),
-                    text = "Price : ${inventoryItem.buyPrice} €"
+                    text = "Price : ${inventoryItem.buyPrice} €",
                 )
             }
         }
@@ -222,28 +272,37 @@ private fun InventoryItemCard(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DismissBackground(dismissState: DismissState) {
-    val direction = dismissState.dismissDirection ?: return
-    val color = when (direction) {
-        DismissDirection.EndToStart -> Color(0xFFFF1744)
-        DismissDirection.StartToEnd -> Color(0xFF32CD32)
-    }
+fun DismissBackground(dismissState: SwipeToDismissBoxState) {
+    val direction = dismissState.dismissDirection
+    val color =
+        when (direction) {
+            SwipeToDismissBoxValue.EndToStart -> Color(0xFFFF1744)
+            SwipeToDismissBoxValue.StartToEnd -> Color(0xFF32CD32)
+            else -> {
+                Color(0xFFFFFFFF)
+            }
+        }
     Row(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color),
-        verticalAlignment = Alignment.CenterVertically
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .background(color),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        if (direction == DismissDirection.StartToEnd) Icon(
-            imageVector = Icons.Default.CheckCircle,
-            contentDescription = "sell",
-            modifier = Modifier.padding(start = 16.dp)
-        )
+        if (direction == SwipeToDismissBoxValue.StartToEnd) {
+            Icon(
+                imageVector = Icons.Default.CheckCircle,
+                contentDescription = "sell",
+                modifier = Modifier.padding(start = 16.dp),
+            )
+        }
         Spacer(modifier = Modifier.weight(1f))
-        if (direction == DismissDirection.EndToStart) Icon(
-            imageVector = Icons.Default.Delete,
-            contentDescription = "delete",
-            modifier = Modifier.padding(end = 16.dp)
-        )
+        if (direction == SwipeToDismissBoxValue.EndToStart) {
+            Icon(
+                imageVector = Icons.Default.Delete,
+                contentDescription = "delete",
+                modifier = Modifier.padding(end = 16.dp),
+            )
+        }
     }
 }

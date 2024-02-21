@@ -3,12 +3,23 @@ package com.athimue.ui.composables.sneakerpicker
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,21 +45,23 @@ fun SneakerPicker(
     if (isDialogDisplayed) {
         Dialog(
             properties = DialogProperties(usePlatformDefaultWidth = false),
-            onDismissRequest = closeDialog
+            onDismissRequest = closeDialog,
         ) {
             Column(
-                modifier = Modifier
-                    .background(Color(0xFFf3edfd))
-                    .padding(10.dp)
+                modifier =
+                    Modifier
+                        .background(Color(0xFFf3edfd))
+                        .padding(10.dp),
             ) {
                 ModalHeader(
                     title = "Sneaker search",
-                    onCloseBtnClick = closeDialog
+                    onCloseBtnClick = closeDialog,
                 )
                 OutlinedTextField(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 10.dp),
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(top = 10.dp),
                     value = query,
                     onValueChange = {
                         query = it
@@ -60,25 +73,27 @@ fun SneakerPicker(
                     items(uiState.sneakers) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable { onSneakerSelected(it.name, it.picture) }
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .clickable { onSneakerSelected(it.name, it.picture) },
                         ) {
                             Image(
                                 painter = rememberAsyncImagePainter(it.picture),
                                 contentDescription = "",
-                                modifier = Modifier
-                                    .size(100.dp)
-                                    .padding(top = 4.dp, bottom = 4.dp)
-                                    .clip(RoundedCornerShape(10.dp))
-                                    .padding(bottom = 3.dp)
+                                modifier =
+                                    Modifier
+                                        .size(100.dp)
+                                        .padding(top = 4.dp, bottom = 4.dp)
+                                        .clip(RoundedCornerShape(10.dp))
+                                        .padding(bottom = 3.dp),
                             )
                             Column(modifier = Modifier.padding(start = 8.dp)) {
                                 Text(text = it.name)
                                 Text(text = it.brand)
                             }
                         }
-                        Divider()
+                        HorizontalDivider()
                     }
                 }
             }
