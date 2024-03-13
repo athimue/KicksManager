@@ -1,12 +1,13 @@
-package com.athimue.domain.models
+package com.athimue.domain.model
 
-data class InventoryItem(
+data class InventorySell(
     val id: Long,
     val name: String,
     val picture: String,
     val size: String,
     val quantity: Int,
     val buyPrice: Double,
-    val buyDate: String,
-    val buyPlace: String,
+    val sellPrice: Double,
+    val sellDate: String,
+    val sellPlace: String,
 )

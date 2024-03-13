@@ -1,6 +1,6 @@
-package com.athimue.domain.repositories
+package com.athimue.domain.repository
 
-import com.athimue.domain.models.InventoryItem
+import com.athimue.domain.model.InventoryItem
 import kotlinx.coroutines.flow.Flow
 
 interface InventoryRepository {

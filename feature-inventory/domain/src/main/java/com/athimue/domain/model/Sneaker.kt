@@ -1,4 +1,4 @@
-package com.athimue.domain.models
+package com.athimue.domain.model
 
 data class Sneaker(
     val id: Long,
