@@ -1,7 +1,7 @@
 package com.athimue.data.repositories
 
-import com.athimue.domain.models.InventorySell
-import com.athimue.domain.repositories.InventorySellRepository
+import com.athimue.domain.model.InventorySell
+import com.athimue.domain.repository.InventorySellRepository
 import database.dao.SellDao
 import database.entity.SellEntity
 import javax.inject.Inject

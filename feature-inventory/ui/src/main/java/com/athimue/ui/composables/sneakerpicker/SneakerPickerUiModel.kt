@@ -1,6 +1,6 @@
 package com.athimue.ui.composables.sneakerpicker
 
-import com.athimue.domain.models.Sneaker
+import com.athimue.domain.model.Sneaker
 
 data class SneakerUiModel(
     val name: String,

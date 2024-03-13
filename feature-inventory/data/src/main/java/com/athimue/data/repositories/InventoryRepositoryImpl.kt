@@ -4,8 +4,8 @@ import android.util.Log
 import com.athimue.data.database.dao.InventoryDao
 import com.athimue.data.database.entity.InventoryEntity
 import com.athimue.data.database.entity.toInventoryItem
-import com.athimue.domain.models.InventoryItem
-import com.athimue.domain.repositories.InventoryRepository
+import com.athimue.domain.model.InventoryItem
+import com.athimue.domain.repository.InventoryRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

@@ -1,6 +1,6 @@
 package com.athimue.ui.composables.inventory
 
-import com.athimue.domain.models.InventoryItem
+import com.athimue.domain.model.InventoryItem
 import com.athimue.ui.composables.inventoryform.InventoryFormModalUiModel
 
 data class InventoryUiModel(

@@ -3,8 +3,8 @@ package com.athimue.data.repositories
 import android.util.Log
 import com.athimue.data.network.api.SellWeTheNewApi
 import com.athimue.data.network.dto.toSneaker
-import com.athimue.domain.models.Sneaker
-import com.athimue.domain.repositories.SearchRepository
+import com.athimue.domain.model.Sneaker
+import com.athimue.domain.repository.SearchRepository
 import javax.inject.Inject
 
 class SearchRepositoryImpl @Inject constructor(

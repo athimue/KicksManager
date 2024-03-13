@@ -3,9 +3,9 @@ package com.athimue.data.di
 import com.athimue.data.repositories.InventoryRepositoryImpl
 import com.athimue.data.repositories.InventorySellRepositoryImpl
 import com.athimue.data.repositories.SearchRepositoryImpl
-import com.athimue.domain.repositories.InventoryRepository
-import com.athimue.domain.repositories.InventorySellRepository
-import com.athimue.domain.repositories.SearchRepository
+import com.athimue.domain.repository.InventoryRepository
+import com.athimue.domain.repository.InventorySellRepository
+import com.athimue.domain.repository.SearchRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

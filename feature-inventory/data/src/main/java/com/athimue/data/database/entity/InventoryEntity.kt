@@ -2,7 +2,7 @@ package com.athimue.data.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.athimue.domain.models.InventoryItem
+import com.athimue.domain.model.InventoryItem
 
 @Entity(tableName = "inventory")
 data class InventoryEntity(

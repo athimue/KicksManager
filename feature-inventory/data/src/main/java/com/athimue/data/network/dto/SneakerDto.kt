@@ -1,6 +1,6 @@
 package com.athimue.data.network.dto
 
-import com.athimue.domain.models.Sneaker
+import com.athimue.domain.model.Sneaker
 import com.google.gson.annotations.SerializedName
 
 data class SneakerDto(
