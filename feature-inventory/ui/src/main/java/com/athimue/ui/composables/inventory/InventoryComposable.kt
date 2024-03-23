@@ -79,11 +79,11 @@ fun InventoryComposable(viewModel: InventoryViewModel = hiltViewModel()) {
             }
         },
         floatingActionButtonPosition = FabPosition.End,
-    ) {
+    ) { content ->
         Column(
             Modifier
                 .fillMaxSize()
-                .padding(it),
+                .padding(content),
         ) {
             Text(
                 modifier =

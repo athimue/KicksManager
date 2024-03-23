@@ -1,7 +1,6 @@
 package com.athimue.ui.composables.inventory
 
 import com.athimue.domain.model.InventoryItem
-import com.athimue.ui.composables.inventoryform.InventoryFormModalUiModel
 
 data class InventoryUiModel(
     val id: Long,
@@ -12,11 +11,12 @@ data class InventoryUiModel(
     val buyPrice: Double,
 )
 
-fun InventoryItem.toInventoryUiModel() = InventoryUiModel(
-    id = id,
-    name = name,
-    picture = picture,
-    size = size,
-    quantity = quantity,
-    buyPrice = buyPrice,
-)
+fun InventoryItem.toInventoryUiModel() =
+    InventoryUiModel(
+        id = id,
+        name = name,
+        picture = picture,
+        size = size,
+        quantity = quantity,
+        buyPrice = buyPrice,
+    )

@@ -1,5 +1,3 @@
 package com.athimue.data.network.api
 
-interface GoatApi {
-
-}
+interface GoatApi

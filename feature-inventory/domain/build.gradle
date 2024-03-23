@@ -34,7 +34,7 @@ android {
 
 dependencies {
     implementation "androidx.core:core-ktx:$core_ktx_version"
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_core"
 
     // Hilt dependencies
     implementation "com.google.dagger:hilt-android:$hilt_version"

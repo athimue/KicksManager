@@ -8,11 +8,10 @@ import com.athimue.data.database.entity.InventoryEntity
 @androidx.room.Database(
     entities = [InventoryEntity::class],
     version = 1,
-    exportSchema = false
+    exportSchema = false,
 )
-@TypeConverters()
+@TypeConverters
 abstract class Database : RoomDatabase() {
-
     abstract fun inventoryDao(): InventoryDao
 
     companion object {

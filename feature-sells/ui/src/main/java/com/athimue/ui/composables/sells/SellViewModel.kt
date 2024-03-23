@@ -21,7 +21,7 @@ class SellViewModel
     ) : ViewModel() {
         var uiState =
             getSellsUseCase.invoke()
-                .map { SellUiState(sells = it.map { it.toSellUiModel() }) }
+                .map { sells -> SellUiState(sells = sells.map { it.toSellUiModel() }) }
                 .stateIn(
                     scope = viewModelScope,
                     initialValue = SellUiState(),

@@ -22,11 +22,11 @@ import com.athimue.ui.composables.sells.SellsComposable
 import com.athimue.ui.navigation.StatisticsNavigation
 
 sealed class Screen(val route: String) {
-    object Inventory : Screen("inventory")
+    data object Inventory : Screen("inventory")
 
-    object Sells : Screen("sells")
+    data object Sells : Screen("sells")
 
-    object Statistics : Screen("statistics")
+    data object Statistics : Screen("statistics")
 }
 
 @Composable
