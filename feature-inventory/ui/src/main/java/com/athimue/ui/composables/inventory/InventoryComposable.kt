@@ -34,7 +34,6 @@ import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
@@ -61,7 +60,7 @@ fun InventoryComposable(viewModel: InventoryViewModel = hiltViewModel()) {
     val uiState by viewModel.uiState.collectAsState()
     var isInventoryFormModalOpen by remember { mutableStateOf(false) }
     var showSellFormModal by remember { mutableStateOf(false) }
-    var selectedSneakerId by remember { mutableLongStateOf(0L) }
+    var selectedSneakerId by remember { mutableStateOf<Long?>(null) }
     val context = LocalContext.current
 
     Scaffold(
@@ -69,7 +68,7 @@ fun InventoryComposable(viewModel: InventoryViewModel = hiltViewModel()) {
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    selectedSneakerId = 0
+                    selectedSneakerId = null
                     isInventoryFormModalOpen = true
                 },
             ) {
@@ -141,7 +140,7 @@ fun InventoryComposable(viewModel: InventoryViewModel = hiltViewModel()) {
                 InventoryFormModal(
                     selectedSneakerId = selectedSneakerId,
                     closeModal = {
-                        selectedSneakerId = 0
+                        selectedSneakerId = null
                         isInventoryFormModalOpen = false
                     },
                     addInventory = { inventoryFormModalUiModel ->
@@ -166,18 +165,20 @@ fun InventoryComposable(viewModel: InventoryViewModel = hiltViewModel()) {
                 SellFormDialog(
                     onCloseBtnClick = { showSellFormModal = false },
                     onActionBtnClick = { sellPrice, sellDate, sellPlace ->
-                        viewModel.addSell(
-                            selectedSneakerId,
-                            sellPrice,
-                            sellDate,
-                            sellPlace,
-                        )
-                        showSellFormModal = false
-                        Toast.makeText(
-                            context,
-                            "Sneaker sold !",
-                            Toast.LENGTH_SHORT,
-                        ).show()
+                        selectedSneakerId?.let {
+                            viewModel.addSell(
+                                it,
+                                sellPrice,
+                                sellDate,
+                                sellPlace,
+                            )
+                            showSellFormModal = false
+                            Toast.makeText(
+                                context,
+                                "Sneaker sold !",
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                        }
                     },
                 )
             }
@@ -185,6 +186,7 @@ fun InventoryComposable(viewModel: InventoryViewModel = hiltViewModel()) {
     }
 }
 
+@Suppress("ktlint:standard:function-naming")
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 private fun LazyItemScope.InventoryItem(
@@ -227,6 +229,7 @@ private fun LazyItemScope.InventoryItem(
     }
 }
 
+@Suppress("ktlint:standard:function-naming")
 @Composable
 private fun InventoryItemCard(
     inventoryItem: InventoryUiModel,
@@ -270,6 +273,7 @@ private fun InventoryItemCard(
     }
 }
 
+@Suppress("ktlint:standard:function-naming")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DismissBackground(dismissState: SwipeToDismissBoxState) {

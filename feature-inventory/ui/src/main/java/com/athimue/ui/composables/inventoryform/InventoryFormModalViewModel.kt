@@ -19,29 +19,24 @@ class InventoryFormModalViewModel
         private val getInventoryItemUseCase: GetInventoryItemUseCase,
     ) : ViewModel() {
         private val _uiState = MutableStateFlow(InventoryFormModalUiModel())
+
         val uiState: StateFlow<InventoryFormModalUiModel> = _uiState
 
-        fun loadInventoryItem(itemId: Long) {
-            viewModelScope.launch {
-                if (itemId != 0L) {
-                    getInventoryItemUseCase(itemId).first().let { item ->
-                        withContext(Dispatchers.Main) {
-                            _uiState.value =
-                                InventoryFormModalUiModel(
-                                    isLoading = false,
-                                    id = item.id,
-                                    name = item.name,
-                                    size = item.size,
-                                    picture = item.picture,
-                                    buyPrice = item.buyPrice,
-                                    buyPlace = item.buyPlace,
-                                    buyDate = item.buyDate,
-                                )
-                        }
-                    }
-                } else {
+        fun loadInventoryItem(inventoryItemId: Long) {
+            viewModelScope.launch(Dispatchers.IO) {
+                getInventoryItemUseCase(inventoryItemId).first().let { item ->
                     withContext(Dispatchers.Main) {
-                        _uiState.value = InventoryFormModalUiModel(false)
+                        _uiState.value =
+                            InventoryFormModalUiModel(
+                                isLoading = false,
+                                id = item.id,
+                                name = item.name,
+                                size = item.size,
+                                picture = item.picture,
+                                buyPrice = item.buyPrice,
+                                buyPlace = item.buyPlace,
+                                buyDate = item.buyDate,
+                            )
                     }
                 }
             }

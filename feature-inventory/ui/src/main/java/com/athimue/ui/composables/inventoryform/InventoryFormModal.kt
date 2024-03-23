@@ -31,18 +31,21 @@ import com.athimue.ui.composables.sneakerpicker.SneakerPicker
 import com.athimue.ui.constants.BuyShop
 import com.athimue.ui.constants.ShoeSize
 
+@Suppress("ktlint:standard:function-naming")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InventoryFormModal(
     viewModel: InventoryFormModalViewModel = hiltViewModel(),
-    selectedSneakerId: Long,
+    selectedSneakerId: Long?,
     closeModal: () -> Unit,
     addInventory: (InventoryFormModalUiModel) -> Unit,
 ) {
     val inventoryFormModalState = rememberModalBottomSheetState(true)
     val uiState by viewModel.uiState.collectAsState()
 
-    viewModel.loadInventoryItem(selectedSneakerId)
+    selectedSneakerId?.let {
+        viewModel.loadInventoryItem(it)
+    } ?: {}
 
     ModalBottomSheet(
         modifier = Modifier.fillMaxSize(),
@@ -62,12 +65,7 @@ fun InventoryFormModal(
                 CircularProgressIndicator()
             } else {
                 ModalHeader(
-                    title =
-                        if (selectedSneakerId.toInt() != 0) {
-                            "Update an item"
-                        } else {
-                            "Add an item"
-                        },
+                    title = selectedSneakerId?.let { "Update an item" } ?: "Add an item",
                     onCloseBtnClick = {
                         viewModel.closeDatePicker()
                         viewModel.closeSneakerPicker()
