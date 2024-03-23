@@ -1,5 +1,6 @@
 package com.athimue.ui.composables.inventoryform
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -45,7 +46,7 @@ fun InventoryFormModal(
 
     selectedSneakerId?.let {
         viewModel.loadInventoryItem(it)
-    } ?: {}
+    } ?: viewModel.resetUiModel()
 
     ModalBottomSheet(
         modifier = Modifier.fillMaxSize(),
@@ -62,7 +63,13 @@ fun InventoryFormModal(
                     .verticalScroll(rememberScrollState()),
         ) {
             if (uiState.isLoading) {
-                CircularProgressIndicator()
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                ) {
+                    CircularProgressIndicator()
+                }
             } else {
                 ModalHeader(
                     title = selectedSneakerId?.let { "Update an item" } ?: "Add an item",

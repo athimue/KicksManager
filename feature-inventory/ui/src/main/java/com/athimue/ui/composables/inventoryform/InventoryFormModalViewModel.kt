@@ -42,6 +42,10 @@ class InventoryFormModalViewModel
             }
         }
 
+        fun resetUiModel() {
+            _uiState.value = InventoryFormModalUiModel(isLoading = false)
+        }
+
         fun closeDatePicker() = updateState { copy(showDatePicker = false) }
 
         fun closeSneakerPicker() = updateState { copy(showSneakerPicker = false) }
