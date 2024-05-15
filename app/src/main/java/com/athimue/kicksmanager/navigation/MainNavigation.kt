@@ -21,14 +21,6 @@ import com.athimue.ui.composables.inventory.InventoryComposable
 import com.athimue.ui.composables.sells.SellsComposable
 import com.athimue.ui.navigation.StatisticsNavigation
 
-sealed class Screen(val route: String) {
-    data object Inventory : Screen("inventory")
-
-    data object Sells : Screen("sells")
-
-    data object Statistics : Screen("statistics")
-}
-
 @Composable
 fun MainNavigation() {
     val navController = rememberNavController()
@@ -37,24 +29,24 @@ fun MainNavigation() {
         bottomBar = {
             BottomBar(
                 currentRoute = navController.currentDestination?.route,
-                onInventoryClick = { navController.navigate(Screen.Inventory.route) },
-                onSellsClick = { navController.navigate(Screen.Sells.route) },
-                onStatisticsClick = { navController.navigate(Screen.Statistics.route) },
+                onInventoryClick = { navController.navigate(Routes.Inventory) },
+                onSellsClick = { navController.navigate(Routes.Sells) },
+                onStatisticsClick = { navController.navigate(Routes.Statistics) },
             )
         },
     ) {
         NavHost(
             modifier = Modifier.padding(it),
             navController = navController,
-            startDestination = Screen.Inventory.route,
+            startDestination = Routes.Inventory,
         ) {
-            composable(Screen.Inventory.route) {
+            composable<Routes.Inventory> {
                 InventoryComposable()
             }
-            composable(Screen.Sells.route) {
+            composable<Routes.Sells> {
                 SellsComposable()
             }
-            composable(Screen.Statistics.route) {
+            composable<Routes.Statistics> {
                 StatisticsNavigation()
             }
         }
@@ -70,7 +62,7 @@ fun BottomBar(
 ) {
     NavigationBar {
         NavigationBarItem(
-            selected = currentRoute == Screen.Inventory.route,
+            selected = currentRoute == Routes.Inventory.toString(),
             icon = { Icon(imageVector = Icons.AutoMirrored.Rounded.List, contentDescription = "") },
             label = { Text("Inventory") },
             onClick = onInventoryClick,
@@ -81,7 +73,7 @@ fun BottomBar(
                 ),
         )
         NavigationBarItem(
-            selected = currentRoute == Screen.Sells.route,
+            selected = currentRoute == Routes.Sells.toString(),
             icon = { Icon(imageVector = Icons.Rounded.ShoppingCart, contentDescription = "") },
             label = { Text("Sells") },
             onClick = onSellsClick,
@@ -92,7 +84,7 @@ fun BottomBar(
                 ),
         )
         NavigationBarItem(
-            selected = currentRoute == Screen.Statistics.route,
+            selected = currentRoute == Routes.Statistics.toString(),
             icon = { Icon(imageVector = Icons.Rounded.Build, contentDescription = "") },
             label = { Text("Statistics") },
             onClick = onStatisticsClick,
