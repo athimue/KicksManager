@@ -1,42 +1,31 @@
 package com.athimue.ui.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
+import androidx.navigation.toRoute
 import com.athimue.ui.composable.sellplace.SellPlaceStatisticsComposable
 import com.athimue.ui.composable.statistics.StatisticsComposable
-
-sealed class StatisticsScreen(val route: String) {
-    data object Home : StatisticsScreen("home")
-    data object SellPlace : StatisticsScreen("sellplace/{place}")
-}
 
 @Composable
 fun StatisticsNavigation() {
     val navController = rememberNavController()
     NavHost(
-        navController = navController, startDestination = StatisticsScreen.Home.route
+        navController = navController,
+        startDestination = Routes.Home,
     ) {
-        composable(route = StatisticsScreen.Home.route) {
+        composable<Routes.Home> {
             StatisticsComposable(onClick = { sellPlace ->
-                navController.navigate(
-                    StatisticsScreen.SellPlace.route.replace(
-                        oldValue = "{place}", newValue = sellPlace
-                    )
-                )
+                navController.navigate(Routes.SellPlace(place = sellPlace))
             })
         }
-        composable(
-            route = StatisticsScreen.SellPlace.route, arguments = listOf(navArgument("place") {
-                type = NavType.StringType
-                defaultValue = "WETHENEW"
-            })
-        ) { sellPlace ->
-            SellPlaceStatisticsComposable(sellPlace = sellPlace.arguments?.getString("place") ?: "",
-                onBack = { navController.popBackStack() })
+        composable<Routes.SellPlace> {
+            val args = it.toRoute<Routes.SellPlace>()
+            SellPlaceStatisticsComposable(
+                sellPlace = args.place,
+                onBack = { navController.popBackStack() },
+            )
         }
     }
 }
