@@ -23,6 +23,10 @@
             <option value="$PROJECT_DIR$/feature-statistics/data" />
             <option value="$PROJECT_DIR$/feature-statistics/domain" />
             <option value="$PROJECT_DIR$/feature-statistics/ui" />
+            <option value="$PROJECT_DIR$/feature-trends" />
+            <option value="$PROJECT_DIR$/feature-trends/data" />
+            <option value="$PROJECT_DIR$/feature-trends/domain" />
+            <option value="$PROJECT_DIR$/feature-trends/ui" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
