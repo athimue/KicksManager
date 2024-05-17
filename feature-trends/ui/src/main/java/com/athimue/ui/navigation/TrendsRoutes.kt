@@ -3,7 +3,7 @@ package com.athimue.ui.navigation
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed class Routes {
+sealed class TrendsRoutes {
     @Serializable
-    object Trends
+    object Home
 }

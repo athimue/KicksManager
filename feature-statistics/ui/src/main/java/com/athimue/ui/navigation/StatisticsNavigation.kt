@@ -13,15 +13,15 @@ fun StatisticsNavigation() {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = Routes.Home,
+        startDestination = StatisticsRoutes.Home,
     ) {
-        composable<Routes.Home> {
+        composable<StatisticsRoutes.Home> {
             StatisticsComposable(onClick = { sellPlace ->
-                navController.navigate(Routes.SellPlace(place = sellPlace))
+                navController.navigate(StatisticsRoutes.SellPlace(place = sellPlace))
             })
         }
-        composable<Routes.SellPlace> {
-            val args = it.toRoute<Routes.SellPlace>()
+        composable<StatisticsRoutes.SellPlace> {
+            val args = it.toRoute<StatisticsRoutes.SellPlace>()
             SellPlaceStatisticsComposable(
                 sellPlace = args.place,
                 onBack = { navController.popBackStack() },

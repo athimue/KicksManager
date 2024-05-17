@@ -13,4 +13,7 @@ sealed class Routes {
 
     @Serializable
     object Statistics
+
+    @Serializable
+    object Trends
 }
