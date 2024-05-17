@@ -5,6 +5,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.List
 import androidx.compose.material.icons.rounded.Build
 import androidx.compose.material.icons.rounded.ShoppingCart
+import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -20,6 +21,7 @@ import androidx.navigation.compose.rememberNavController
 import com.athimue.ui.composables.inventory.InventoryComposable
 import com.athimue.ui.composables.sells.SellsComposable
 import com.athimue.ui.navigation.StatisticsNavigation
+import com.athimue.ui.navigation.TrendsNavigation
 
 @Composable
 fun MainNavigation() {
@@ -32,6 +34,7 @@ fun MainNavigation() {
                 onInventoryClick = { navController.navigate(Routes.Inventory) },
                 onSellsClick = { navController.navigate(Routes.Sells) },
                 onStatisticsClick = { navController.navigate(Routes.Statistics) },
+                onTrendsClick = { navController.navigate(Routes.Trends) }
             )
         },
     ) {
@@ -49,6 +52,9 @@ fun MainNavigation() {
             composable<Routes.Statistics> {
                 StatisticsNavigation()
             }
+            composable<Routes.Trends> {
+                TrendsNavigation()
+            }
         }
     }
 }
@@ -59,6 +65,7 @@ fun BottomBar(
     onInventoryClick: () -> Unit,
     onSellsClick: () -> Unit,
     onStatisticsClick: () -> Unit,
+    onTrendsClick: () -> Unit,
 ) {
     NavigationBar {
         NavigationBarItem(
@@ -88,6 +95,17 @@ fun BottomBar(
             icon = { Icon(imageVector = Icons.Rounded.Build, contentDescription = "") },
             label = { Text("Statistics") },
             onClick = onStatisticsClick,
+            colors =
+                NavigationBarItemDefaults.colors(
+                    unselectedIconColor = MaterialTheme.colorScheme.secondary,
+                    unselectedTextColor = MaterialTheme.colorScheme.secondary,
+                ),
+        )
+        NavigationBarItem(
+            selected = currentRoute == Routes.Trends.toString(),
+            icon = { Icon(imageVector = Icons.Rounded.Star, contentDescription = null) },
+            label = { Text("Trends") },
+            onClick = onTrendsClick,
             colors =
                 NavigationBarItemDefaults.colors(
                     unselectedIconColor = MaterialTheme.colorScheme.secondary,
