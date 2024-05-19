@@ -30,7 +30,7 @@ object NetworkModule {
 
     /**
      * Provides an instance of [Retrofit] with [OkHttpClient] as client
-     * and [BuildConfig.DEEZER_BASE_URL] as a base url.
+     * and [SELL_WETHENEW_API] as a base url.
      */
     @Singleton
     @Provides
@@ -43,11 +43,11 @@ object NetworkModule {
 
 
     /**
-     * Provides an instance of [DeezerApi].
+     * Provides an instance of [SellWeTheNewApi].
      */
     @Provides
     @Singleton
-    fun provideDeezerApi(retrofit: Retrofit): SellWeTheNewApi =
+    fun provideWeTheNewApi(retrofit: Retrofit): SellWeTheNewApi =
         retrofit.create(SellWeTheNewApi::class.java)
 
 }
