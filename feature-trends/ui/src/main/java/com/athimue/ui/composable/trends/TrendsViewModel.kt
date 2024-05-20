@@ -1,6 +1,5 @@
 package com.athimue.ui.composable.trends
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -20,11 +19,16 @@ class TrendsViewModel
         var uiState by mutableStateOf(TrendsUiState())
 
         init {
-            viewModelScope.launch {
-                trendsRepository.getPopularItems().map {
-                    uiState = uiState.copy(popularSneaker = it)
-                }.onFailure { e ->
-                    Log.d("COUCOU", "$e")
+            viewModelScope.run {
+                launch {
+                    trendsRepository.getPopularSneakers().map {
+                        uiState = uiState.copy(popularSneakers = it)
+                    }
+                }
+                launch {
+                    trendsRepository.getJustDroppedSneakers().map {
+                        uiState = uiState.copy(justDroppedSneakers = it)
+                    }
                 }
             }
         }

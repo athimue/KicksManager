@@ -7,5 +7,5 @@ import javax.inject.Inject
 class GetPopularItemUseCase
     @Inject
     constructor(private val trendsRepository: TrendsRepository) {
-        suspend operator fun invoke(): Result<List<PopularSneaker>> = trendsRepository.getPopularItems()
+        suspend operator fun invoke(): Result<List<PopularSneaker>> = trendsRepository.getPopularSneakers()
     }

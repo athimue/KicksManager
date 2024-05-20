@@ -41,15 +41,55 @@ fun TrendsComposable(viewModel: TrendsViewModel = hiltViewModel()) {
         HorizontalDivider()
         Text(
             text = "MOST WANTED SNEAKERS",
-            modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
+            modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
             textAlign = TextAlign.Center,
             fontSize = 25.sp,
             fontWeight = FontWeight.ExtraBold,
         )
-        if (viewModel.uiState.popularSneaker.isNotEmpty()) {
+        if (viewModel.uiState.popularSneakers.isNotEmpty()) {
             LazyRow {
                 items(
-                    items = viewModel.uiState.popularSneaker,
+                    items = viewModel.uiState.popularSneakers,
+                    key = { item -> item.sku },
+                ) { popularSneaker ->
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Image(
+                            painter = rememberAsyncImagePainter(popularSneaker.picture),
+                            contentDescription = null,
+                            modifier = Modifier.size(120.dp),
+                        )
+                        Text(
+                            text =
+                                if (popularSneaker.name.length > 10) {
+                                    popularSneaker.name.substring(
+                                        0,
+                                        8,
+                                    ) + ".."
+                                } else {
+                                    popularSneaker.name
+                                },
+                        )
+                        Text(text = popularSneaker.sku)
+                    }
+                }
+            }
+        } else {
+            Text("Empty list", textAlign = TextAlign.Center)
+        }
+        HorizontalDivider()
+        Text(
+            text = "JUST DROPPED",
+            modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
+            textAlign = TextAlign.Center,
+            fontSize = 25.sp,
+            fontWeight = FontWeight.ExtraBold,
+        )
+        if (viewModel.uiState.justDroppedSneakers.isNotEmpty()) {
+            LazyRow {
+                items(
+                    items = viewModel.uiState.justDroppedSneakers,
                     key = { item -> item.sku },
                 ) { popularSneaker ->
                     Column(

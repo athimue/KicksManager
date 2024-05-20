@@ -14,6 +14,14 @@ interface GoatApi {
     @Query("filters[web_groups]") group: String = "sneakers",
   ): Response<PopularResponseDto>
 
+  @GET("browse/collection_id/just-dropped")
+  suspend fun getJustDroppedSneakers(
+    @Query("key") key: String = "key_XT7bjdbvjgECO5d8",
+    @Query("page") page: Int = 1,
+    @Query("num_results_per_page") resultPerPage: Int = 20,
+    @Query("filters[web_groups]") group: String = "sneakers",
+  ): Response<PopularResponseDto>
+
   companion object {
     const val GOAT_API = "https://ac.cnstrc.com"
   }
