@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,7 +26,9 @@ import coil.compose.rememberAsyncImagePainter
 @Composable
 fun TrendsComposable(viewModel: TrendsViewModel = hiltViewModel()) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier =
+            Modifier.fillMaxSize()
+                .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
@@ -119,5 +123,44 @@ fun TrendsComposable(viewModel: TrendsViewModel = hiltViewModel()) {
             Text("Empty list", textAlign = TextAlign.Center)
         }
         HorizontalDivider()
+        Text(
+            text = "NEW ARRIVALS",
+            modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
+            textAlign = TextAlign.Center,
+            fontSize = 25.sp,
+            fontWeight = FontWeight.ExtraBold,
+        )
+        if (viewModel.uiState.newArrivalsSneakers.isNotEmpty()) {
+            LazyRow {
+                items(
+                    items = viewModel.uiState.newArrivalsSneakers,
+                    key = { item -> item.sku },
+                ) { popularSneaker ->
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Image(
+                            painter = rememberAsyncImagePainter(popularSneaker.picture),
+                            contentDescription = null,
+                            modifier = Modifier.size(120.dp),
+                        )
+                        Text(
+                            text =
+                                if (popularSneaker.name.length > 10) {
+                                    popularSneaker.name.substring(
+                                        0,
+                                        8,
+                                    ) + ".."
+                                } else {
+                                    popularSneaker.name
+                                },
+                        )
+                        Text(text = popularSneaker.sku)
+                    }
+                }
+            }
+        } else {
+            Text("Empty list", textAlign = TextAlign.Center)
+        }
     }
 }

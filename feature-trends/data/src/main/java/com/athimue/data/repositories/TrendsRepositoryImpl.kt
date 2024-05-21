@@ -25,4 +25,11 @@ class TrendsRepositoryImpl
             Result.success(it.response.results.map { popularSneakerDto -> popularSneakerDto.toPopularSneaker() })
         } ?: Result.failure(Exception(response.message()))
     }
+
+    override suspend fun getNewArrivalsSneakers(): Result<List<PopularSneaker>> {
+        val response = goatApi.getNewArrivals()
+        return response.takeIf { it.isSuccessful }?.body()?.let {
+            Result.success(it.response.results.map { popularSneakerDto -> popularSneakerDto.toPopularSneaker() })
+        } ?: Result.failure(Exception(response.message()))
+    }
 }

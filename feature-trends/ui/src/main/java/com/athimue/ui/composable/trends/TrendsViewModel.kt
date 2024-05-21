@@ -30,6 +30,11 @@ class TrendsViewModel
                         uiState = uiState.copy(justDroppedSneakers = it)
                     }
                 }
+                launch {
+                    trendsRepository.getNewArrivalsSneakers().map {
+                        uiState = uiState.copy(newArrivalsSneakers = it)
+                    }
+                }
             }
         }
     }
