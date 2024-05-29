@@ -120,6 +120,7 @@ data class PopularSneakerDataDto(
 )
 
 fun PopularSneakerDto.toPopularSneaker() = PopularSneaker(
+  id = data.id,
   sku = data.sku,
   name = value,
   picture = data.imageUrl,

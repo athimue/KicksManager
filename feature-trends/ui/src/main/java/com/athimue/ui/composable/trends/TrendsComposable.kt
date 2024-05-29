@@ -1,6 +1,7 @@
 package com.athimue.ui.composable.trends
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,12 +23,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
+import com.athimue.ui.composable.common.TrendItem
+import com.athimue.ui.composable.detail.DetailModel
 
 @Composable
-fun TrendsComposable(viewModel: TrendsViewModel = hiltViewModel()) {
+fun TrendsComposable(
+    viewModel: TrendsViewModel = hiltViewModel(),
+    goToDetail: (DetailModel) -> Unit,
+) {
     Column(
         modifier =
-            Modifier.fillMaxSize()
+            Modifier
+                .fillMaxSize()
                 .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -45,7 +52,10 @@ fun TrendsComposable(viewModel: TrendsViewModel = hiltViewModel()) {
         HorizontalDivider()
         Text(
             text = "MOST WANTED SNEAKERS",
-            modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 10.dp),
             textAlign = TextAlign.Center,
             fontSize = 25.sp,
             fontWeight = FontWeight.ExtraBold,
@@ -58,24 +68,22 @@ fun TrendsComposable(viewModel: TrendsViewModel = hiltViewModel()) {
                 ) { popularSneaker ->
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier =
+                            Modifier.clickable {
+                                goToDetail(
+                                    DetailModel(
+                                        id = popularSneaker.id,
+                                        picture = popularSneaker.picture,
+                                        name = popularSneaker.name,
+                                    ),
+                                )
+                            },
                     ) {
-                        Image(
-                            painter = rememberAsyncImagePainter(popularSneaker.picture),
-                            contentDescription = null,
-                            modifier = Modifier.size(120.dp),
+                        TrendItem(
+                            picture = popularSneaker.picture,
+                            name = popularSneaker.name,
+                            sku = popularSneaker.sku,
                         )
-                        Text(
-                            text =
-                                if (popularSneaker.name.length > 10) {
-                                    popularSneaker.name.substring(
-                                        0,
-                                        8,
-                                    ) + ".."
-                                } else {
-                                    popularSneaker.name
-                                },
-                        )
-                        Text(text = popularSneaker.sku)
                     }
                 }
             }
@@ -85,7 +93,10 @@ fun TrendsComposable(viewModel: TrendsViewModel = hiltViewModel()) {
         HorizontalDivider()
         Text(
             text = "JUST DROPPED",
-            modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 10.dp),
             textAlign = TextAlign.Center,
             fontSize = 25.sp,
             fontWeight = FontWeight.ExtraBold,
@@ -125,7 +136,10 @@ fun TrendsComposable(viewModel: TrendsViewModel = hiltViewModel()) {
         HorizontalDivider()
         Text(
             text = "NEW ARRIVALS",
-            modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 10.dp),
             textAlign = TextAlign.Center,
             fontSize = 25.sp,
             fontWeight = FontWeight.ExtraBold,
