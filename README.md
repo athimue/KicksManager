@@ -6,7 +6,7 @@ Build with Android jetpack compose based on MVVM and clean architecture -> featu
 
 I developed this application to discover jetpack compose and to improve my mobile development skills.
 
-![Uploading image.png…]()
+![image](https://github.com/athimue/KicksManager/assets/84283744/24d1061f-e817-4e73-870b-cdb95f73eff3)
 
 ## Project technical stack
 
