@@ -1,5 +1,8 @@
 package com.athimue.ui.composable.trends
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -26,8 +29,10 @@ import coil.compose.rememberAsyncImagePainter
 import com.athimue.ui.composable.common.TrendItem
 import com.athimue.ui.composable.detail.DetailModel
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun TrendsComposable(
+fun SharedTransitionScope.TrendsComposable(
+    animatedVisibilityScope: AnimatedVisibilityScope,
     viewModel: TrendsViewModel = hiltViewModel(),
     goToDetail: (DetailModel) -> Unit,
 ) {
@@ -72,7 +77,7 @@ fun TrendsComposable(
                             Modifier.clickable {
                                 goToDetail(
                                     DetailModel(
-                                        id = popularSneaker.id,
+                                        sku = popularSneaker.sku,
                                         picture = popularSneaker.picture,
                                         name = popularSneaker.name,
                                     ),
@@ -80,6 +85,7 @@ fun TrendsComposable(
                             },
                     ) {
                         TrendItem(
+                            animatedVisibilityScope = animatedVisibilityScope,
                             picture = popularSneaker.picture,
                             name = popularSneaker.name,
                             sku = popularSneaker.sku,

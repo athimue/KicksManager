@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class DetailModel(
-    val id: String,
+    val sku: String,
     val name: String,
     val picture: String,
 )

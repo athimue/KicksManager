@@ -1,7 +1,9 @@
 package com.athimue.ui.composable.common
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -9,8 +11,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun ColumnScope.TrendItem(
+fun SharedTransitionScope.TrendItem(
+    animatedVisibilityScope: AnimatedVisibilityScope,
     picture: String,
     name: String,
     sku: String,
@@ -18,7 +22,13 @@ fun ColumnScope.TrendItem(
     Image(
         painter = rememberAsyncImagePainter(picture),
         contentDescription = null,
-        modifier = Modifier.size(120.dp),
+        modifier =
+            Modifier
+                .size(120.dp)
+                .sharedElement(
+                    state = rememberSharedContentState(key = "image/$picture"),
+                    animatedVisibilityScope = animatedVisibilityScope,
+                ),
     )
     Text(
         text =
@@ -30,6 +40,18 @@ fun ColumnScope.TrendItem(
             } else {
                 name
             },
+        modifier =
+            Modifier.sharedElement(
+                state = rememberSharedContentState(key = "text/$name"),
+                animatedVisibilityScope = animatedVisibilityScope,
+            ),
     )
-    Text(text = sku)
+    Text(
+        text = sku,
+        modifier =
+            Modifier.sharedElement(
+                state = rememberSharedContentState(key = "text/$sku"),
+                animatedVisibilityScope = animatedVisibilityScope,
+            ),
+    )
 }
