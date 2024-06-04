@@ -1,6 +1,5 @@
 package com.athimue.ui.navigation
 
-import com.athimue.ui.composable.detail.DetailModel
 import kotlinx.serialization.Serializable
 
 @Serializable
