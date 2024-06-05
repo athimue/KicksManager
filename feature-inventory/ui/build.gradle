@@ -49,8 +49,8 @@ dependencies {
     implementation project(':feature-inventory:domain')
 
     implementation "androidx.core:core-ktx:$core_ktx_version"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$compose_version"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$compose_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_compose_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_compose_version"
     implementation "androidx.activity:activity-compose:$activity_compose_version"
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.compiler:compiler:$compose_compiler"
