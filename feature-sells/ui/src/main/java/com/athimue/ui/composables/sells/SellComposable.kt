@@ -57,20 +57,32 @@ fun SellsComposable(viewModel: SellViewModel = hiltViewModel()) {
         )
         SellSummary(uiState.sells)
         HorizontalDivider()
-        LazyColumn {
-            items(items = uiState.sells, key = { item -> item.id }) { item ->
-                SellItem(
-                    sell = item,
-                    onEndToStartSwipe = {
-                        viewModel.deleteSell(it)
-                        Toast.makeText(
-                            context,
-                            "Sell deleted !",
-                            Toast.LENGTH_SHORT,
-                        ).show()
-                    },
+        if (uiState.sells.isNotEmpty()) {
+            LazyColumn {
+                items(items = uiState.sells, key = { item -> item.id }) { item ->
+                    SellItem(
+                        sell = item,
+                        onEndToStartSwipe = {
+                            viewModel.deleteSell(it)
+                            Toast.makeText(
+                                context,
+                                "Sell deleted !",
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                        },
+                    )
+                    HorizontalDivider()
+                }
+            }
+        } else {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Text(
+                    text = "No sells",
+                    modifier = Modifier.padding(top = 8.dp),
                 )
-                HorizontalDivider()
             }
         }
     }
