@@ -24,7 +24,7 @@ fun StatisticsNavigation() {
             val args = it.toRoute<StatisticsRoutes.SellPlace>()
             SellPlaceStatisticsComposable(
                 sellPlace = args.place,
-                onBack = { navController.popBackStack() },
+                onBack = { navController.navigateUp() },
             )
         }
     }

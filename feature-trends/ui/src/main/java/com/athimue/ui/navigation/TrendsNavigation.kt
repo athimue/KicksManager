@@ -35,7 +35,7 @@ fun TrendsNavigation() {
                 DetailScreen(
                     animatedVisibilityScope = this,
                     detail = Gson().fromJson(args.item, DetailModel::class.java),
-                    onBackClick = { navController.popBackStack() },
+                    onBackClick = { navController.navigateUp() },
                 )
             }
         }
