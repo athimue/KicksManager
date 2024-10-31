@@ -4,10 +4,6 @@ KicksManager is an android mobile app to manage a shoe stock. Users can declare 
 
 Build with Android jetpack compose based on MVVM and clean architecture -> features with layers based module
 
-I developed this application to discover jetpack compose and to improve my mobile development skills.
-
-![image](https://github.com/athimue/KicksManager/assets/84283744/24d1061f-e817-4e73-870b-cdb95f73eff3)
-
 ## Project technical stack
 
 This project takes advantage of best practices, and many popular libraries and tools in the Android ecosystem.
