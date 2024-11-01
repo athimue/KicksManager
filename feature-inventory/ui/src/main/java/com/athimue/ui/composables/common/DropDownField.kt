@@ -26,6 +26,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 
@@ -54,11 +55,11 @@ fun DropDownField(
                 value = itemSelected,
                 onValueChange = onItemSelected,
                 modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .onGloballyPositioned { coordinates ->
-                            dropDownTextField = coordinates.size.toSize()
-                        },
+                Modifier
+                    .fillMaxWidth()
+                    .onGloballyPositioned { coordinates ->
+                        dropDownTextField = coordinates.size.toSize()
+                    },
                 label = { Text(title) },
                 trailingIcon = {
                     Icon(
@@ -69,10 +70,10 @@ fun DropDownField(
             )
             Box(
                 modifier =
-                    Modifier
-                        .matchParentSize()
-                        .alpha(0f)
-                        .clickable(onClick = { isDropDownExpanded = !isDropDownExpanded }),
+                Modifier
+                    .matchParentSize()
+                    .alpha(0f)
+                    .clickable(onClick = { isDropDownExpanded = !isDropDownExpanded }),
             )
         }
         DropdownMenu(
@@ -88,4 +89,15 @@ fun DropDownField(
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DropDownFieldPreview() {
+    DropDownField(
+        title = "Title",
+        choices = listOf("Choice 1", "Choice 2", "Choice 3"),
+        itemSelected = "Choice 1",
+        onItemSelected = {},
+    )
 }

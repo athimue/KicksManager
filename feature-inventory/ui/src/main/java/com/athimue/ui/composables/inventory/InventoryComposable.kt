@@ -56,7 +56,9 @@ import com.athimue.ui.composables.sellform.SellFormDialog
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
-fun InventoryComposable(viewModel: InventoryViewModel = hiltViewModel()) {
+fun InventoryComposable(
+    viewModel: InventoryViewModel = hiltViewModel()
+) {
     val uiState by viewModel.uiState.collectAsState()
     var isInventoryFormModalOpen by remember { mutableStateOf(false) }
     var showSellFormModal by remember { mutableStateOf(false) }
@@ -87,9 +89,9 @@ fun InventoryComposable(viewModel: InventoryViewModel = hiltViewModel()) {
         ) {
             Text(
                 modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(top = 10.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 10.dp),
                 text = "INVENTORY",
                 textAlign = TextAlign.Center,
                 fontFamily = FontFamily.Monospace,
@@ -125,9 +127,9 @@ fun InventoryComposable(viewModel: InventoryViewModel = hiltViewModel()) {
             } else {
                 Text(
                     modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(top = 20.dp),
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 20.dp),
                     text = "No inventory",
                     textAlign = TextAlign.Center,
                     fontFamily = FontFamily.Monospace,
@@ -187,7 +189,6 @@ fun InventoryComposable(viewModel: InventoryViewModel = hiltViewModel()) {
 }
 
 @Suppress("ktlint:standard:function-naming")
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 private fun LazyItemScope.InventoryItem(
     inventoryItem: InventoryUiModel,
@@ -214,10 +215,9 @@ private fun LazyItemScope.InventoryItem(
         }, positionalThreshold = { 0.35f })
     SwipeToDismissBox(
         state = dismissState,
-        modifier =
-            Modifier
-                .padding(vertical = 1.dp)
-                .animateItemPlacement(),
+        modifier = Modifier
+            .padding(vertical = 1.dp)
+            .animateItem(fadeInSpec = null, fadeOutSpec = null),
         backgroundContent = {
             DismissBackground(dismissState)
         },
@@ -237,10 +237,10 @@ private fun InventoryItemCard(
 ) {
     Row(
         modifier =
-            Modifier
-                .clip(MaterialTheme.shapes.medium)
-                .background(Color.White)
-                .clickable { onClick(inventoryItem.id) },
+        Modifier
+            .clip(MaterialTheme.shapes.medium)
+            .background(Color.White)
+            .clickable { onClick(inventoryItem.id) },
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
@@ -274,7 +274,6 @@ private fun InventoryItemCard(
 }
 
 @Suppress("ktlint:standard:function-naming")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DismissBackground(dismissState: SwipeToDismissBoxState) {
     val direction = dismissState.dismissDirection
@@ -288,9 +287,9 @@ fun DismissBackground(dismissState: SwipeToDismissBoxState) {
         }
     Row(
         modifier =
-            Modifier
-                .fillMaxSize()
-                .background(color),
+        Modifier
+            .fillMaxSize()
+            .background(color),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (direction == SwipeToDismissBoxValue.StartToEnd) {

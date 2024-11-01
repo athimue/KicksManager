@@ -10,6 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -17,7 +19,9 @@ fun InputField(
     title: String,
     value: String,
     onValueChange: (String) -> Unit,
-    keyboardOptions: KeyboardOptions
+    keyboardOptions: KeyboardOptions = KeyboardOptions(
+        keyboardType = KeyboardType.Text,
+    ),
 ) {
     Column(
         modifier = Modifier.padding(8.dp)
@@ -34,4 +38,14 @@ fun InputField(
             keyboardOptions = keyboardOptions,
         )
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun InputFieldPreview() {
+    InputField(
+        title = "Title",
+        value = "Value",
+        onValueChange = {}
+    )
 }

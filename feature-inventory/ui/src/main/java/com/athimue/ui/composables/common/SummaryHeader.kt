@@ -7,6 +7,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.athimue.ui.composables.inventory.InventoryUiModel
 
@@ -28,4 +29,21 @@ fun SummaryHeader(inventory: List<InventoryUiModel>) {
         )
     }
     HorizontalDivider()
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SummaryHeaderPreview() {
+    SummaryHeader(
+        inventory = listOf(
+            InventoryUiModel(
+                id = 1L,
+                name = "name",
+                picture = "picture",
+                size = "42",
+                quantity = 1,
+                buyPrice = 150.0
+            )
+        )
+    )
 }

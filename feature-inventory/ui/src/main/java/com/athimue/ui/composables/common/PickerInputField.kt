@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -45,4 +46,14 @@ fun <T> PickerInputField(
             )
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PickerInputFieldPreview() {
+    PickerInputField(
+        title = "Title",
+        value = "Value",
+        onClick = {}
+    )
 }
