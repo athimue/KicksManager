@@ -32,8 +32,8 @@ import com.athimue.ui.composable.detail.DetailModel
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun SharedTransitionScope.TrendsComposable(
-    animatedVisibilityScope: AnimatedVisibilityScope,
     viewModel: TrendsViewModel = hiltViewModel(),
+    animatedVisibilityScope: AnimatedVisibilityScope,
     goToDetail: (DetailModel) -> Unit,
 ) {
     Column(
