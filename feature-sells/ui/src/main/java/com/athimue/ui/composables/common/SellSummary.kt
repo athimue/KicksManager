@@ -1,8 +1,6 @@
 package com.athimue.ui.composables.common
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -10,24 +8,22 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AddCircle
 import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material.icons.rounded.ThumbUp
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.athimue.ui.composables.sells.SellUiModel
 
 @Composable
 fun SellSummary(sells: List<SellUiModel>) {
     Row(
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(top = 10.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 10.dp),
         horizontalArrangement = Arrangement.SpaceAround,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         SellSummaryItem(
             icon = Icons.Rounded.ThumbUp,
@@ -48,31 +44,19 @@ fun SellSummary(sells: List<SellUiModel>) {
             icon = Icons.Rounded.CheckCircle,
             iconColor = Color.Red,
             title = "${
-                sells.map { sell -> sell.sellPrice }.fold(0.0) { acc, profitItem -> acc + profitItem }
+                sells.map { sell -> sell.sellPrice }
+                    .fold(0.0) { acc, profitItem -> acc + profitItem }
             } €",
             subject = "Sales",
         )
     }
 }
 
+@Preview(showBackground = true)
 @Composable
-private fun SellSummaryItem(
-    icon: ImageVector,
-    iconColor: Color,
-    title: String,
-    subject: String,
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Image(
-            imageVector = icon,
-            contentDescription = "",
-            colorFilter = ColorFilter.tint(iconColor),
-        )
-        Column(modifier = Modifier.padding(10.dp)) {
-            Text(text = title)
-            Text(text = subject)
-        }
-    }
+fun SellSummaryPreview() {
+    SellSummary(
+        sells = listOf()
+    )
 }
+

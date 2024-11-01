@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.athimue.ui.composables.sells.SellUiModel
@@ -68,4 +69,21 @@ fun SellItemCard(
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SellItemCardPreview() {
+    SellItemCard(
+        sell = SellUiModel(
+            id = 1,
+            name = "",
+            picture = "",
+            size = "",
+            buyPrice = 1.0,
+            sellPrice = 1.0,
+            sellDate = "",
+            sellPlace = ""
+        )
+    )
 }

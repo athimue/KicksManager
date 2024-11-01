@@ -46,9 +46,9 @@ fun SellsComposable(viewModel: SellViewModel = hiltViewModel()) {
     Column {
         Text(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(top = 10.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp),
             text = "SELLS",
             textAlign = TextAlign.Center,
             fontFamily = FontFamily.Monospace,
@@ -88,7 +88,7 @@ fun SellsComposable(viewModel: SellViewModel = hiltViewModel()) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun LazyItemScope.SellItem(
     sell: SellUiModel,
@@ -108,10 +108,9 @@ private fun LazyItemScope.SellItem(
         }, positionalThreshold = { 0.35f })
     SwipeToDismissBox(
         state = dismissState,
-        modifier =
-            Modifier
-                .padding(vertical = 1.dp)
-                .animateItemPlacement(),
+        modifier = Modifier
+            .padding(vertical = 1.dp)
+            .animateItem(fadeInSpec = null, fadeOutSpec = null),
         enableDismissFromStartToEnd = false,
         backgroundContent = {
             DismissBackground(dismissState)
@@ -121,7 +120,6 @@ private fun LazyItemScope.SellItem(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun DismissBackground(dismissState: SwipeToDismissBoxState) {
     val color =
@@ -131,9 +129,9 @@ private fun DismissBackground(dismissState: SwipeToDismissBoxState) {
         }
     Row(
         modifier =
-            Modifier
-                .fillMaxSize()
-                .background(color),
+        Modifier
+            .fillMaxSize()
+            .background(color),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Spacer(modifier = Modifier.weight(1f))
