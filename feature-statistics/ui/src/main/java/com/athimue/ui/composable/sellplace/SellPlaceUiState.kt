@@ -1,5 +1,5 @@
 package com.athimue.ui.composable.sellplace
 
 data class SellPlaceUiState(
-    var sells: List<SellPlaceUiModel> = listOf()
+    val sells: List<SellPlaceUiModel> = listOf()
 )
