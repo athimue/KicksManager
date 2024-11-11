@@ -13,24 +13,25 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SellViewModel
-    @Inject
-    constructor(
-        getSellsUseCase: GetSellsUseCase,
-        private val deleteSellUseCase: DeleteSellUseCase,
-    ) : ViewModel() {
-        var uiState =
-            getSellsUseCase.invoke()
-                .map { sells -> SellUiState(sells = sells.map { it.toSellUiModel() }) }
-                .stateIn(
-                    scope = viewModelScope,
-                    initialValue = SellUiState(),
-                    started = SharingStarted.WhileSubscribed(5000),
-                )
+class SellViewModel @Inject constructor(
+    getSellsUseCase: GetSellsUseCase,
+    private val deleteSellUseCase: DeleteSellUseCase,
+) : ViewModel() {
 
-        fun deleteSell(sellId: Long) {
-            viewModelScope.launch(Dispatchers.IO) {
-                deleteSellUseCase.deleteSell(sellId)
-            }
+    private val uiState =
+        getSellsUseCase.invoke()
+            .map { sells -> SellUiState(sells = sells.map { it.toSellUiModel() }) }
+            .stateIn(
+                scope = viewModelScope,
+                initialValue = SellUiState(),
+                started = SharingStarted.WhileSubscribed(5000),
+            )
+    val _uiState = uiState
+
+
+    fun deleteSell(sellId: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            deleteSellUseCase.deleteSell(sellId)
         }
     }
+}

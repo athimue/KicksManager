@@ -1,7 +1,6 @@
 package com.athimue.ui.composables.sells
 
 import android.widget.Toast
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,7 +13,6 @@ import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.SwipeToDismissBox
@@ -41,7 +39,7 @@ import com.athimue.ui.composables.common.SellSummary
 
 @Composable
 fun SellsComposable(viewModel: SellViewModel = hiltViewModel()) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel._uiState.collectAsState()
     val context = LocalContext.current
     Column {
         Text(
@@ -88,7 +86,6 @@ fun SellsComposable(viewModel: SellViewModel = hiltViewModel()) {
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun LazyItemScope.SellItem(
     sell: SellUiModel,
