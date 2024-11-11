@@ -1,7 +1,6 @@
 package com.athimue.ui.composables.inventory
 
 import android.widget.Toast
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,7 +18,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
@@ -59,7 +57,7 @@ import com.athimue.ui.composables.sellform.SellFormDialog
 fun InventoryComposable(
     viewModel: InventoryViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel._uiState.collectAsState()
     var isInventoryFormModalOpen by remember { mutableStateOf(false) }
     var showSellFormModal by remember { mutableStateOf(false) }
     var selectedSneakerId by remember { mutableStateOf<Long?>(null) }

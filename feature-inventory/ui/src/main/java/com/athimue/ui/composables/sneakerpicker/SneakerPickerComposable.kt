@@ -38,7 +38,7 @@ fun SneakerPicker(
     closeDialog: () -> Unit,
     onSneakerSelected: (String, String) -> Unit,
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel._uiState.collectAsState()
     var query by remember { mutableStateOf("") }
     viewModel.searchSneaker()
 

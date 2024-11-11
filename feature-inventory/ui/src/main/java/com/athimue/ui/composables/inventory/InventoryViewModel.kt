@@ -16,62 +16,63 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class InventoryViewModel
-    @Inject
-    constructor(
-        getInventoryUseCase: GetInventoryUseCase,
-        private val addOrUpdateInventoryUseCase: AddOrUpdateInventoryUseCase,
-        private val addSellUseCase: AddSellUseCase,
-        private val deleteInventoryUseCase: DeleteInventoryUseCase,
-    ) : ViewModel() {
-        val uiState =
-            getInventoryUseCase()
-                .map { InventoryUiState(inventory = it.map { inventoryItem -> inventoryItem.toInventoryUiModel() }) }
-                .stateIn(
-                    scope = viewModelScope,
-                    initialValue = InventoryUiState(),
-                    started = WhileSubscribed(5000),
-                )
+class InventoryViewModel @Inject constructor(
+    getInventoryUseCase: GetInventoryUseCase,
+    private val addOrUpdateInventoryUseCase: AddOrUpdateInventoryUseCase,
+    private val addSellUseCase: AddSellUseCase,
+    private val deleteInventoryUseCase: DeleteInventoryUseCase,
+) : ViewModel() {
 
-        fun addOrUpdateInventoryItem(
-            id: Long?,
-            name: String,
-            picture: String,
-            size: String,
-            buyPrice: Double,
-            buyDate: String,
-            buyPlace: String,
-        ) {
-            viewModelScope.launch(Dispatchers.IO) {
-                addOrUpdateInventoryUseCase(
-                    InventoryItem(
-                        id = id ?: 0,
-                        name = name,
-                        picture = picture,
-                        size = size,
-                        quantity = 1,
-                        buyPrice = buyPrice,
-                        buyDate = buyDate,
-                        buyPlace = buyPlace,
-                    ),
-                )
-            }
-        }
+    private val uiState =
+        getInventoryUseCase()
+            .map { InventoryUiState(inventory = it.map { inventoryItem -> inventoryItem.toInventoryUiModel() }) }
+            .stateIn(
+                scope = viewModelScope,
+                initialValue = InventoryUiState(),
+                started = WhileSubscribed(5000),
+            )
 
-        fun deleteInventoryItem(inventoryItemId: Long) {
-            viewModelScope.launch(Dispatchers.IO) {
-                deleteInventoryUseCase(inventoryItemId)
-            }
-        }
+    val _uiState = uiState
 
-        fun addSell(
-            inventoryItemId: Long,
-            sellPrice: String,
-            sellDate: String,
-            sellPlace: String,
-        ) {
-            viewModelScope.launch(Dispatchers.IO) {
-                addSellUseCase(inventoryItemId, sellPrice, sellDate, sellPlace)
-            }
+    fun addOrUpdateInventoryItem(
+        id: Long?,
+        name: String,
+        picture: String,
+        size: String,
+        buyPrice: Double,
+        buyDate: String,
+        buyPlace: String,
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            addOrUpdateInventoryUseCase(
+                InventoryItem(
+                    id = id ?: 0,
+                    name = name,
+                    picture = picture,
+                    size = size,
+                    quantity = 1,
+                    buyPrice = buyPrice,
+                    buyDate = buyDate,
+                    buyPlace = buyPlace,
+                ),
+            )
         }
     }
+
+    fun deleteInventoryItem(inventoryItemId: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            deleteInventoryUseCase(inventoryItemId)
+        }
+    }
+
+    fun addSell(
+        inventoryItemId: Long,
+        sellPrice: String,
+        sellDate: String,
+        sellPlace: String,
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            addSellUseCase(inventoryItemId, sellPrice, sellDate, sellPlace)
+        }
+    }
+}

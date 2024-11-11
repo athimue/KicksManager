@@ -1,8 +1,8 @@
 package com.athimue.ui.composables.inventoryform
 
 data class InventoryFormModalUiModel(
-    var isLoading: Boolean = true,
-    var id: Long? = null,
+    val isLoading: Boolean = true,
+    val id: Long? = null,
     val name: String = "",
     val size: String = "",
     val picture: String = "",
