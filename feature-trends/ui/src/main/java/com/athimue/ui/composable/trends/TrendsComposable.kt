@@ -17,6 +17,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
@@ -36,18 +38,20 @@ fun SharedTransitionScope.TrendsComposable(
     animatedVisibilityScope: AnimatedVisibilityScope,
     goToDetail: (DetailModel) -> Unit,
 ) {
+    val uiState by viewModel.uiState.collectAsState()
+
     Column(
         modifier =
-            Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState()),
+        Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(top = 10.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp),
             text = "TRENDS",
             textAlign = TextAlign.Center,
             fontFamily = FontFamily.Monospace,
@@ -58,31 +62,31 @@ fun SharedTransitionScope.TrendsComposable(
         Text(
             text = "MOST WANTED SNEAKERS",
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 10.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(vertical = 10.dp),
             textAlign = TextAlign.Center,
             fontSize = 25.sp,
             fontWeight = FontWeight.ExtraBold,
         )
-        if (viewModel.uiState.popularSneakers.isNotEmpty()) {
+        if (uiState.popularSneakers.isNotEmpty()) {
             LazyRow {
                 items(
-                    items = viewModel.uiState.popularSneakers,
+                    items = uiState.popularSneakers,
                     key = { item -> item.sku },
                 ) { popularSneaker ->
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier =
-                            Modifier.clickable {
-                                goToDetail(
-                                    DetailModel(
-                                        sku = popularSneaker.sku,
-                                        picture = popularSneaker.picture,
-                                        name = popularSneaker.name,
-                                    ),
-                                )
-                            },
+                        Modifier.clickable {
+                            goToDetail(
+                                DetailModel(
+                                    sku = popularSneaker.sku,
+                                    picture = popularSneaker.picture,
+                                    name = popularSneaker.name,
+                                ),
+                            )
+                        },
                     ) {
                         TrendItem(
                             animatedVisibilityScope = animatedVisibilityScope,
@@ -100,39 +104,39 @@ fun SharedTransitionScope.TrendsComposable(
         Text(
             text = "JUST DROPPED",
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 10.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(vertical = 10.dp),
             textAlign = TextAlign.Center,
             fontSize = 25.sp,
             fontWeight = FontWeight.ExtraBold,
         )
-        if (viewModel.uiState.justDroppedSneakers.isNotEmpty()) {
+        if (uiState.justDroppedSneakers.isNotEmpty()) {
             LazyRow {
                 items(
-                    items = viewModel.uiState.justDroppedSneakers,
+                    items = uiState.justDroppedSneakers,
                     key = { item -> item.sku },
-                ) { popularSneaker ->
+                ) { justDroppedSneaker ->
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         Image(
-                            painter = rememberAsyncImagePainter(popularSneaker.picture),
+                            painter = rememberAsyncImagePainter(justDroppedSneaker.picture),
                             contentDescription = null,
                             modifier = Modifier.size(120.dp),
                         )
                         Text(
                             text =
-                                if (popularSneaker.name.length > 10) {
-                                    popularSneaker.name.substring(
-                                        0,
-                                        8,
-                                    ) + ".."
-                                } else {
-                                    popularSneaker.name
-                                },
+                            if (justDroppedSneaker.name.length > 10) {
+                                justDroppedSneaker.name.substring(
+                                    0,
+                                    8,
+                                ) + ".."
+                            } else {
+                                justDroppedSneaker.name
+                            },
                         )
-                        Text(text = popularSneaker.sku)
+                        Text(text = justDroppedSneaker.sku)
                     }
                 }
             }
@@ -143,17 +147,17 @@ fun SharedTransitionScope.TrendsComposable(
         Text(
             text = "NEW ARRIVALS",
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 10.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(vertical = 10.dp),
             textAlign = TextAlign.Center,
             fontSize = 25.sp,
             fontWeight = FontWeight.ExtraBold,
         )
-        if (viewModel.uiState.newArrivalsSneakers.isNotEmpty()) {
+        if (uiState.newArrivalsSneakers.isNotEmpty()) {
             LazyRow {
                 items(
-                    items = viewModel.uiState.newArrivalsSneakers,
+                    items = uiState.newArrivalsSneakers,
                     key = { item -> item.sku },
                 ) { popularSneaker ->
                     Column(
@@ -166,14 +170,14 @@ fun SharedTransitionScope.TrendsComposable(
                         )
                         Text(
                             text =
-                                if (popularSneaker.name.length > 10) {
-                                    popularSneaker.name.substring(
-                                        0,
-                                        8,
-                                    ) + ".."
-                                } else {
-                                    popularSneaker.name
-                                },
+                            if (popularSneaker.name.length > 10) {
+                                popularSneaker.name.substring(
+                                    0,
+                                    8,
+                                ) + ".."
+                            } else {
+                                popularSneaker.name
+                            },
                         )
                         Text(text = popularSneaker.sku)
                     }
