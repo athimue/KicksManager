@@ -2,7 +2,7 @@ package com.athimue.ui.composables.inventoryform
 
 data class InventoryFormModalUiModel(
     val isLoading: Boolean = true,
-    val id: Long? = null,
+    val id: Long = 0,
     val name: String = "",
     val size: String = "",
     val picture: String = "",
@@ -13,6 +13,5 @@ data class InventoryFormModalUiModel(
     val showSneakerPicker: Boolean = false
 )
 
-fun InventoryFormModalUiModel.isCompleted(): Boolean {
-    return name != "" && size != "" && picture != "" && buyPrice != 0.0 && buyPlace != "" && buyDate != ""
-}
+fun InventoryFormModalUiModel.isCompleted() =
+    sequenceOf(name, size, picture, buyPrice, buyPlace, buyDate).all { it != "" }

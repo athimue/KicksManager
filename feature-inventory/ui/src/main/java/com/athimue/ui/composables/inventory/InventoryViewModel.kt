@@ -35,7 +35,7 @@ class InventoryViewModel @Inject constructor(
     val _uiState = uiState
 
     fun addOrUpdateInventoryItem(
-        id: Long?,
+        id: Long,
         name: String,
         picture: String,
         size: String,
@@ -46,7 +46,7 @@ class InventoryViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             addOrUpdateInventoryUseCase(
                 InventoryItem(
-                    id = id ?: 0,
+                    id = id,
                     name = name,
                     picture = picture,
                     size = size,
