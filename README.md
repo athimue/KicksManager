@@ -1,44 +1,44 @@
-KicksManager 👟📱
+# KicksManager 👟📱
 
 KicksManager is an Android mobile application designed to help users efficiently manage their shoe inventory and sales. The app provides an intuitive interface for tracking purchases, sales, and financial statistics. 📊💰
 
-Features 🚀
+## Features 🚀
 
-Inventory Management 📦
+- Inventory Management 📦
 
 Add new shoes to your collection 👟
 
 Record purchase details: brand, model, price, purchase location, and date 🏷️📅
 
-Sales Tracking 💸
+- Sales Tracking 💸
 
 Log shoe sales with details such as sale price, location, and date 🏪
 
 Calculate profit per transaction 📈
 
-Statistics Dashboard 📊
+- Statistics Dashboard 📊
 
 View total profit earned 💰
 
 Analyze sales performance based on location and other factors 📍
 
-Technology Stack 🛠️
+# Technology Stack 🛠️
 
-KicksManager is built using modern Android development practices, following MVVM architecture and clean code principles. The project utilizes the following technologies:
+ - KicksManager is built using modern Android development practices, following MVVM architecture and clean code principles. The project utilizes the following technologies:
 
-Kotlin - Primary programming language 💻
+ - Kotlin - Primary programming language 💻
 
-Jetpack Compose - UI toolkit for building native Android interfaces 🎨
+ - Jetpack Compose - UI toolkit for building native Android interfaces 🎨
 
-Coroutines - For efficient background processing ⚡
+ - Coroutines - For efficient background processing ⚡
 
-Hilt - Dependency injection framework 🏗️
+ - Hilt - Dependency injection framework 🏗️
 
-Retrofit2 - API communication library for network operations 🌐
+ - Retrofit2 - API communication library for network operations 🌐
 
-Coil - Fast and lightweight image loading library 🖼️
+ - Coil - Fast and lightweight image loading library 🖼️
 
-Installation & Setup 🛠️
+# Installation & Setup 🛠️
 
 To build and run the project, ensure you have the following:
 
@@ -53,7 +53,7 @@ Clone the repository and open it in Android Studio:
   git clone https://github.com/your-repo/kicksmanager.git
   cd kicksmanager
 
-Contributing 🤝
+# Contributing 🤝
 
 We welcome contributions to improve KicksManager! Feel free to submit issues or open pull requests with new features and improvements. 🚀
 
