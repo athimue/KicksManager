@@ -8,7 +8,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,8 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import com.athimue.ui.composables.common.DatePicker
 import com.athimue.ui.composables.common.DropDownField
 import com.athimue.ui.composables.common.InputField
@@ -29,26 +30,28 @@ import com.athimue.ui.composables.common.ModalHeader
 import com.athimue.ui.composables.common.PickerInputField
 import com.athimue.ui.constants.SellShop
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SellFormDialog(
+    modifier: Modifier = Modifier,
     onCloseBtnClick: () -> Unit,
     onActionBtnClick: (String, String, String) -> Unit,
 ) {
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var sellPrice by rememberSaveable { mutableStateOf("") }
     var sellDate by rememberSaveable { mutableStateOf("") }
     var sellPlace by rememberSaveable { mutableStateOf("") }
     var showDatePicker by remember { mutableStateOf(false) }
 
-    Dialog(
-        properties = DialogProperties(usePlatformDefaultWidth = false),
+    ModalBottomSheet(
         onDismissRequest = onCloseBtnClick,
+        sheetState = sheetState
     ) {
         Column(
-            modifier =
-                Modifier
-                    .background(Color.White)
-                    .fillMaxSize()
-                    .padding(16.dp),
+            modifier = modifier
+                .fillMaxSize()
+                .background(Color.White)
+                .padding(16.dp),
             verticalArrangement = Arrangement.Center,
         ) {
             ModalHeader(
@@ -60,9 +63,9 @@ fun SellFormDialog(
                 value = sellPrice,
                 onValueChange = { sellPrice = it },
                 keyboardOptions =
-                    KeyboardOptions(
-                        keyboardType = KeyboardType.Decimal,
-                    ),
+                KeyboardOptions(
+                    keyboardType = KeyboardType.Decimal,
+                ),
             )
             PickerInputField(
                 title = "Sell date",

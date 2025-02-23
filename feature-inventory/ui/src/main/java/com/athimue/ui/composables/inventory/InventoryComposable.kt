@@ -163,6 +163,7 @@ fun InventoryComposable(
             }
             if (showSellFormModal) {
                 SellFormDialog(
+                    modifier = Modifier,
                     onCloseBtnClick = { showSellFormModal = false },
                     onActionBtnClick = { sellPrice, sellDate, sellPlace ->
                         selectedSneakerId?.let {
