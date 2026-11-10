@@ -1,46 +1,48 @@
 plugins {
     id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
-    id 'dagger.hilt.android.plugin'
+    id 'org.jetbrains.kotlin.plugin.compose'
     id 'com.google.devtools.ksp'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
-    namespace 'com.athimue.feature_sells.ui'
-    compileSdk project.compileSdk
+    namespace = 'com.athimue.feature_sells.ui'
+    compileSdk = project.compileSdk
 
     defaultConfig {
-        minSdk project.minSdk
-        targetSdk project.targetSdk
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        minSdk = project.minSdk
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
-            useSupportLibrary true
+            useSupportLibrary = true
         }
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled = false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = '11'
-    }
+
     buildFeatures {
-        compose true
+        compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion compose_version
-    }
-    packagingOptions {
+
+    packaging {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
     }
 }
 
@@ -48,23 +50,29 @@ dependencies {
     implementation project(':feature-sells:domain')
 
     implementation "androidx.core:core-ktx:$core_ktx_version"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_compose_version"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_compose_version"
-    implementation "androidx.activity:activity-compose:$activity_compose_version"
-    implementation "androidx.compose.material3:material3:$material3_version"
-    implementation "androidx.compose.foundation:foundation:$compose_version"
-    implementation "io.coil-kt:coil-compose:$coil_compose"
-    implementation "androidx.compose.ui:ui:$compose_version"
-    implementation "androidx.compose.compiler:compiler:$compose_compiler"
-    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
-    implementation "androidx.compose.ui:ui-tooling:$compose_version"
 
-    // Hilt dependencies
-    implementation "androidx.hilt:hilt-navigation-compose:$hilt_nav_compose_version"
+    // Compose
+    implementation platform("androidx.compose:compose-bom:$compose_bom")
+    implementation "androidx.compose.ui:ui"
+    implementation "androidx.compose.ui:ui-tooling-preview"
+    debugImplementation "androidx.compose.ui:ui-tooling"
+    implementation "androidx.compose.foundation:foundation"
+    implementation "androidx.compose.material3:material3"
+    implementation "androidx.compose.material:material-icons-core:$material_icons_version"
+    implementation "androidx.activity:activity-compose:$activity_compose_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version"
+
+    // Coil
+    implementation "io.coil-kt.coil3:coil-compose:$coil_version"
+    implementation "io.coil-kt.coil3:coil-network-okhttp:$coil_version"
+
+    // Hilt
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel-compose:$androidx_hilt_version"
     implementation "com.google.dagger:hilt-android:$hilt_version"
     ksp "com.google.dagger:hilt-android-compiler:$hilt_version"
 
-    // Retrofit
+    // Retrofit / OkHttp
     implementation "com.squareup.retrofit2:retrofit:$retrofit2"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit2"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3"

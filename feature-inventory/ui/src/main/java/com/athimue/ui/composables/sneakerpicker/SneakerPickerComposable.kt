@@ -28,8 +28,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.rememberAsyncImagePainter
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import coil3.compose.rememberAsyncImagePainter
 import com.athimue.ui.composables.common.ModalHeader
 
 @OptIn(ExperimentalMaterial3Api::class)

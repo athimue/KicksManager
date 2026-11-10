@@ -27,8 +27,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.rememberAsyncImagePainter
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import coil3.compose.rememberAsyncImagePainter
 import com.athimue.ui.composable.common.KeyFigureTitle
 
 @Composable

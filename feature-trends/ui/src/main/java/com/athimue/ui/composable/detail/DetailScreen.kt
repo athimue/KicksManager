@@ -18,7 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
+import coil3.compose.rememberAsyncImagePainter
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -48,7 +48,7 @@ fun SharedTransitionScope.DetailScreen(
                     Modifier
                         .size(120.dp)
                         .sharedElement(
-                            state = rememberSharedContentState(key = "image/${detail.picture}"),
+                            sharedContentState = rememberSharedContentState(key = "image/${detail.picture}"),
                             animatedVisibilityScope = animatedVisibilityScope,
                         ),
             )
@@ -56,7 +56,7 @@ fun SharedTransitionScope.DetailScreen(
                 text = detail.name,
                 modifier =
                     Modifier.sharedElement(
-                        state = rememberSharedContentState(key = "text/${detail.name}"),
+                        sharedContentState = rememberSharedContentState(key = "text/${detail.name}"),
                         animatedVisibilityScope = animatedVisibilityScope,
                     ),
             )
@@ -64,7 +64,7 @@ fun SharedTransitionScope.DetailScreen(
                 text = detail.sku,
                 modifier =
                     Modifier.sharedElement(
-                        state = rememberSharedContentState(key = "text/${detail.sku}"),
+                        sharedContentState = rememberSharedContentState(key = "text/${detail.sku}"),
                         animatedVisibilityScope = animatedVisibilityScope,
                     ),
             )

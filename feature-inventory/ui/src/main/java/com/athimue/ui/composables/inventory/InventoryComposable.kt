@@ -46,8 +46,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.rememberAsyncImagePainter
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import coil3.compose.rememberAsyncImagePainter
 import com.athimue.ui.composables.common.SummaryHeader
 import com.athimue.ui.composables.inventoryform.InventoryFormModal
 import com.athimue.ui.composables.sellform.SellFormDialog

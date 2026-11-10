@@ -9,7 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
+import coil3.compose.rememberAsyncImagePainter
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -26,7 +26,7 @@ fun SharedTransitionScope.TrendItem(
         Modifier
             .size(120.dp)
             .sharedElement(
-                state = rememberSharedContentState(key = "image/$picture"),
+                sharedContentState = rememberSharedContentState(key = "image/$picture"),
                 animatedVisibilityScope = animatedVisibilityScope,
             ),
     )
@@ -42,7 +42,7 @@ fun SharedTransitionScope.TrendItem(
         },
         modifier =
         Modifier.sharedElement(
-            state = rememberSharedContentState(key = "text/$name"),
+            sharedContentState = rememberSharedContentState(key = "text/$name"),
             animatedVisibilityScope = animatedVisibilityScope,
         ),
     )
@@ -50,7 +50,7 @@ fun SharedTransitionScope.TrendItem(
         text = sku,
         modifier =
         Modifier.sharedElement(
-            state = rememberSharedContentState(key = "text/$sku"),
+            sharedContentState = rememberSharedContentState(key = "text/$sku"),
             animatedVisibilityScope = animatedVisibilityScope,
         ),
     )

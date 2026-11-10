@@ -44,14 +44,16 @@ To build and run the project, ensure you have the following:
 
 Android Studio installed 💻
 
-Minimum Android SDK 21+ 📱
+Android Studio with AGP 9.5 support, JDK 17+ 📱
+
+Minimum Android SDK 29 (Android 10), target SDK 37 (Android 17) 📱
 
 Enable Jetpack Compose support in your project settings ⚙️
 
 Clone the repository and open it in Android Studio:
 
-  git clone https://github.com/your-repo/kicksmanager.git
-  cd kicksmanager
+  git clone https://github.com/athimue/KicksManager.git
+  cd KicksManager
 
 # Contributing 🤝
 
