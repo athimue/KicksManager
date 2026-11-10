@@ -7,10 +7,13 @@
     <string name="stats_inventory">Pairs in stock</string>
     <string name="stats_sales">Sales</string>
     <string name="stats_revenue">Revenue</string>
-    <string name="stats_expenses">Expenses</string>
-    <string name="stats_margin">Margin</string>
+    <string name="stats_expenses">Purchases</string>
+    <string name="stats_margin">Net margin</string>
     <string name="stats_sellplace_subtitle">Sales summary</string>
     <string name="stats_sellplace_empty_title">No sales here yet</string>
     <string name="stats_sellplace_empty_message">Sales made on this platform will show up here.</string>
     <string name="stats_size">Size %1$s</string>
+    <string name="stats_stock_value">Stock value</string>
+    <string name="stats_fees">Fees</string>
+    <string name="stats_platforms_empty">Your sales will be split by platform here.</string>
 </resources>

@@ -6,7 +6,7 @@ import database.entity.SellEntity
 
 @androidx.room.Database(
     entities = [SellEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class Database : RoomDatabase() {

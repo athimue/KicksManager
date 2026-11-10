@@ -7,10 +7,13 @@
     <string name="stats_inventory">Paires en stock</string>
     <string name="stats_sales">Ventes</string>
     <string name="stats_revenue">Encaissé</string>
-    <string name="stats_expenses">Dépenses</string>
-    <string name="stats_margin">Marge</string>
+    <string name="stats_expenses">Achats</string>
+    <string name="stats_margin">Marge nette</string>
     <string name="stats_sellplace_subtitle">Récapitulatif des ventes</string>
     <string name="stats_sellplace_empty_title">Aucune vente ici pour l\'instant</string>
     <string name="stats_sellplace_empty_message">Les ventes réalisées sur cette plateforme apparaîtront ici.</string>
     <string name="stats_size">Taille %1$s</string>
+    <string name="stats_stock_value">Valeur du stock</string>
+    <string name="stats_fees">Frais</string>
+    <string name="stats_platforms_empty">Tes ventes seront réparties ici par plateforme.</string>
 </resources>

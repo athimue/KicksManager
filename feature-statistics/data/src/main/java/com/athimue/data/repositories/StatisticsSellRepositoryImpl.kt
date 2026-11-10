@@ -23,7 +23,8 @@ class StatisticsSellRepositoryImpl @Inject constructor(
                     buyPrice = sellEntity.buyPrice,
                     sellPrice = sellEntity.sellPrice,
                     sellDate = sellEntity.sellDate,
-                    sellPlace = sellEntity.sellPlace
+                    sellPlace = sellEntity.sellPlace,
+                    fees = sellEntity.fees,
                 )
             }
         }

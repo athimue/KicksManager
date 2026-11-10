@@ -10,4 +10,5 @@ data class InventorySell(
     val sellPrice: Double,
     val sellDate: String,
     val sellPlace: String,
+    val fees: Double = 0.0,
 )

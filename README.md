@@ -20,15 +20,17 @@ KicksManager is an Android app for sneaker resellers: track the pairs you own, r
 **Inventory**
 - Add a pair in seconds: search the model, pick the size, purchase price, date and shop
 - See your stock value at a glance
-- Swipe right to mark a pair as sold, swipe left to delete it
+- Search by model, size or shop, sort by date, price, name or size
+- Swipe right to mark a pair as sold, swipe left to delete it (with undo)
 
 **Sales**
-- Every sale with its price, platform, date and profit
-- Totals for revenue and profit
+- Every sale with its price, platform, date, fees and net profit
+- Totals for revenue and net profit
 
 **Statistics**
-- Revenue, expenses and margin
-- Breakdown by platform (Vinted, WeTheNew, GOAT…), tap one to see its sales
+- Pairs in stock and stock value
+- Revenue, purchases, fees and net margin
+- Breakdown by platform, built from your actual sales: tap one to see its sales
 
 **Trends**
 - Most wanted sneakers, latest drops and new arrivals

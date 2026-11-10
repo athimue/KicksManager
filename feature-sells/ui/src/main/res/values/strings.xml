@@ -2,10 +2,12 @@
     <string name="sales_title">Sales</string>
     <string name="sales_stat_count">Sales</string>
     <string name="sales_stat_revenue">Revenue</string>
-    <string name="sales_stat_profit">Profit</string>
+    <string name="sales_stat_profit">Net profit</string>
     <string name="sales_empty_title">No sales yet</string>
     <string name="sales_empty_message">Swipe a pair to the right in your inventory to record a sale.</string>
     <string name="sales_toast_deleted">Sale deleted</string>
     <string name="sales_size">Size %1$s</string>
     <string name="sales_swipe_hint">Swipe left to delete a sale</string>
+    <string name="sales_undo">Undo</string>
+    <string name="sales_fees">Fees %1$s</string>
 </resources>

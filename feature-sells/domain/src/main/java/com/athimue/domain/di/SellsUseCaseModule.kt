@@ -19,4 +19,8 @@ abstract class SellsUseCaseModule {
     @ViewModelScoped
     abstract fun bindDeleteSellUseCase(deleteSellUseCase: DeleteSellUseCaseImpl): DeleteSellUseCase
 
+    @Binds
+    @ViewModelScoped
+    abstract fun bindRestoreSellUseCase(restoreSellUseCase: RestoreSellUseCaseImpl): RestoreSellUseCase
+
 }

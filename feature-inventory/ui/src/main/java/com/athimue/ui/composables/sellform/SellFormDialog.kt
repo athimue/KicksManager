@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.athimue.core.ui.formatShopName
 import com.athimue.feature_inventory.ui.R
 import com.athimue.ui.composables.common.DatePicker
 import com.athimue.ui.composables.common.DropDownField
@@ -35,16 +36,19 @@ import com.athimue.ui.constants.SellShop
 fun SellFormDialog(
     modifier: Modifier = Modifier,
     onCloseBtnClick: () -> Unit,
-    onActionBtnClick: (String, String, String) -> Unit,
+    // prix de vente, date, plateforme, frais
+    onActionBtnClick: (String, String, String, String) -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var sellPrice by rememberSaveable { mutableStateOf("") }
     var sellDate by rememberSaveable { mutableStateOf("") }
     var sellPlace by rememberSaveable { mutableStateOf("") }
+    var fees by rememberSaveable { mutableStateOf("") }
     var showDatePicker by remember { mutableStateOf(false) }
     // « 89,90 » est accepté comme « 89.90 »
     val normalizedPrice = sellPrice.trim().replace(',', '.')
-    val isValid = normalizedPrice.toDoubleOrNull() != null && sellDate.isNotBlank() && sellPlace.isNotBlank()
+    val isFeesValid = fees.isBlank() || fees.trim().replace(',', '.').toDoubleOrNull() != null
+    val isValid = normalizedPrice.toDoubleOrNull() != null && isFeesValid && sellDate.isNotBlank() && sellPlace.isNotBlank()
 
     ModalBottomSheet(
         onDismissRequest = onCloseBtnClick,
@@ -80,6 +84,16 @@ fun SellFormDialog(
                 itemSelected = sellPlace,
                 onItemSelected = { sellPlace = it },
                 choices = SellShop.entries.map { it.shopName },
+                choiceLabel = ::formatShopName,
+            )
+            InputField(
+                title = stringResource(R.string.inventory_sell_fees),
+                value = fees,
+                onValueChange = { fees = it },
+                keyboardOptions =
+                KeyboardOptions(
+                    keyboardType = KeyboardType.Decimal,
+                ),
             )
             Button(
                 modifier = Modifier
@@ -87,7 +101,7 @@ fun SellFormDialog(
                     .padding(horizontal = 8.dp, vertical = 16.dp)
                     .height(52.dp),
                 enabled = isValid,
-                onClick = { onActionBtnClick(normalizedPrice, sellDate, sellPlace) },
+                onClick = { onActionBtnClick(normalizedPrice, sellDate, sellPlace, fees.trim().replace(',', '.')) },
             ) {
                 Text(text = stringResource(R.string.inventory_sell_confirm))
             }

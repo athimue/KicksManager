@@ -32,6 +32,8 @@ fun DropDownField(
     choices: List<String>,
     itemSelected: String,
     onItemSelected: (String) -> Unit,
+    // Libellé affiché pour une valeur (ex. « VINTED » -> « Vinted »), la valeur enregistrée reste inchangée
+    choiceLabel: (String) -> String = { it },
 ) {
     var isDropDownExpanded by remember { mutableStateOf(false) }
     var dropDownTextField by remember { mutableStateOf(Size.Zero) }
@@ -41,7 +43,7 @@ fun DropDownField(
     ) {
         Box {
             OutlinedTextField(
-                value = itemSelected,
+                value = if (itemSelected.isEmpty()) "" else choiceLabel(itemSelected),
                 onValueChange = onItemSelected,
                 readOnly = true,
                 singleLine = true,
@@ -76,7 +78,7 @@ fun DropDownField(
                 DropdownMenuItem(onClick = {
                     onItemSelected(label)
                     isDropDownExpanded = false
-                }, text = { Text(text = label) })
+                }, text = { Text(text = choiceLabel(label)) })
             }
         }
     }

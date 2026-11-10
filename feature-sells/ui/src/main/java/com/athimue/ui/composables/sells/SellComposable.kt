@@ -1,6 +1,5 @@
 package com.athimue.ui.composables.sells
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,12 +8,17 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -27,14 +31,18 @@ import com.athimue.core.ui.SwipeActionBackground
 import com.athimue.feature_sells.ui.R
 import com.athimue.ui.composables.common.SellItemCard
 import com.athimue.ui.composables.common.SellSummary
+import kotlinx.coroutines.launch
 
 @Composable
 fun SellsComposable(viewModel: SellViewModel = hiltViewModel()) {
     val uiState by viewModel._uiState.collectAsState()
     val context = LocalContext.current
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
 
     Scaffold(
         topBar = { KicksTopBar(title = stringResource(R.string.sales_title)) },
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
     ) { innerPadding ->
         if (uiState.sells.isEmpty()) {
             EmptyState(
@@ -62,11 +70,14 @@ fun SellsComposable(viewModel: SellViewModel = hiltViewModel()) {
                         sell = item,
                         onEndToStartSwipe = {
                             viewModel.deleteSell(it)
-                            Toast.makeText(
-                                context,
-                                context.getString(R.string.sales_toast_deleted),
-                                Toast.LENGTH_SHORT,
-                            ).show()
+                            scope.launch {
+                                snackbarHostState.currentSnackbarData?.dismiss()
+                                val result = snackbarHostState.showSnackbar(
+                                    message = context.getString(R.string.sales_toast_deleted),
+                                    actionLabel = context.getString(R.string.sales_undo),
+                                )
+                                if (result == SnackbarResult.ActionPerformed) viewModel.undoDelete()
+                            }
                         },
                     )
                 }

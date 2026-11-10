@@ -4,6 +4,8 @@ import com.athimue.domain.usecases.GetSellsStatisticsUseCase
 import com.athimue.domain.usecases.GetSellsStatisticsUseCaseImpl
 import com.athimue.domain.usecases.GetSpecificSellsUseCase
 import com.athimue.domain.usecases.GetSpecificSellsUseCaseImpl
+import com.athimue.domain.usecases.GetStockUseCase
+import com.athimue.domain.usecases.GetStockUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -21,4 +23,8 @@ abstract class StatisticsUseCaseModule {
     @Binds
     @ViewModelScoped
     abstract fun bindGetSpecificSellsUseCase(getSpecificSellsUseCase: GetSpecificSellsUseCaseImpl): GetSpecificSellsUseCase
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindGetStockUseCase(getStockUseCase: GetStockUseCaseImpl): GetStockUseCase
 }

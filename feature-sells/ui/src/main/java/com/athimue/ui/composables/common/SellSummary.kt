@@ -21,7 +21,7 @@ import com.athimue.ui.composables.sells.SellUiModel
 
 @Composable
 fun SellSummary(sells: List<SellUiModel>) {
-    val profit = sells.sumOf { sell -> sell.sellPrice - sell.buyPrice }
+    val profit = sells.sumOf { sell -> sell.netProfit }
     val revenue = sells.sumOf { sell -> sell.sellPrice }
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {

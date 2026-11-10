@@ -2,6 +2,8 @@ package di
 
 import android.content.Context
 import androidx.room.Room
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,6 +16,14 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 object DatabaseModule {
+
+    /** v1 -> v2 : ajout des frais de vente (les ventes existantes gardent 0 € de frais). */
+    private val MIGRATION_1_2 = object : Migration(1, 2) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE sell ADD COLUMN fees REAL NOT NULL DEFAULT 0")
+        }
+    }
+
     @Singleton
     @Provides
     fun provideDatabase(
@@ -25,6 +35,7 @@ object DatabaseModule {
             Database.DATABASE_NAME
         )
         builder.enableMultiInstanceInvalidation()
+        builder.addMigrations(MIGRATION_1_2)
         builder.build()
     }
 

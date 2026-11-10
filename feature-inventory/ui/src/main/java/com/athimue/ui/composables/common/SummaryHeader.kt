@@ -15,23 +15,23 @@ import androidx.compose.ui.unit.dp
 import com.athimue.core.ui.StatTile
 import com.athimue.core.ui.formatPrice
 import com.athimue.feature_inventory.ui.R
-import com.athimue.ui.composables.inventory.InventoryUiModel
 
 @Composable
 fun SummaryHeader(
-    inventory: List<InventoryUiModel>,
+    totalPairs: Int,
+    totalValue: Double,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             StatTile(
                 modifier = Modifier.weight(1f),
-                value = inventory.size.toString(),
+                value = totalPairs.toString(),
                 label = stringResource(R.string.inventory_stat_pairs),
             )
             StatTile(
                 modifier = Modifier.weight(1f),
-                value = formatPrice(inventory.sumOf { inventoryItem -> inventoryItem.buyPrice }),
+                value = formatPrice(totalValue),
                 label = stringResource(R.string.inventory_stat_value),
                 accent = MaterialTheme.colorScheme.tertiary,
             )
@@ -48,16 +48,5 @@ fun SummaryHeader(
 @Preview(showBackground = true)
 @Composable
 fun SummaryHeaderPreview() {
-    SummaryHeader(
-        inventory = listOf(
-            InventoryUiModel(
-                id = 1L,
-                name = "name",
-                picture = "picture",
-                size = "42",
-                quantity = 1,
-                buyPrice = 150.0
-            )
-        )
-    )
+    SummaryHeader(totalPairs = 12, totalValue = 1840.0)
 }

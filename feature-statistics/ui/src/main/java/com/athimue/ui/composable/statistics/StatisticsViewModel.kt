@@ -3,9 +3,10 @@ package com.athimue.ui.composable.statistics
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.athimue.domain.usecases.GetSellsStatisticsUseCase
+import com.athimue.domain.usecases.GetStockUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
@@ -14,47 +15,35 @@ class StatisticsViewModel
     @Inject
     constructor(
         getSellsStatisticsUseCase: GetSellsStatisticsUseCase,
+        getStockUseCase: GetStockUseCase,
     ) : ViewModel() {
         val uiState =
-            getSellsStatisticsUseCase.invoke()
-                .map {
-                    StatisticsUiState(
-                        shoes = 15,
-                        sells = it.size,
-                        sales =
-                            it.map { sell -> sell.sellPrice }
-                                .fold(0.0) { acc, profitItem -> acc + profitItem },
-                        expenses =
-                            it.map { sell -> sell.buyPrice }
-                                .fold(0.0) { acc, profitItem -> acc + profitItem },
-                        margin =
-                            it.map { sell -> sell.sellPrice - sell.buyPrice }
-                                .fold(0.0) { acc, profitItem -> acc + profitItem },
-                        wtnSells =
-                            it.filter { sell -> sell.sellPlace == "WETHENEW" }
-                                .map { sell -> sell.sellPrice }
-                                .fold(0.0) { acc, profitItem -> acc + profitItem },
-                        vintedSells =
-                            it.filter { sell -> sell.sellPlace == "VINTED" }
-                                .map { sell -> sell.sellPrice }
-                                .fold(0.0) { acc, profitItem -> acc + profitItem },
-                        goatSells =
-                            it.filter { sell -> sell.sellPlace == "ALIAS" }
-                                .map { sell -> sell.sellPrice }
-                                .fold(0.0) { acc, profitItem -> acc + profitItem },
-                        meetupSells =
-                            it.filter { sell -> sell.sellPlace == "MEET_UP" }
-                                .map { sell -> sell.sellPrice }
-                                .fold(0.0) { acc, profitItem -> acc + profitItem },
-                        beforeShopSells =
-                            it.filter { sell -> sell.sellPlace == "BEFORE_SHOP" }
-                                .map { sell -> sell.sellPrice }
-                                .fold(0.0) { acc, profitItem -> acc + profitItem },
-                    )
-                }
-                .stateIn(
-                    scope = viewModelScope,
-                    initialValue = StatisticsUiState(),
-                    started = SharingStarted.WhileSubscribed(5000),
+            combine(getSellsStatisticsUseCase.invoke(), getStockUseCase.invoke()) { sells, stock ->
+                StatisticsUiState(
+                    stockPairs = stock.pairs,
+                    stockValue = stock.value,
+                    sells = sells.size,
+                    sales = sells.sumOf { sell -> sell.sellPrice },
+                    expenses = sells.sumOf { sell -> sell.buyPrice },
+                    fees = sells.sumOf { sell -> sell.fees },
+                    margin = sells.sumOf { sell -> sell.netProfit },
+                    // Plateformes calculées à partir des ventes réelles (plus de liste figée)
+                    platforms =
+                        sells
+                            .groupBy { sell -> sell.sellPlace.trim().uppercase() }
+                            .filterKeys { it.isNotEmpty() }
+                            .map { (key, platformSells) ->
+                                PlatformStatistics(
+                                    key = key,
+                                    sales = platformSells.sumOf { sell -> sell.sellPrice },
+                                    count = platformSells.size,
+                                )
+                            }
+                            .sortedByDescending { it.sales },
                 )
+            }.stateIn(
+                scope = viewModelScope,
+                initialValue = StatisticsUiState(),
+                started = SharingStarted.WhileSubscribed(5000),
+            )
     }

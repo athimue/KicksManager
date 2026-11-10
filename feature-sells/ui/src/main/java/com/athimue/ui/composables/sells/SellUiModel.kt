@@ -11,7 +11,10 @@ data class SellUiModel(
     val sellPrice: Double,
     val sellDate: String,
     val sellPlace: String,
-)
+    val fees: Double = 0.0,
+) {
+    val netProfit: Double get() = sellPrice - buyPrice - fees
+}
 
 fun Sell.toSellUiModel() = SellUiModel(
     id = id,
@@ -21,5 +24,6 @@ fun Sell.toSellUiModel() = SellUiModel(
     buyPrice = buyPrice,
     sellPrice = sellPrice,
     sellDate = sellDate,
-    sellPlace = sellPlace
+    sellPlace = sellPlace,
+    fees = fees,
 )

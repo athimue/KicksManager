@@ -32,6 +32,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.athimue.core.ui.SneakerImage
+import com.athimue.core.ui.formatShopName
 import com.athimue.feature_inventory.ui.R
 import com.athimue.ui.composables.common.DatePicker
 import com.athimue.ui.composables.common.DropDownField
@@ -144,6 +145,7 @@ fun InventoryFormModal(
                     itemSelected = uiState.buyPlace,
                     onItemSelected = viewModel::setBuyPlace,
                     choices = BuyShop.entries.map { it.shopName },
+                    choiceLabel = ::formatShopName,
                 )
                 Button(
                     modifier = Modifier

@@ -17,6 +17,7 @@ class AddSellUseCase
             sellPrice: String,
             sellDate: String,
             sellPlace: String,
+            fees: String = "",
         ) {
             inventoryRepository.getInventory(inventoryItemId).first().let {
                 inventorySellRepository.addSell(
@@ -30,6 +31,7 @@ class AddSellUseCase
                         sellPrice = sellPrice.toDouble(),
                         sellPlace = sellPlace,
                         sellDate = sellDate,
+                        fees = fees.trim().replace(',', '.').toDoubleOrNull() ?: 0.0,
                     ),
                 )
                 inventoryRepository.deleteInventory(inventoryItemId)

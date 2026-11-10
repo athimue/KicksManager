@@ -16,6 +16,6 @@ fun StatisticsSell.toSellPlaceUiModel() = SellPlaceUiModel(
     name = name,
     picture = picture,
     size = size,
-    profit = sellPrice - buyPrice,
+    profit = netProfit,
     sellDate = sellDate
 )

@@ -21,6 +21,7 @@ class InventorySellRepositoryImpl @Inject constructor(
                 sellPrice = sell.sellPrice,
                 sellPlace = sell.sellPlace,
                 sellDate = sell.sellDate,
+                fees = sell.fees,
             )
         )
     }

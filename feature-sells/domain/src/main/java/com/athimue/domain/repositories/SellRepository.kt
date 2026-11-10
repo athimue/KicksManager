@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.Flow
 interface SellRepository {
 
     suspend fun deleteSell(sellId: Long)
+    suspend fun restoreSell(sell: Sell)
 
     fun getSells(): Flow<List<Sell>>
 }

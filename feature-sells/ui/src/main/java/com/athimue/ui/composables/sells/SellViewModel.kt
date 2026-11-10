@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.athimue.domain.usecases.DeleteSellUseCase
 import com.athimue.domain.usecases.GetSellsUseCase
+import com.athimue.domain.usecases.RestoreSellUseCase
+import com.athimue.domain.models.Sell
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
@@ -16,7 +18,11 @@ import javax.inject.Inject
 class SellViewModel @Inject constructor(
     getSellsUseCase: GetSellsUseCase,
     private val deleteSellUseCase: DeleteSellUseCase,
+    private val restoreSellUseCase: RestoreSellUseCase,
 ) : ViewModel() {
+
+    // Dernière vente supprimée, gardée pour le bouton « Annuler »
+    private var lastDeletedSell: Sell? = null
 
     private val uiState =
         getSellsUseCase.invoke()
@@ -31,7 +37,15 @@ class SellViewModel @Inject constructor(
 
     fun deleteSell(sellId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
-            deleteSellUseCase.deleteSell(sellId)
+            lastDeletedSell = deleteSellUseCase.deleteSell(sellId)
+        }
+    }
+
+    fun undoDelete() {
+        val sell = lastDeletedSell ?: return
+        lastDeletedSell = null
+        viewModelScope.launch(Dispatchers.IO) {
+            restoreSellUseCase.restoreSell(sell)
         }
     }
 }

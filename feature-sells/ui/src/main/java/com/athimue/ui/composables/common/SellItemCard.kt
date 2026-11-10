@@ -25,6 +25,7 @@ fun SellItemCard(
             InfoChip(text = stringResource(R.string.sales_size, sell.size))
             if (sell.sellPlace.isNotBlank()) InfoChip(text = formatShopName(sell.sellPlace))
             if (sell.sellDate.isNotBlank()) InfoChip(text = sell.sellDate)
+            if (sell.fees > 0) InfoChip(text = stringResource(R.string.sales_fees, formatPrice(sell.fees)))
         },
         trailing = {
             Text(
@@ -32,7 +33,7 @@ fun SellItemCard(
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
             )
-            ProfitText(amount = sell.sellPrice - sell.buyPrice)
+            ProfitText(amount = sell.netProfit)
         },
     )
 }

@@ -10,4 +10,8 @@ data class StatisticsSell(
     val sellPrice: Double,
     val sellDate: String,
     val sellPlace: String,
-)
+    val fees: Double = 0.0,
+) {
+    /** Bénéfice net : prix de vente - prix d'achat - frais. */
+    val netProfit: Double get() = sellPrice - buyPrice - fees
+}

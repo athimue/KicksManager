@@ -30,4 +30,14 @@
     <string name="inventory_date_cancel">Annuler</string>
     <string name="inventory_picker_title">Rechercher une sneaker</string>
     <string name="inventory_picker_hint">Modèle ou marque</string>
+    <string name="inventory_sell_fees">Frais : commission, port… (€, facultatif)</string>
+    <string name="inventory_undo">Annuler</string>
+    <string name="inventory_search_hint">Rechercher un modèle, une taille, une boutique</string>
+    <string name="inventory_clear_search">Effacer la recherche</string>
+    <string name="inventory_sort_recent">Récentes</string>
+    <string name="inventory_sort_price_asc">Prix ↑</string>
+    <string name="inventory_sort_price_desc">Prix ↓</string>
+    <string name="inventory_sort_name">Nom</string>
+    <string name="inventory_sort_size">Taille</string>
+    <string name="inventory_no_result">Aucune paire ne correspond à ta recherche</string>
 </resources>

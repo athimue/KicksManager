@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -29,6 +30,8 @@ import com.athimue.core.ui.formatShopName
 import com.athimue.core.ui.formatSignedPrice
 import com.athimue.feature_statistics.ui.R
 
+private const val TILES_PER_ROW = 3
+
 @Composable
 fun StatisticsComposable(
     viewModel: StatisticsViewModel = hiltViewModel(),
@@ -51,8 +54,14 @@ fun StatisticsComposable(
             TileRow {
                 StatTile(
                     modifier = Modifier.weight(1f),
-                    value = "–",
+                    value = uiState.stockPairs?.toString() ?: "–",
                     label = stringResource(R.string.stats_inventory),
+                )
+                StatTile(
+                    modifier = Modifier.weight(1f),
+                    value = uiState.stockValue?.let { formatPrice(it) } ?: "–",
+                    label = stringResource(R.string.stats_stock_value),
+                    accent = MaterialTheme.colorScheme.tertiary,
                 )
                 StatTile(
                     modifier = Modifier.weight(1f),
@@ -68,12 +77,20 @@ fun StatisticsComposable(
                     modifier = Modifier.weight(1f),
                     value = formatPrice(uiState.sales),
                     label = stringResource(R.string.stats_revenue),
-                    accent = MaterialTheme.colorScheme.tertiary,
+                    accent = MaterialTheme.colorScheme.primary,
                 )
                 StatTile(
                     modifier = Modifier.weight(1f),
                     value = formatPrice(uiState.expenses),
                     label = stringResource(R.string.stats_expenses),
+                    accent = MaterialTheme.colorScheme.tertiary,
+                )
+            }
+            TileRow {
+                StatTile(
+                    modifier = Modifier.weight(1f),
+                    value = formatPrice(uiState.fees),
+                    label = stringResource(R.string.stats_fees),
                     accent = MaterialTheme.colorScheme.error,
                 )
                 StatTile(
@@ -86,22 +103,37 @@ fun StatisticsComposable(
             }
 
             SectionTitle(title = stringResource(R.string.stats_section_platforms))
-            Text(
-                text = stringResource(R.string.stats_platforms_hint),
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 6.dp),
-            )
-            // La clé (« VINTED »…) doit rester identique à la valeur enregistrée avec la vente
-            TileRow {
-                PlatformTile("VINTED", uiState.vintedSells, Color(0xFF09B1BA), onClick)
-                PlatformTile("WETHENEW", uiState.wtnSells, Color(0xFFED9613), onClick)
-                PlatformTile("GOAT", uiState.goatSells, Color(0xFF7857FF), onClick)
-            }
-            TileRow {
-                PlatformTile("DISCORD", 0.0, Color(0xFF5865F2))
-                PlatformTile("BEFORE SHOP", uiState.beforeShopSells, Color(0xFFC6E000))
-                PlatformTile("MEET UP", uiState.meetupSells, Color(0xFFE0115F))
+            if (uiState.platforms.isEmpty()) {
+                Text(
+                    text = stringResource(R.string.stats_platforms_empty),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                )
+            } else {
+                Text(
+                    text = stringResource(R.string.stats_platforms_hint),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 6.dp),
+                )
+                uiState.platforms.chunked(TILES_PER_ROW).forEach { rowPlatforms ->
+                    TileRow {
+                        rowPlatforms.forEach { platform ->
+                            StatTile(
+                                modifier = Modifier.weight(1f),
+                                value = formatPrice(platform.sales),
+                                label = formatShopName(platform.key),
+                                accent = platformColor(platform.key),
+                                onClick = { onClick(platform.key) },
+                            )
+                        }
+                        // Cases vides pour garder des tuiles de même largeur sur la dernière ligne
+                        repeat(TILES_PER_ROW - rowPlatforms.size) {
+                            Spacer(modifier = Modifier.weight(1f))
+                        }
+                    }
+                }
             }
         }
     }
@@ -118,18 +150,16 @@ private fun TileRow(content: @Composable RowScope.() -> Unit) {
     )
 }
 
+/** Couleur de marque des plateformes connues, couleur du thème sinon. */
 @Composable
-private fun RowScope.PlatformTile(
-    key: String,
-    amount: Double,
-    brandColor: Color,
-    onClick: ((String) -> Unit)? = null,
-) {
-    StatTile(
-        modifier = Modifier.weight(1f),
-        value = formatPrice(amount),
-        label = formatShopName(key),
-        accent = brandColor,
-        onClick = onClick?.let { callback -> { callback(key) } },
-    )
-}
+private fun platformColor(key: String): Color =
+    when (key) {
+        "VINTED" -> Color(0xFF09B1BA)
+        "WETHENEW" -> Color(0xFFED9613)
+        "ALIAS", "GOAT" -> Color(0xFF7857FF)
+        "STOCKX" -> Color(0xFF006340)
+        "DISCORD" -> Color(0xFF5865F2)
+        "MEET UP" -> Color(0xFFE0115F)
+        "BEFORE SHOP" -> Color(0xFFC6E000)
+        else -> MaterialTheme.colorScheme.secondary
+    }
