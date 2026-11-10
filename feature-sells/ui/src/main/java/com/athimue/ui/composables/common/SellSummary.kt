@@ -1,53 +1,54 @@
 package com.athimue.ui.composables.common
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.AddCircle
-import androidx.compose.material.icons.rounded.CheckCircle
-import androidx.compose.material.icons.rounded.ThumbUp
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.athimue.core.ui.KicksColors
+import com.athimue.core.ui.StatTile
+import com.athimue.core.ui.formatPrice
+import com.athimue.core.ui.formatSignedPrice
+import com.athimue.feature_sells.ui.R
 import com.athimue.ui.composables.sells.SellUiModel
 
 @Composable
 fun SellSummary(sells: List<SellUiModel>) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 10.dp),
-        horizontalArrangement = Arrangement.SpaceAround,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        SellSummaryItem(
-            icon = Icons.Rounded.ThumbUp,
-            iconColor = Color.Blue,
-            title = sells.size.toString(),
-            subject = "Sells",
-        )
-        SellSummaryItem(
-            icon = Icons.Rounded.AddCircle,
-            iconColor = Color.Green,
-            title = "${
-                sells.map { sell -> sell.sellPrice - sell.buyPrice }
-                    .fold(0.0) { acc, profitItem -> acc + profitItem }
-            } €",
-            subject = "Margin",
-        )
-        SellSummaryItem(
-            icon = Icons.Rounded.CheckCircle,
-            iconColor = Color.Red,
-            title = "${
-                sells.map { sell -> sell.sellPrice }
-                    .fold(0.0) { acc, profitItem -> acc + profitItem }
-            } €",
-            subject = "Sales",
+    val profit = sells.sumOf { sell -> sell.sellPrice - sell.buyPrice }
+    val revenue = sells.sumOf { sell -> sell.sellPrice }
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            StatTile(
+                modifier = Modifier.weight(1f),
+                value = sells.size.toString(),
+                label = stringResource(R.string.sales_stat_count),
+            )
+            StatTile(
+                modifier = Modifier.weight(1f),
+                value = formatPrice(revenue),
+                label = stringResource(R.string.sales_stat_revenue),
+                accent = MaterialTheme.colorScheme.tertiary,
+            )
+            StatTile(
+                modifier = Modifier.weight(1f),
+                value = formatSignedPrice(profit),
+                label = stringResource(R.string.sales_stat_profit),
+                accent = KicksColors.success,
+                valueColor = if (profit < 0) MaterialTheme.colorScheme.error else KicksColors.success,
+            )
+        }
+        Text(
+            text = stringResource(R.string.sales_swipe_hint),
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.padding(top = 12.dp, start = 4.dp),
         )
     }
 }
@@ -59,4 +60,3 @@ fun SellSummaryPreview() {
         sells = listOf()
     )
 }
-

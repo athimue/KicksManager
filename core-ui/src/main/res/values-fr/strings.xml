@@ -1,0 +1,6 @@
+<resources>
+    <string name="core_ui_back">Retour</string>
+    <string name="core_ui_close">Fermer</string>
+    <string name="core_ui_sell">Vendre</string>
+    <string name="core_ui_delete">Supprimer</string>
+</resources>

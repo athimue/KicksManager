@@ -1,10 +1,8 @@
 package com.athimue.ui.composables.sellform
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -18,11 +16,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.athimue.feature_inventory.ui.R
 import com.athimue.ui.composables.common.DatePicker
 import com.athimue.ui.composables.common.DropDownField
 import com.athimue.ui.composables.common.InputField
@@ -42,6 +40,9 @@ fun SellFormDialog(
     var sellDate by rememberSaveable { mutableStateOf("") }
     var sellPlace by rememberSaveable { mutableStateOf("") }
     var showDatePicker by remember { mutableStateOf(false) }
+    // « 89,90 » est accepté comme « 89.90 »
+    val normalizedPrice = sellPrice.trim().replace(',', '.')
+    val isValid = normalizedPrice.toDoubleOrNull() != null && sellDate.isNotBlank() && sellPlace.isNotBlank()
 
     ModalBottomSheet(
         onDismissRequest = onCloseBtnClick,
@@ -49,17 +50,16 @@ fun SellFormDialog(
     ) {
         Column(
             modifier = modifier
-                .fillMaxSize()
-                .background(Color.White)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.Center,
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+                .padding(bottom = 16.dp),
         ) {
             ModalHeader(
-                title = "Item sold",
+                title = stringResource(R.string.inventory_sell_title),
                 onCloseBtnClick = onCloseBtnClick,
             )
             InputField(
-                title = "Sell price",
+                title = stringResource(R.string.inventory_sell_price),
                 value = sellPrice,
                 onValueChange = { sellPrice = it },
                 keyboardOptions =
@@ -68,22 +68,25 @@ fun SellFormDialog(
                 ),
             )
             PickerInputField(
-                title = "Sell date",
+                title = stringResource(R.string.inventory_sell_date),
                 value = sellDate,
                 onClick = { showDatePicker = true },
             )
             DropDownField(
-                title = "Sell place",
+                title = stringResource(R.string.inventory_sell_place),
                 itemSelected = sellPlace,
                 onItemSelected = { sellPlace = it },
                 choices = SellShop.entries.map { it.shopName },
             )
-            Spacer(modifier = Modifier.weight(1f))
             Button(
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-                onClick = { onActionBtnClick(sellPrice, sellDate, sellPlace) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp, vertical = 16.dp)
+                    .height(52.dp),
+                enabled = isValid,
+                onClick = { onActionBtnClick(normalizedPrice, sellDate, sellPlace) },
             ) {
-                Text(text = "Add the sell")
+                Text(text = stringResource(R.string.inventory_sell_confirm))
             }
             DatePicker(
                 isDialogDisplayed = showDatePicker,

@@ -1,0 +1,8 @@
+<resources>
+    <string name="trends_title">Trends</string>
+    <string name="trends_most_wanted">🔥 Most wanted</string>
+    <string name="trends_just_dropped">Just dropped</string>
+    <string name="trends_new_arrivals">New arrivals</string>
+    <string name="trends_empty">Nothing to show right now</string>
+    <string name="trends_sku">SKU %1$s</string>
+</resources>

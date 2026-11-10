@@ -1,35 +1,28 @@
 package com.athimue.ui.composable.sellplace
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import coil3.compose.rememberAsyncImagePainter
-import com.athimue.ui.composable.common.KeyFigureTitle
+import com.athimue.core.ui.EmptyState
+import com.athimue.core.ui.InfoChip
+import com.athimue.core.ui.KicksTopBar
+import com.athimue.core.ui.ProfitText
+import com.athimue.core.ui.SneakerCard
+import com.athimue.core.ui.formatShopName
+import com.athimue.feature_statistics.ui.R
 
 @Composable
 fun SellPlaceStatisticsComposable(
@@ -39,72 +32,54 @@ fun SellPlaceStatisticsComposable(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    LaunchedEffect(key1 = Unit) {
+    LaunchedEffect(key1 = sellPlace) {
         viewModel.loadSells(sellPlace)
     }
 
-    Column {
-        IconButton(onClick = onBack) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                contentDescription = "Go back",
-                tint = MaterialTheme.colorScheme.primary,
+    Scaffold(
+        topBar = {
+            KicksTopBar(
+                title = formatShopName(sellPlace),
+                subtitle = stringResource(R.string.stats_sellplace_subtitle),
+                onBack = onBack,
             )
-        }
-        KeyFigureTitle(title = "$sellPlace SUMMARY")
-        if (uiState.sells.isNotEmpty()) {
-            LazyColumn(modifier = Modifier.padding(top = 10.dp)) {
-                items(items = uiState.sells) {
-                    HorizontalDivider()
-                    Row(
-                        modifier =
-                        Modifier
-                            .clip(MaterialTheme.shapes.medium)
-                            .background(Color.White),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Image(
-                            painter = rememberAsyncImagePainter(it.picture),
-                            contentDescription = "",
-                            modifier = Modifier.size(100.dp),
-                        )
-                        Column(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                        ) {
-                            Text(
-                                text = it.name,
-                                fontWeight = FontWeight.ExtraBold,
+        },
+    ) { innerPadding ->
+        if (uiState.sells.isEmpty()) {
+            EmptyState(
+                modifier = Modifier.padding(innerPadding),
+                emoji = "📭",
+                title = stringResource(R.string.stats_sellplace_empty_title),
+                message = stringResource(R.string.stats_sellplace_empty_message),
+            )
+        } else {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(
+                    start = 16.dp,
+                    end = 16.dp,
+                    top = innerPadding.calculateTopPadding() + 8.dp,
+                    bottom = innerPadding.calculateBottomPadding() + 16.dp,
+                ),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                items(items = uiState.sells) { sell ->
+                    SneakerCard(
+                        name = sell.name,
+                        picture = sell.picture,
+                        details = {
+                            InfoChip(text = stringResource(R.string.stats_size, sell.size))
+                            if (sell.sellDate.isNotBlank()) InfoChip(text = sell.sellDate)
+                        },
+                        trailing = {
+                            ProfitText(
+                                amount = sell.profit,
+                                style = MaterialTheme.typography.titleMedium,
                             )
-                            Row(modifier = Modifier.padding(top = 10.dp)) {
-                                Text(
-                                    modifier = Modifier.padding(start = 10.dp),
-                                    text = "Date : ${it.sellDate}",
-                                )
-                                Text(
-                                    modifier = Modifier.padding(start = 10.dp),
-                                    text = "Size : ${it.size}",
-                                )
-                            }
-                            Row(modifier = Modifier.padding(top = 10.dp)) {
-                                Text(
-                                    modifier = Modifier.padding(start = 10.dp),
-                                    text = "Profit : ${it.profit}  €",
-                                )
-                            }
-                        }
-                    }
+                        },
+                    )
                 }
             }
-        } else {
-            Text(
-                text = "No sells",
-                textAlign = TextAlign.Center,
-                modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(top = 10.dp),
-            )
         }
     }
 }

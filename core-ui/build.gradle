@@ -1,0 +1,51 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.plugin.compose'
+}
+
+android {
+    namespace = 'com.athimue.core_ui'
+    compileSdk = project.compileSdk
+
+    defaultConfig {
+        minSdk = project.minSdk
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled = false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    buildFeatures {
+        compose = true
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
+    }
+}
+
+dependencies {
+    // Compose
+    api platform("androidx.compose:compose-bom:$compose_bom")
+    api "androidx.compose.ui:ui"
+    api "androidx.compose.foundation:foundation"
+    api "androidx.compose.material3:material3"
+    api "androidx.compose.material:material-icons-core:$material_icons_version"
+    implementation "androidx.compose.ui:ui-tooling-preview"
+    debugImplementation "androidx.compose.ui:ui-tooling"
+
+    // Coil
+    implementation "io.coil-kt.coil3:coil-compose:$coil_version"
+}

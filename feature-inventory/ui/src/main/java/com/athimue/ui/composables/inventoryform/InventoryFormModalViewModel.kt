@@ -59,7 +59,8 @@ class InventoryFormModalViewModel @Inject constructor(
 
     fun setSize(size: String) = updateState { copy(size = size) }
 
-    fun setBuyPrice(price: String) = updateState { copy(buyPrice = price.toDouble()) }
+    fun setBuyPrice(price: String) =
+        updateState { copy(buyPrice = price.replace(',', '.').toDoubleOrNull() ?: 0.0) }
 
     fun setBuyPlace(buyPlace: String) = updateState { copy(buyPlace = buyPlace) }
 

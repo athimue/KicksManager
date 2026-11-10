@@ -1,0 +1,33 @@
+<resources>
+    <string name="inventory_title">Inventory</string>
+    <string name="inventory_add">Add a pair</string>
+    <string name="inventory_stat_pairs">Pairs in stock</string>
+    <string name="inventory_stat_value">Stock value</string>
+    <string name="inventory_swipe_hint">Swipe right to sell, left to delete</string>
+    <string name="inventory_empty_title">No pairs yet</string>
+    <string name="inventory_empty_message">Add your first pair to start tracking your collection.</string>
+    <string name="inventory_size">Size %1$s</string>
+    <string name="inventory_qty">Qty %1$d</string>
+    <string name="inventory_bought_for">bought</string>
+    <string name="inventory_toast_deleted">Pair deleted</string>
+    <string name="inventory_toast_saved">Pair saved</string>
+    <string name="inventory_toast_sold">Pair sold 🎉</string>
+    <string name="inventory_close">Close</string>
+    <string name="inventory_form_add_title">Add a pair</string>
+    <string name="inventory_form_update_title">Edit pair</string>
+    <string name="inventory_form_name">Model</string>
+    <string name="inventory_form_size">Size</string>
+    <string name="inventory_form_buy_price">Purchase price (€)</string>
+    <string name="inventory_form_buy_date">Purchase date</string>
+    <string name="inventory_form_buy_place">Purchased at</string>
+    <string name="inventory_form_save">Save</string>
+    <string name="inventory_sell_title">Mark as sold</string>
+    <string name="inventory_sell_price">Sale price (€)</string>
+    <string name="inventory_sell_date">Sale date</string>
+    <string name="inventory_sell_place">Sold on</string>
+    <string name="inventory_sell_confirm">Confirm sale</string>
+    <string name="inventory_date_confirm">OK</string>
+    <string name="inventory_date_cancel">Cancel</string>
+    <string name="inventory_picker_title">Find a sneaker</string>
+    <string name="inventory_picker_hint">Search by model or brand</string>
+</resources>

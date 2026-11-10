@@ -47,6 +47,7 @@ kotlin {
 
 dependencies {
     implementation project(':feature-trends:domain')
+    implementation project(':core-ui')
 
     implementation "androidx.core:core-ktx:$core_ktx_version"
 

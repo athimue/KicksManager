@@ -1,64 +1,80 @@
-# KicksManager 👟📱
+# 👟 KicksManager
 
-KicksManager is an Android mobile application designed to help users efficiently manage their shoe inventory and sales. The app provides an intuitive interface for tracking purchases, sales, and financial statistics. 📊💰
+![Kotlin](https://img.shields.io/badge/Kotlin-2.4-7F52FF?logo=kotlin&logoColor=white)
+![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-Material%203-4285F4?logo=jetpackcompose&logoColor=white)
+![Min SDK](https://img.shields.io/badge/minSdk-29-3DDC84?logo=android&logoColor=white)
+![Target SDK](https://img.shields.io/badge/targetSdk-37-3DDC84?logo=android&logoColor=white)
 
-## Features 🚀
+KicksManager is an Android app for sneaker resellers: track the pairs you own, record every sale and see how much you actually make on each platform.
 
-- Inventory Management 📦
+<!--
+## 📸 Screenshots
 
-Add new shoes to your collection 👟
+| Inventory | Sales | Statistics | Trends |
+| :---: | :---: | :---: | :---: |
+| <img src="docs/screenshots/inventory.png" width="200"/> | <img src="docs/screenshots/sales.png" width="200"/> | <img src="docs/screenshots/statistics.png" width="200"/> | <img src="docs/screenshots/trends.png" width="200"/> |
+-->
 
-Record purchase details: brand, model, price, purchase location, and date 🏷️📅
+## ✨ Features
 
-- Sales Tracking 💸
+**Inventory**
+- Add a pair in seconds: search the model, pick the size, purchase price, date and shop
+- See your stock value at a glance
+- Swipe right to mark a pair as sold, swipe left to delete it
 
-Log shoe sales with details such as sale price, location, and date 🏪
+**Sales**
+- Every sale with its price, platform, date and profit
+- Totals for revenue and profit
 
-Calculate profit per transaction 📈
+**Statistics**
+- Revenue, expenses and margin
+- Breakdown by platform (Vinted, WeTheNew, GOAT…), tap one to see its sales
 
-- Statistics Dashboard 📊
+**Trends**
+- Most wanted sneakers, latest drops and new arrivals
 
-View total profit earned 💰
+The app follows your system theme (light / dark), uses Material You colors on Android 12+ and is available in English and French.
 
-Analyze sales performance based on location and other factors 📍
+## 🛠️ Tech stack
 
-# Technology Stack 🛠️
+| | |
+| --- | --- |
+| Language | Kotlin 2.4 |
+| UI | Jetpack Compose, Material 3 |
+| Architecture | MVVM, clean architecture, multi-module (one `data` / `domain` / `ui` module per feature) |
+| Dependency injection | Hilt |
+| Persistence | Room |
+| Network | Retrofit, OkHttp |
+| Images | Coil 3 |
+| Async | Kotlin Coroutines & Flow |
+| Navigation | Navigation Compose (type-safe routes) |
 
- - KicksManager is built using modern Android development practices, following MVVM architecture and clean code principles. The project utilizes the following technologies:
+## 🚀 Getting started
 
- - Kotlin - Primary programming language 💻
+Requirements:
+- Android Studio with Android Gradle Plugin 9.5 support
+- JDK 17+
+- Android SDK Platform 37
 
- - Jetpack Compose - UI toolkit for building native Android interfaces 🎨
+```bash
+git clone https://github.com/athimue/KicksManager.git
+cd KicksManager
+```
 
- - Coroutines - For efficient background processing ⚡
+Open the project in Android Studio, let Gradle sync, then run the `app` configuration.
 
- - Hilt - Dependency injection framework 🏗️
+## 🧱 Project structure
 
- - Retrofit2 - API communication library for network operations 🌐
+```
+app/                  Entry point, theme and bottom navigation
+core-ui/              Shared design components (cards, badges, top bar, empty states)
+core-data/            Shared database and network setup
+feature-inventory/    Pairs in stock (ui / domain / data)
+feature-sells/        Recorded sales (ui / domain / data)
+feature-statistics/   Key figures and per-platform stats (ui / domain / data)
+feature-trends/       Sneaker trends (ui / domain / data)
+```
 
- - Coil - Fast and lightweight image loading library 🖼️
+## 🤝 Contributing
 
-# Installation & Setup 🛠️
-
-To build and run the project, ensure you have the following:
-
-Android Studio installed 💻
-
-Android Studio with AGP 9.5 support, JDK 17+ 📱
-
-Minimum Android SDK 29 (Android 10), target SDK 37 (Android 17) 📱
-
-Enable Jetpack Compose support in your project settings ⚙️
-
-Clone the repository and open it in Android Studio:
-
-  git clone https://github.com/athimue/KicksManager.git
-  cd KicksManager
-
-# Contributing 🤝
-
-We welcome contributions to improve KicksManager! Feel free to submit issues or open pull requests with new features and improvements. 🚀
-
-License 📜
-
-This project is licensed under the MIT License.
+Issues and pull requests are welcome.

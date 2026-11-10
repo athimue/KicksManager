@@ -1,0 +1,8 @@
+<resources>
+    <string name="trends_title">Tendances</string>
+    <string name="trends_most_wanted">🔥 Les plus recherchées</string>
+    <string name="trends_just_dropped">Dernières sorties</string>
+    <string name="trends_new_arrivals">Nouveautés</string>
+    <string name="trends_empty">Rien à afficher pour le moment</string>
+    <string name="trends_sku">Réf. %1$s</string>
+</resources>

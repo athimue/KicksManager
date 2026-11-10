@@ -48,6 +48,7 @@ kotlin {
 
 dependencies {
     implementation project(':feature-inventory:domain')
+    implementation project(':core-ui')
 
     implementation "androidx.core:core-ktx:$core_ktx_version"
 

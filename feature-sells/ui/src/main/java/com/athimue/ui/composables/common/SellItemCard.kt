@@ -1,74 +1,40 @@
 package com.athimue.ui.composables.common
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import coil3.compose.rememberAsyncImagePainter
+import com.athimue.core.ui.InfoChip
+import com.athimue.core.ui.ProfitText
+import com.athimue.core.ui.SneakerCard
+import com.athimue.core.ui.formatPrice
+import com.athimue.core.ui.formatShopName
+import com.athimue.feature_sells.ui.R
 import com.athimue.ui.composables.sells.SellUiModel
 
 @Composable
 fun SellItemCard(
     sell: SellUiModel
 ) {
-    Row(
-        modifier = Modifier
-            .clip(MaterialTheme.shapes.medium)
-            .background(Color.White),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Image(
-            painter = rememberAsyncImagePainter(sell.picture),
-            contentDescription = "",
-            modifier = Modifier.size(100.dp)
-        )
-        Column(
-            modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+    SneakerCard(
+        name = sell.name,
+        picture = sell.picture,
+        details = {
+            InfoChip(text = stringResource(R.string.sales_size, sell.size))
+            if (sell.sellPlace.isNotBlank()) InfoChip(text = formatShopName(sell.sellPlace))
+            if (sell.sellDate.isNotBlank()) InfoChip(text = sell.sellDate)
+        },
+        trailing = {
             Text(
-                text = sell.name, fontWeight = FontWeight.ExtraBold
+                text = formatPrice(sell.sellPrice),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
             )
-            Row(modifier = Modifier.padding(top = 10.dp)) {
-                Text(
-                    modifier = Modifier.padding(start = 10.dp),
-                    text = "Date : ${sell.sellDate}",
-                )
-                Text(
-                    modifier = Modifier.padding(start = 10.dp),
-                    text = "Size : ${sell.size}",
-                )
-            }
-            Row(modifier = Modifier.padding(top = 10.dp)) {
-                Text(
-                    modifier = Modifier.padding(start = 10.dp),
-                    text = "Sell price : ${sell.sellPrice}  €",
-                )
-                Text(
-                    modifier = Modifier.padding(start = 10.dp),
-                    text = "Profit : ${sell.sellPrice - sell.buyPrice} €"
-                )
-            }
-            Row(modifier = Modifier.padding(top = 10.dp)) {
-                Text(
-                    modifier = Modifier.padding(start = 10.dp),
-                    text = "Sell place : ${sell.sellPlace}",
-                )
-            }
-        }
-    }
+            ProfitText(amount = sell.sellPrice - sell.buyPrice)
+        },
+    )
 }
 
 @Preview(showBackground = true)
@@ -77,13 +43,13 @@ fun SellItemCardPreview() {
     SellItemCard(
         sell = SellUiModel(
             id = 1,
-            name = "",
+            name = "Nike Dunk Low Panda",
             picture = "",
-            size = "",
-            buyPrice = 1.0,
-            sellPrice = 1.0,
-            sellDate = "",
-            sellPlace = ""
+            size = "42",
+            buyPrice = 110.0,
+            sellPrice = 150.0,
+            sellDate = "12/10/2026",
+            sellPlace = "VINTED"
         )
     )
 }

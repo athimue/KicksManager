@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">KicksManager</string>
+    <string name="app_name" translatable="false">KicksManager</string>
+    <string name="nav_inventory">Inventory</string>
+    <string name="nav_sales">Sales</string>
+    <string name="nav_statistics">Stats</string>
+    <string name="nav_trends">Trends</string>
 </resources>

@@ -1,23 +1,24 @@
 package com.athimue.ui.composables.sneakerpicker
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,11 +26,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import coil3.compose.rememberAsyncImagePainter
+import com.athimue.core.ui.SneakerImage
+import com.athimue.feature_inventory.ui.R
 import com.athimue.ui.composables.common.ModalHeader
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,7 +46,11 @@ fun SneakerPicker(
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val uiState by viewModel._uiState.collectAsState()
     var query by remember { mutableStateOf("") }
-    viewModel.searchSneaker()
+
+    // Première recherche une seule fois (et non à chaque recomposition)
+    LaunchedEffect(Unit) {
+        viewModel.searchSneaker()
+    }
 
     if (isDialogDisplayed) {
         ModalBottomSheet(
@@ -51,51 +58,54 @@ fun SneakerPicker(
             sheetState = sheetState
         ) {
             Column(
-                modifier = Modifier
-                    .background(Color(0xFFf3edfd))
-                    .padding(10.dp),
+                modifier = Modifier.padding(horizontal = 16.dp),
             ) {
                 ModalHeader(
-                    title = "Sneaker search",
+                    title = stringResource(R.string.inventory_picker_title),
                     onCloseBtnClick = closeDialog,
                 )
                 OutlinedTextField(
-                    modifier =
-                    Modifier
+                    modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 10.dp),
+                        .padding(horizontal = 8.dp),
                     value = query,
                     onValueChange = {
                         query = it
                         viewModel.searchSneaker(it)
                     },
                     singleLine = true,
+                    shape = MaterialTheme.shapes.extraLarge,
+                    placeholder = { Text(text = stringResource(R.string.inventory_picker_hint)) },
+                    leadingIcon = { Icon(imageVector = Icons.Rounded.Search, contentDescription = null) },
                 )
-                LazyColumn {
+                LazyColumn(
+                    modifier = Modifier.padding(top = 8.dp),
+                ) {
                     items(uiState.sneakers) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            modifier =
-                            Modifier
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            modifier = Modifier
                                 .fillMaxWidth()
-                                .clickable { onSneakerSelected(it.name, it.picture) },
+                                .clickable { onSneakerSelected(it.name, it.picture) }
+                                .padding(horizontal = 8.dp, vertical = 8.dp),
                         ) {
-                            Image(
-                                painter = rememberAsyncImagePainter(it.picture),
-                                contentDescription = "",
-                                modifier =
-                                Modifier
-                                    .size(100.dp)
-                                    .padding(top = 4.dp, bottom = 4.dp)
-                                    .clip(RoundedCornerShape(10.dp))
-                                    .padding(bottom = 3.dp),
-                            )
-                            Column(modifier = Modifier.padding(start = 8.dp)) {
-                                Text(text = it.name)
-                                Text(text = it.brand)
+                            SneakerImage(url = it.picture, size = 64.dp)
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(
+                                    text = it.name,
+                                    style = MaterialTheme.typography.titleSmall,
+                                    fontWeight = FontWeight.SemiBold,
+                                    maxLines = 2,
+                                    overflow = TextOverflow.Ellipsis,
+                                )
+                                Text(
+                                    text = it.brand,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
                             }
                         }
-                        HorizontalDivider()
                     }
                 }
             }

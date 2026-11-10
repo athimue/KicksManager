@@ -14,4 +14,4 @@ data class InventoryFormModalUiModel(
 )
 
 fun InventoryFormModalUiModel.isCompleted() =
-    sequenceOf(name, size, picture, buyPrice, buyPlace, buyDate).all { it != "" }
+    sequenceOf(name, size, picture, buyPlace, buyDate).all { it.isNotBlank() } && buyPrice > 0.0

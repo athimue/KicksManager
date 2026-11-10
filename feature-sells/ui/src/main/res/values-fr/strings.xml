@@ -1,0 +1,11 @@
+<resources>
+    <string name="sales_title">Ventes</string>
+    <string name="sales_stat_count">Ventes</string>
+    <string name="sales_stat_revenue">Encaissé</string>
+    <string name="sales_stat_profit">Bénéfice</string>
+    <string name="sales_empty_title">Aucune vente pour l\'instant</string>
+    <string name="sales_empty_message">Glisse une paire vers la droite dans ton inventaire pour enregistrer une vente.</string>
+    <string name="sales_toast_deleted">Vente supprimée</string>
+    <string name="sales_size">Taille %1$s</string>
+    <string name="sales_swipe_hint">Glisse une vente vers la gauche pour la supprimer</string>
+</resources>

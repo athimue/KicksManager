@@ -2,7 +2,6 @@ package com.athimue.ui.composables.common
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.OutlinedTextField
@@ -10,8 +9,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
@@ -20,31 +17,27 @@ fun <T> PickerInputField(
     title: String,
     value: T,
     onClick: () -> Unit,
+    trailingIcon: (@Composable () -> Unit)? = null,
 ) {
-    Column(
-        modifier = Modifier.padding(8.dp)
+    Box(
+        modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp),
     ) {
-        Text(
-            text = title,
-            fontWeight = FontWeight.Bold,
-            fontFamily = FontFamily.Monospace
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = value.toString(),
+            onValueChange = {},
+            readOnly = true,
+            singleLine = true,
+            label = { Text(title) },
+            trailingIcon = trailingIcon,
         )
-        Box {
-            OutlinedTextField(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                value = value.toString(),
-                onValueChange = {},
-                singleLine = true,
-                label = { Text(title) },
-            )
-            Box(
-                modifier = Modifier
-                    .matchParentSize()
-                    .alpha(0f)
-                    .clickable(onClick = onClick),
-            )
-        }
+        // Couche transparente qui capte le clic sur tout le champ
+        Box(
+            modifier = Modifier
+                .matchParentSize()
+                .alpha(0f)
+                .clickable(onClick = onClick),
+        )
     }
 }
 

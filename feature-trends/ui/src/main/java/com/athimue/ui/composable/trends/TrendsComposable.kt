@@ -3,31 +3,30 @@ package com.athimue.ui.composable.trends
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import coil3.compose.rememberAsyncImagePainter
+import com.athimue.core.ui.KicksTopBar
+import com.athimue.core.ui.SectionTitle
+import com.athimue.domain.model.PopularSneaker
+import com.athimue.feature_trends.ui.R
+import com.athimue.ui.composable.common.TrendCard
 import com.athimue.ui.composable.common.TrendItem
 import com.athimue.ui.composable.detail.DetailModel
 
@@ -40,151 +39,75 @@ fun SharedTransitionScope.TrendsComposable(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    Column(
-        modifier =
-        Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Text(
+    Scaffold(
+        topBar = { KicksTopBar(title = stringResource(R.string.trends_title)) },
+    ) { innerPadding ->
+        Column(
             modifier =
             Modifier
-                .fillMaxWidth()
-                .padding(top = 10.dp),
-            text = "TRENDS",
-            textAlign = TextAlign.Center,
-            fontFamily = FontFamily.Monospace,
-            fontWeight = FontWeight.ExtraBold,
-            fontSize = 38.sp,
-        )
-        HorizontalDivider()
-        Text(
-            text = "MOST WANTED SNEAKERS",
-            modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(vertical = 10.dp),
-            textAlign = TextAlign.Center,
-            fontSize = 25.sp,
-            fontWeight = FontWeight.ExtraBold,
-        )
-        if (uiState.popularSneakers.isNotEmpty()) {
-            LazyRow {
-                items(
-                    items = uiState.popularSneakers,
-                    key = { item -> item.sku },
-                ) { popularSneaker ->
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier =
-                        Modifier.clickable {
-                            goToDetail(
-                                DetailModel(
-                                    sku = popularSneaker.sku,
-                                    picture = popularSneaker.picture,
-                                    name = popularSneaker.name,
-                                ),
-                            )
-                        },
-                    ) {
-                        TrendItem(
-                            animatedVisibilityScope = animatedVisibilityScope,
-                            picture = popularSneaker.picture,
-                            name = popularSneaker.name,
-                            sku = popularSneaker.sku,
+                .fillMaxSize()
+                .padding(innerPadding)
+                .verticalScroll(rememberScrollState())
+                .padding(bottom = 16.dp),
+        ) {
+            TrendSection(
+                title = stringResource(R.string.trends_most_wanted),
+                sneakers = uiState.popularSneakers,
+            ) { popularSneaker ->
+                TrendItem(
+                    animatedVisibilityScope = animatedVisibilityScope,
+                    picture = popularSneaker.picture,
+                    name = popularSneaker.name,
+                    sku = popularSneaker.sku,
+                    onClick = {
+                        goToDetail(
+                            DetailModel(
+                                sku = popularSneaker.sku,
+                                picture = popularSneaker.picture,
+                                name = popularSneaker.name,
+                            ),
                         )
-                    }
-                }
+                    },
+                )
             }
-        } else {
-            Text("Empty list", textAlign = TextAlign.Center)
+            TrendSection(
+                title = stringResource(R.string.trends_just_dropped),
+                sneakers = uiState.justDroppedSneakers,
+            ) { sneaker ->
+                TrendCard(picture = sneaker.picture, name = sneaker.name, sku = sneaker.sku)
+            }
+            TrendSection(
+                title = stringResource(R.string.trends_new_arrivals),
+                sneakers = uiState.newArrivalsSneakers,
+            ) { sneaker ->
+                TrendCard(picture = sneaker.picture, name = sneaker.name, sku = sneaker.sku)
+            }
         }
-        HorizontalDivider()
+    }
+}
+
+@Composable
+private fun TrendSection(
+    title: String,
+    sneakers: List<PopularSneaker>,
+    itemContent: @Composable (PopularSneaker) -> Unit,
+) {
+    SectionTitle(title = title)
+    if (sneakers.isEmpty()) {
         Text(
-            text = "JUST DROPPED",
-            modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(vertical = 10.dp),
-            textAlign = TextAlign.Center,
-            fontSize = 25.sp,
-            fontWeight = FontWeight.ExtraBold,
+            text = stringResource(R.string.trends_empty),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.padding(horizontal = 16.dp),
         )
-        if (uiState.justDroppedSneakers.isNotEmpty()) {
-            LazyRow {
-                items(
-                    items = uiState.justDroppedSneakers,
-                    key = { item -> item.sku },
-                ) { justDroppedSneaker ->
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        Image(
-                            painter = rememberAsyncImagePainter(justDroppedSneaker.picture),
-                            contentDescription = null,
-                            modifier = Modifier.size(120.dp),
-                        )
-                        Text(
-                            text =
-                            if (justDroppedSneaker.name.length > 10) {
-                                justDroppedSneaker.name.substring(
-                                    0,
-                                    8,
-                                ) + ".."
-                            } else {
-                                justDroppedSneaker.name
-                            },
-                        )
-                        Text(text = justDroppedSneaker.sku)
-                    }
-                }
+    } else {
+        LazyRow(
+            contentPadding = PaddingValues(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            items(items = sneakers, key = { item -> item.sku }) { sneaker ->
+                itemContent(sneaker)
             }
-        } else {
-            Text("Empty list", textAlign = TextAlign.Center)
-        }
-        HorizontalDivider()
-        Text(
-            text = "NEW ARRIVALS",
-            modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(vertical = 10.dp),
-            textAlign = TextAlign.Center,
-            fontSize = 25.sp,
-            fontWeight = FontWeight.ExtraBold,
-        )
-        if (uiState.newArrivalsSneakers.isNotEmpty()) {
-            LazyRow {
-                items(
-                    items = uiState.newArrivalsSneakers,
-                    key = { item -> item.sku },
-                ) { popularSneaker ->
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        Image(
-                            painter = rememberAsyncImagePainter(popularSneaker.picture),
-                            contentDescription = null,
-                            modifier = Modifier.size(120.dp),
-                        )
-                        Text(
-                            text =
-                            if (popularSneaker.name.length > 10) {
-                                popularSneaker.name.substring(
-                                    0,
-                                    8,
-                                ) + ".."
-                            } else {
-                                popularSneaker.name
-                            },
-                        )
-                        Text(text = popularSneaker.sku)
-                    }
-                }
-            }
-        } else {
-            Text("Empty list", textAlign = TextAlign.Center)
         }
     }
 }

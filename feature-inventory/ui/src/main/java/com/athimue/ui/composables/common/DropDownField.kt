@@ -7,8 +7,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.rounded.KeyboardArrowDown
+import androidx.compose.material.icons.rounded.KeyboardArrowUp
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -24,8 +24,6 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
@@ -40,20 +38,17 @@ fun DropDownField(
     var isDropDownExpanded by remember { mutableStateOf(false) }
     var dropDownTextField by remember { mutableStateOf(Size.Zero) }
     val icon =
-        if (isDropDownExpanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown
+        if (isDropDownExpanded) Icons.Rounded.KeyboardArrowUp else Icons.Rounded.KeyboardArrowDown
 
     Column(
-        modifier = Modifier.padding(8.dp),
+        modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp),
     ) {
-        Text(
-            text = title,
-            fontWeight = FontWeight.Bold,
-            fontFamily = FontFamily.Monospace,
-        )
         Box {
             OutlinedTextField(
                 value = itemSelected,
                 onValueChange = onItemSelected,
+                readOnly = true,
+                singleLine = true,
                 modifier =
                 Modifier
                     .fillMaxWidth()
@@ -64,7 +59,7 @@ fun DropDownField(
                 trailingIcon = {
                     Icon(
                         imageVector = icon,
-                        contentDescription = "",
+                        contentDescription = null,
                     )
                 },
             )

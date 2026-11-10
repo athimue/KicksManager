@@ -1,0 +1,16 @@
+<resources>
+    <string name="stats_title">Statistiques</string>
+    <string name="stats_section_overview">Vue d\'ensemble</string>
+    <string name="stats_section_money">Finances</string>
+    <string name="stats_section_platforms">Par plateforme</string>
+    <string name="stats_platforms_hint">Touche une plateforme pour voir ses ventes</string>
+    <string name="stats_inventory">Paires en stock</string>
+    <string name="stats_sales">Ventes</string>
+    <string name="stats_revenue">Encaissé</string>
+    <string name="stats_expenses">Dépenses</string>
+    <string name="stats_margin">Marge</string>
+    <string name="stats_sellplace_subtitle">Récapitulatif des ventes</string>
+    <string name="stats_sellplace_empty_title">Aucune vente ici pour l\'instant</string>
+    <string name="stats_sellplace_empty_message">Les ventes réalisées sur cette plateforme apparaîtront ici.</string>
+    <string name="stats_size">Taille %1$s</string>
+</resources>

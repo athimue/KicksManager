@@ -7,7 +7,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.athimue.feature_inventory.ui.R
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -31,14 +33,14 @@ fun DatePicker(
                         onDateSelected(currentDate)
                     }
                 }) {
-                    Text(text = "Confirm")
+                    Text(text = stringResource(R.string.inventory_date_confirm))
                 }
             },
             dismissButton = {
                 TextButton(onClick = {
                     closeDialog()
                 }) {
-                    Text(text = "Cancel")
+                    Text(text = stringResource(R.string.inventory_date_cancel))
                 }
             },
         ) {

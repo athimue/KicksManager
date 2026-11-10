@@ -1,0 +1,33 @@
+<resources>
+    <string name="inventory_title">Inventaire</string>
+    <string name="inventory_add">Ajouter une paire</string>
+    <string name="inventory_stat_pairs">Paires en stock</string>
+    <string name="inventory_stat_value">Valeur du stock</string>
+    <string name="inventory_swipe_hint">Glisse à droite pour vendre, à gauche pour supprimer</string>
+    <string name="inventory_empty_title">Aucune paire pour l\'instant</string>
+    <string name="inventory_empty_message">Ajoute ta première paire pour commencer à suivre ton stock.</string>
+    <string name="inventory_size">Taille %1$s</string>
+    <string name="inventory_qty">Qté %1$d</string>
+    <string name="inventory_bought_for">achat</string>
+    <string name="inventory_toast_deleted">Paire supprimée</string>
+    <string name="inventory_toast_saved">Paire enregistrée</string>
+    <string name="inventory_toast_sold">Paire vendue 🎉</string>
+    <string name="inventory_close">Fermer</string>
+    <string name="inventory_form_add_title">Ajouter une paire</string>
+    <string name="inventory_form_update_title">Modifier la paire</string>
+    <string name="inventory_form_name">Modèle</string>
+    <string name="inventory_form_size">Taille</string>
+    <string name="inventory_form_buy_price">Prix d\'achat (€)</string>
+    <string name="inventory_form_buy_date">Date d\'achat</string>
+    <string name="inventory_form_buy_place">Achetée chez</string>
+    <string name="inventory_form_save">Enregistrer</string>
+    <string name="inventory_sell_title">Marquer comme vendue</string>
+    <string name="inventory_sell_price">Prix de vente (€)</string>
+    <string name="inventory_sell_date">Date de vente</string>
+    <string name="inventory_sell_place">Vendue sur</string>
+    <string name="inventory_sell_confirm">Valider la vente</string>
+    <string name="inventory_date_confirm">OK</string>
+    <string name="inventory_date_cancel">Annuler</string>
+    <string name="inventory_picker_title">Rechercher une sneaker</string>
+    <string name="inventory_picker_hint">Modèle ou marque</string>
+</resources>

@@ -2,33 +2,28 @@ package com.athimue.kicksmanager.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.DeviceFontFamilyName
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
 
-// Set of Material typography styles to start with
-val Typography = Typography(
-    bodyLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
-    )
-    /* Other default text styles to override
-    titleLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-        lineHeight = 28.sp,
-        letterSpacing = 0.sp
-    ),
-    labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Medium,
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
-    )
-    */
+// Police condensée du système (Roboto Condensed sur la plupart des appareils) pour les titres :
+// look plus « sneaker / sport », sans embarquer de fichier de police.
+private val Condensed = FontFamily(
+    Font(DeviceFontFamilyName("sans-serif-condensed"), weight = FontWeight.Normal),
+    Font(DeviceFontFamilyName("sans-serif-condensed"), weight = FontWeight.Bold),
+)
+
+private val Default = Typography()
+
+private fun TextStyle.condensedBold() = copy(fontFamily = Condensed, fontWeight = FontWeight.Bold)
+
+val KicksTypography = Typography(
+    displayLarge = Default.displayLarge.condensedBold(),
+    displayMedium = Default.displayMedium.condensedBold(),
+    displaySmall = Default.displaySmall.condensedBold(),
+    headlineLarge = Default.headlineLarge.condensedBold(),
+    headlineMedium = Default.headlineMedium.condensedBold(),
+    headlineSmall = Default.headlineSmall.condensedBold(),
+    titleLarge = Default.titleLarge.condensedBold(),
 )
