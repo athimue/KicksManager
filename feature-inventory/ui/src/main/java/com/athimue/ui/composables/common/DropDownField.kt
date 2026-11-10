@@ -6,9 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.KeyboardArrowDown
-import androidx.compose.material.icons.rounded.KeyboardArrowUp
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -27,6 +24,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
+import com.athimue.core.ui.KicksIcons
 
 @Composable
 fun DropDownField(
@@ -37,8 +35,6 @@ fun DropDownField(
 ) {
     var isDropDownExpanded by remember { mutableStateOf(false) }
     var dropDownTextField by remember { mutableStateOf(Size.Zero) }
-    val icon =
-        if (isDropDownExpanded) Icons.Rounded.KeyboardArrowUp else Icons.Rounded.KeyboardArrowDown
 
     Column(
         modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp),
@@ -58,7 +54,7 @@ fun DropDownField(
                 label = { Text(title) },
                 trailingIcon = {
                     Icon(
-                        imageVector = icon,
+                        painter = if (isDropDownExpanded) KicksIcons.ArrowUp else KicksIcons.ArrowDown,
                         contentDescription = null,
                     )
                 },

@@ -59,7 +59,6 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-tooling"
     implementation "androidx.compose.foundation:foundation"
     implementation "androidx.compose.material3:material3"
-    implementation "androidx.compose.material:material-icons-core:$material_icons_version"
     implementation "androidx.activity:activity-compose:$activity_compose_version"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version"

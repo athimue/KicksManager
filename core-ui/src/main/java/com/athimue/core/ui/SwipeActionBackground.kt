@@ -4,10 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.CheckCircle
-import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SwipeToDismissBoxValue
@@ -34,20 +30,20 @@ fun SwipeActionBackground(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .clip(CardDefaults.elevatedShape)
+            .clip(MaterialTheme.shapes.large)
             .background(containerColor)
             .padding(horizontal = 24.dp),
     ) {
         when (direction) {
             SwipeToDismissBoxValue.StartToEnd -> Icon(
-                imageVector = Icons.Rounded.CheckCircle,
+                painter = KicksIcons.Payments,
                 contentDescription = stringResource(R.string.core_ui_sell),
                 tint = KicksColors.onSuccessContainer,
                 modifier = Modifier.align(Alignment.CenterStart),
             )
 
             SwipeToDismissBoxValue.EndToStart -> Icon(
-                imageVector = Icons.Rounded.Delete,
+                painter = KicksIcons.Delete,
                 contentDescription = stringResource(R.string.core_ui_delete),
                 tint = MaterialTheme.colorScheme.onErrorContainer,
                 modifier = Modifier.align(Alignment.CenterEnd),

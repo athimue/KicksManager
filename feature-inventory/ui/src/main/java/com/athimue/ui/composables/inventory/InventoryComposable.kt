@@ -9,8 +9,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -33,6 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.athimue.core.ui.KicksIcons
 import com.athimue.core.ui.EmptyState
 import com.athimue.core.ui.InfoChip
 import com.athimue.core.ui.KicksTopBar
@@ -69,7 +68,7 @@ fun InventoryComposable(
                 ExtendedFloatingActionButton(
                     onClick = openAddForm,
                     expanded = isFabExpanded,
-                    icon = { Icon(imageVector = Icons.Rounded.Add, contentDescription = null) },
+                    icon = { Icon(painter = KicksIcons.Add, contentDescription = null) },
                     text = { Text(text = stringResource(R.string.inventory_add)) },
                 )
             }

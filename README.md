@@ -33,14 +33,14 @@ KicksManager is an Android app for sneaker resellers: track the pairs you own, r
 **Trends**
 - Most wanted sneakers, latest drops and new arrivals
 
-The app follows your system theme (light / dark), uses Material You colors on Android 12+ and is available in English and French.
+Indigo theme in light and dark mode, Poppins typography, Material Symbols icons, available in English and French.
 
 ## 🛠️ Tech stack
 
 | | |
 | --- | --- |
 | Language | Kotlin 2.4 |
-| UI | Jetpack Compose, Material 3 |
+| UI | Jetpack Compose, Material 3, Material Symbols, Poppins |
 | Architecture | MVVM, clean architecture, multi-module (one `data` / `domain` / `ui` module per feature) |
 | Dependency injection | Hilt |
 | Persistence | Room |
@@ -74,6 +74,11 @@ feature-sells/        Recorded sales (ui / domain / data)
 feature-statistics/   Key figures and per-platform stats (ui / domain / data)
 feature-trends/       Sneaker trends (ui / domain / data)
 ```
+
+## 🙏 Credits
+
+- [Poppins](https://fonts.google.com/specimen/Poppins) font, SIL Open Font License (see `licenses/Poppins-OFL.txt`)
+- [Material Symbols](https://fonts.google.com/icons) icons, Apache License 2.0
 
 ## 🤝 Contributing
 

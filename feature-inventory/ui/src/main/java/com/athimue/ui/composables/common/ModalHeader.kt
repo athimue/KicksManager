@@ -3,8 +3,6 @@ package com.athimue.ui.composables.common
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -15,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.athimue.core.ui.KicksIcons
 import com.athimue.feature_inventory.ui.R
 
 @Composable
@@ -35,7 +34,7 @@ fun ModalHeader(
         )
         IconButton(onClick = onCloseBtnClick) {
             Icon(
-                imageVector = Icons.Rounded.Close,
+                painter = KicksIcons.Close,
                 contentDescription = stringResource(R.string.inventory_close),
             )
         }

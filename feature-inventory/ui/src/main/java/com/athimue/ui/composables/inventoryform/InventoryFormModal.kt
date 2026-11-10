@@ -16,6 +16,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.Icon
+import com.athimue.core.ui.KicksIcons
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -135,6 +137,7 @@ fun InventoryFormModal(
                     title = stringResource(R.string.inventory_form_buy_date),
                     value = uiState.buyDate,
                     onClick = viewModel::showDatePicker,
+                    trailingIcon = { Icon(painter = KicksIcons.Calendar, contentDescription = null) },
                 )
                 DropDownField(
                     title = stringResource(R.string.inventory_form_buy_place),

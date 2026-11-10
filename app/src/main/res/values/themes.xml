@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.KicksManager" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.KicksManager" parent="android:Theme.Material.Light.NoActionBar">
+        <!-- Même fond que l'app pour éviter un flash blanc au lancement -->
+        <item name="android:windowBackground">@color/window_background</item>
+    </style>
 </resources>

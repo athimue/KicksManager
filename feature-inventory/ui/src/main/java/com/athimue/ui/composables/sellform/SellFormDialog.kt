@@ -10,6 +10,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.Icon
+import com.athimue.core.ui.KicksIcons
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -71,6 +73,7 @@ fun SellFormDialog(
                 title = stringResource(R.string.inventory_sell_date),
                 value = sellDate,
                 onClick = { showDatePicker = true },
+                trailingIcon = { Icon(painter = KicksIcons.Calendar, contentDescription = null) },
             )
             DropDownField(
                 title = stringResource(R.string.inventory_sell_place),

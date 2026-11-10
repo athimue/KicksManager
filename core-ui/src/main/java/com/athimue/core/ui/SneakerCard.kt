@@ -8,7 +8,8 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -66,10 +67,12 @@ fun SneakerCard(
             )
         }
     }
+    val colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLowest)
+    val shape = MaterialTheme.shapes.large
     if (onClick != null) {
-        ElevatedCard(onClick = onClick, modifier = modifier.fillMaxWidth()) { content() }
+        Card(onClick = onClick, modifier = modifier.fillMaxWidth(), shape = shape, colors = colors) { content() }
     } else {
-        ElevatedCard(modifier = modifier.fillMaxWidth()) { content() }
+        Card(modifier = modifier.fillMaxWidth(), shape = shape, colors = colors) { content() }
     }
 }
 

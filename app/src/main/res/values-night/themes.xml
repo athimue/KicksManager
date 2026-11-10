@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Thème sombre de la fenêtre : évite le flash blanc au lancement en mode sombre -->
-    <style name="Theme.KicksManager" parent="android:Theme.Material.NoActionBar" />
+    <style name="Theme.KicksManager" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/window_background</item>
+    </style>
 </resources>

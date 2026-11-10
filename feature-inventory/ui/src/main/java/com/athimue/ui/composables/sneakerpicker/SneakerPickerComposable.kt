@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -31,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.athimue.core.ui.KicksIcons
 import com.athimue.core.ui.SneakerImage
 import com.athimue.feature_inventory.ui.R
 import com.athimue.ui.composables.common.ModalHeader
@@ -76,7 +75,7 @@ fun SneakerPicker(
                     singleLine = true,
                     shape = MaterialTheme.shapes.extraLarge,
                     placeholder = { Text(text = stringResource(R.string.inventory_picker_hint)) },
-                    leadingIcon = { Icon(imageVector = Icons.Rounded.Search, contentDescription = null) },
+                    leadingIcon = { Icon(painter = KicksIcons.Search, contentDescription = null) },
                 )
                 LazyColumn(
                     modifier = Modifier.padding(top = 8.dp),

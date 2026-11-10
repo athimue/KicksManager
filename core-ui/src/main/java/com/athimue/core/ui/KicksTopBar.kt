@@ -1,24 +1,30 @@
 package com.athimue.core.ui
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.athimue.core_ui.R
 
 /**
- * Barre de titre commune à tous les écrans. Gère elle-même la marge de la barre d'état (bord à bord).
+ * En-tête coloré aux coins arrondis, commun à tous les écrans.
+ * Il passe sous la barre d'état (bord à bord) et gère lui-même sa marge.
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun KicksTopBar(
     title: String,
@@ -26,10 +32,32 @@ fun KicksTopBar(
     subtitle: String? = null,
     onBack: (() -> Unit)? = null,
 ) {
-    TopAppBar(
-        modifier = modifier,
-        title = {
-            Column {
+    Surface(
+        modifier = modifier.fillMaxWidth(),
+        color = KicksColors.header,
+        contentColor = KicksColors.onHeader,
+        shape = RoundedCornerShape(bottomStart = 28.dp, bottomEnd = 28.dp),
+    ) {
+        Row(
+            modifier = Modifier
+                .statusBarsPadding()
+                .padding(
+                    start = if (onBack != null) 8.dp else 24.dp,
+                    end = 24.dp,
+                    top = 12.dp,
+                    bottom = 20.dp,
+                ),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            if (onBack != null) {
+                IconButton(onClick = onBack) {
+                    Icon(
+                        painter = KicksIcons.ArrowBack,
+                        contentDescription = stringResource(R.string.core_ui_back),
+                    )
+                }
+            }
+            Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = title,
                     style = MaterialTheme.typography.headlineMedium,
@@ -40,22 +68,18 @@ fun KicksTopBar(
                     Text(
                         text = subtitle,
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = LocalContentColor.current.copy(alpha = 0.8f),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
                 }
             }
-        },
-        navigationIcon = {
-            if (onBack != null) {
-                IconButton(onClick = onBack) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                        contentDescription = stringResource(R.string.core_ui_back),
-                    )
-                }
-            }
-        },
-    )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun KicksTopBarPreview() {
+    KicksTopBar(title = "Inventory", subtitle = "12 pairs", onBack = {})
 }
